@@ -52,7 +52,7 @@ public class SocialLoginController {
             @RequestParam("session_state") String sessionState) {
 
         // Exchange authorization code for token
-        TokenResponse tokenResponse = keycloakService.exchangeCodeForToken(code);
+        TokenResponse tokenResponse = keycloakService.exchangeCodeForToken(code).block();
         return ResponseEntity.ok(tokenResponse);
     }
 }

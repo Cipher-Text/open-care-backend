@@ -25,7 +25,7 @@ public class AuthController {
         try {
             TokenResponse tokenResponse = keycloakService.login(
                     loginRequest.getUsername(),
-                    loginRequest.getPassword());
+                    loginRequest.getPassword()).block();
             return ResponseEntity.ok(tokenResponse);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -35,7 +35,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
         try {
-            boolean successful = keycloakService.registerUser(registrationRequest);
+            boolean successful = keycloakService.registerUser(registrationRequest).block();
             if (successful) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
             } else {
@@ -50,7 +50,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshRequest) {
         try {
-            TokenResponse tokenResponse = keycloakService.refreshToken(refreshRequest.getRefreshToken());
+            TokenResponse tokenResponse = keycloakService.refreshToken(refreshRequest.getRefreshToken()).block();
             return ResponseEntity.ok(tokenResponse);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

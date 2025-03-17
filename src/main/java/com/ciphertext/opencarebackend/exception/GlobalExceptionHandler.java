@@ -7,6 +7,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,6 +30,37 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(KeycloakClientException.class)
+    public ResponseEntity<ApiError> handleKeycloakClientException(KeycloakClientException ex) {
+        ApiError apiError = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                "Keycloak Client Error",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(KeycloakServerException.class)
+    public ResponseEntity<ApiError> handleKeycloakServerException(KeycloakServerException ex) {
+        ApiError apiError = new ApiError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "Keycloak Server Error",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(WebClientResponseException.class)
+    public ResponseEntity<ApiError> handleWebClientResponseException(WebClientResponseException ex) {
+        HttpStatus status = HttpStatus.valueOf(ex.getStatusCode().value());
+        ApiError apiError = new ApiError(
+                status.value(),
+                "WebClient Error",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(apiError, status);
     }
 
     @ExceptionHandler(Exception.class)
