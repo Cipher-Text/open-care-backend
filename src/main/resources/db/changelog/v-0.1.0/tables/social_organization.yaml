@@ -29,4 +29,24 @@ databaseChangeLog:
               - column:
                   name: url
                   type: varchar(500)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
             tableName: social_organization

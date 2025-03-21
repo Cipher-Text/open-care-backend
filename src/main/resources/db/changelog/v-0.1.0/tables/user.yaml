@@ -20,7 +20,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: password
+                  name: keycloak_user_id
                   type: varchar(100)
               - column:
                   name: phone
@@ -35,17 +35,23 @@ databaseChangeLog:
                   type: boolean
                   defaultValueBoolean: false
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
-                  type: int8
+                  type: varchar(100)
               - column:
                   constraints:
                     nullable: false
                   name: created_at
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: updated_by
-                  type: int8
+                  type: varchar(100)
               - column:
+                  constraints:
+                    nullable: false
                   name: updated_at
                   type: timestamp
             tableName: user

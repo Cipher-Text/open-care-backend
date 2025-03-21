@@ -1,11 +1,5 @@
 databaseChangeLog:
   - include:
-      file: tables/role.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: tables/permission.yaml
-      relativeToChangelogFile: true
-  - include:
       file: tables/division.yaml
       relativeToChangelogFile: true
   - include:
