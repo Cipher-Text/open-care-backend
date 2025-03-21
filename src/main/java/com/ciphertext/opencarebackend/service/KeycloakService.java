@@ -29,7 +29,11 @@ public class KeycloakService {
             @Value("${app.keycloak.server-url}") String serverUrl,
             @Value("${app.keycloak.realm}") String realm,
             @Value("${app.keycloak.client-id}") String clientId,
-            @Value("${app.keycloak.client-secret}") String clientSecret) {
+            @Value("${app.keycloak.client-secret}") String clientSecret,
+            @Value("${app.keycloak.admin.client-id}") String adminClientId,
+            @Value("${app.keycloak.admin.username}") String adminUsername,
+            @Value("${app.keycloak.admin.password}") String adminPassword
+            ) {
         this.webClient = webClientBuilder.build();
         this.serverUrl = serverUrl;
         this.realm = realm;
@@ -98,10 +102,16 @@ public class KeycloakService {
     }
 
     private Mono<String> getAdminToken() {
-        // Implementation to get admin token for Keycloak Admin API
-        // Note: This requires proper admin credentials and restricted access
-        // In production, consider using a service account with limited permissions
-        return Mono.just("admin-token");
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("client_id", "admin-cli");
+        formData.add("username", "admin");
+        formData.add("password", "admin");
+        formData.add("grant_type", "password");
+
+        String tokenUrl = serverUrl + "/realms/master/protocol/openid-connect/token";
+
+        return executeRequest(tokenUrl, formData, TokenResponse.class)
+                .map(TokenResponse::getAccess_token);
     }
 
     public Mono<TokenResponse> exchangeCodeForToken(String code) {
