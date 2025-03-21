@@ -4,11 +4,6 @@ databaseChangeLog:
       author: sadman
       changes:
         - loadData:
-            file: seeds/role.csv
-            relativeToChangelogFile: true
-            tableName: role
-            quotchar: '"'
-        - loadData:
             file: seeds/degree.csv
             relativeToChangelogFile: true
             tableName: degree
@@ -57,21 +52,6 @@ databaseChangeLog:
             file: seeds/user.csv
             relativeToChangelogFile: true
             tableName: user
-            quotchar: '"'
-        - loadData:
-            file: seeds/user_role.csv
-            relativeToChangelogFile: true
-            tableName: user_role
-            quotchar: '"'
-        - loadData:
-            file: seeds/permission.csv
-            relativeToChangelogFile: true
-            tableName: permission
-            quotchar: '"'
-        - loadData:
-            file: seeds/role_permission.csv
-            relativeToChangelogFile: true
-            tableName: role_permission
             quotchar: '"'
         - loadData:
             file: seeds/doctor.csv
