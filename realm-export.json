@@ -50,7 +50,21 @@
   "groups": [
     {
       "name": "Super Admin",
-      "path": "/Super Admin"
+      "path": "/Super Admin",
+      "realmRoles": [
+        "create-master-data",
+        "update-master-data",
+        "delete-master-data",
+        "create-institution",
+        "update-institution",
+        "delete-institution",
+        "create-doctor",
+        "update-doctor",
+        "delete-doctor",
+        "create-hospital",
+        "update-hospital",
+        "delete-hospital"
+      ]
     },
     {
       "name": "Admin",
@@ -76,50 +90,85 @@
   "roles": {
     "realm": [
       {
-        "name": "user",
-        "description": "User role"
+        "name": "create-master-data",
+        "description": "Create Master Data Permission"
       },
       {
-        "name": "admin",
-        "description": "Administrator role"
+        "name": "update-master-data",
+        "description": "Update Master Data Permission"
       },
       {
-        "name": "super_admin",
-        "description": "Super Administrator role"
+        "name": "delete-master-data",
+        "description": "Delete Master Data Permission"
       },
       {
-        "name": "moderator",
-        "description": "Moderator role"
+        "name": "create-institution",
+        "description": "Create Institution Permission"
       },
       {
-        "name": "operator",
-        "description": "Operator role"
+        "name": "update-institution",
+        "description": "Update Institution Permission"
       },
       {
-        "name": "doctor",
-        "description": "Doctor role"
+        "name": "delete-institution",
+        "description": "Delete Institution Permission"
+      },
+      {
+        "name": "create-doctor",
+        "description": "Create Doctor Permission"
+      },
+      {
+        "name": "update-doctor",
+        "description": "Update Doctor Permission"
+      },
+      {
+        "name": "delete-doctor",
+        "description": "Delete Doctor Permission"
+      },
+      {
+        "name": "create-hospital",
+        "description": "Create Hospital Permission"
+      },
+      {
+        "name": "update-hospital",
+        "description": "Update Hospital Permission"
+      },
+      {
+        "name": "delete-hospital",
+        "description": "Delete Hospital Permission"
       }
     ]
   },
   "users": [
     {
-      "username": "testuser",
+      "username": "superadmin",
       "enabled": true,
-      "email": "test@example.com",
-      "firstName": "Test",
-      "lastName": "User",
+      "email": "superadmin@example.com",
+      "firstName": "Super",
+      "lastName": "Admin",
       "credentials": [
         {
           "type": "password",
-          "value": "password",
+          "value": "123456",
           "temporary": false
         }
       ],
       "realmRoles": [
-        "user"
+        "create-master-data",
+        "update-master-data",
+        "delete-master-data",
+        "create-institution",
+        "update-institution",
+        "delete-institution",
+        "create-doctor",
+        "update-doctor",
+        "delete-doctor",
+        "create-hospital",
+        "update-hospital",
+        "delete-hospital"
       ],
       "groups": [
-        "/User"
+        "/Super Admin"
       ]
     }
   ]
