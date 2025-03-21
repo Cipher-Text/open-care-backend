@@ -3,8 +3,10 @@ package com.ciphertext.opencarebackend.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
@@ -75,5 +77,30 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/api-docs/**",
+                        "configuration/**",
+                        "/swagger*/**",
+                        "/webjars/**",
+                        "/swagger-ui/**",
+                        "/actuator/**"
+                )
+                .requestMatchers(HttpMethod.GET,
+                        "/api/specialities/**",
+                        "/api/medical-tests/**",
+                        "/api/institutions/**",
+                        "/api/hospitals/**",
+                        "/api/doctors/**",
+                        "/api/districts/**",
+                        "/api/divisions/**",
+                        "/api/upazilas/**",
+                        "/api/organization-types/**",
+                        "/api/hospital-types/**");
     }
 }
