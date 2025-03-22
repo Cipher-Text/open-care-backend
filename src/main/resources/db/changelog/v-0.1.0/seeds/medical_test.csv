@@ -205,7 +205,7 @@ id,name,bn_name,alternative_names,parent_id
 204,Echocardiogram - children,ইকোকার্ডিওগ্রাম - শিশু,null,null
 205,EEG,ইইজি,null,null
 206,EGD - esophagogastroduodenoscopy,EGD - esophagogastroduodenoscopy,null,null
-207,Electrocardiogram,ইসিজি,"{""ECG"", ""EKG""}",null
+207,Electrocardiogram,ইসিজি,null,null
 208,Electrolytes - urine,ইলেক্ট্রোলাইটস - প্রস্রাব,null,null
 209,Electromyography,ইলেক্ট্রোমায়োগ্রাফি,null,null
 210,Electronystagmography,ইলেক্ট্রোনিস্টাগমোগ্রাফি,null,null
@@ -589,7 +589,7 @@ id,name,bn_name,alternative_names,parent_id
 588,TSI test,টিএসআই পরীক্ষা,null,null
 589,Tularemia blood test,Tularemia রক্ত পরীক্ষা,null,null
 590,Tympanometry,Tympanometry,null,null
-591,Ultrasound,আল্ট্রাসাউন্ড,"{""Sonogram""}",null
+591,Ultrasound,আল্ট্রাসাউন্ড,null,null
 592,Ultrasound pregnancy,আল্ট্রাসাউন্ড গর্ভাবস্থা,null,591
 593,Upper airway biopsy,উপরের এয়ারওয়ে বায়োপসি,null,null
 594,Upper GI and small bowel series,উপরের জিআই এবং ছোট অন্ত্রের সিরিজ,null,null

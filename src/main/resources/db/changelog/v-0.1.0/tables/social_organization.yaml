@@ -16,10 +16,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                   name: name
-                  type: varchar(100)
+                  type: varchar(200)
               - column:
                   name: bn_name
-                  type: varchar(100)
+                  type: varchar(200)
               - column:
                   name: organization_type
                   type: varchar(10)
