@@ -15,8 +15,19 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: user_id
-                  type: int8
+                  name: username
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: keycloak_user_id
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: email
+                  type: varchar(100)
               - column:
                   name: name
                   type: varchar(100)

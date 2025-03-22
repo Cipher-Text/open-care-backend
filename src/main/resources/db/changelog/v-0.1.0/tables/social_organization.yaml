@@ -21,14 +21,38 @@ databaseChangeLog:
                   name: bn_name
                   type: varchar(100)
               - column:
+                  name: founded_date
+                  type: timestamp
+              - column:
                   name: description
                   type: varchar(1000)
               - column:
                   name: address
                   type: varchar(500)
               - column:
-                  name: url
+                  name: website_url
                   type: varchar(500)
+              - column:
+                  name: facebook_url
+                  type: varchar(500)
+              - column:
+                  name: twitter_url
+                  type: varchar(500)
+              - column:
+                  name: linkedin_url
+                  type: varchar(500)
+              - column:
+                  name: youtube_url
+                  type: varchar(500)
+              - column:
+                  name: email
+                  type: varchar(500)
+              - column:
+                  name: phone
+                  type: varchar(100)
+              - column:
+                  name: origin_country
+                  type: varchar(100)
               - column:
                   constraints:
                     nullable: false
