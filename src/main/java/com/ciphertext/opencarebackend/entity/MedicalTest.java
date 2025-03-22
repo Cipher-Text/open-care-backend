@@ -32,7 +32,6 @@ public class MedicalTest {
     @Column(name = "bn_name", nullable = false, length = 100)
     private String bnName;
 
-
     @Column(name = "alternative_names")
     private String alternativeNames;
 

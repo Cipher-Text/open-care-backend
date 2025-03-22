@@ -51,6 +51,6 @@ public class Institution {
     @Column(name="lon", nullable = false)
     private String lon;
 
-    @Column(name="url", nullable = false)
-    private String url;
+    @Column(name="website_url", nullable = false)
+    private String websiteUrl;
 }
