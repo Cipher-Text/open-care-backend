@@ -30,15 +30,14 @@ databaseChangeLog:
                   name: established_year
                   type: int4
               - column:
-                  constraints:
-                    nullable: false
                   name: enroll
                   type: int4
               - column:
-                  constraints:
-                    nullable: false
                   name: district_id
                   type: int4
+              - column:
+                  name: country
+                  type: varchar(100)
               - column:
                   constraints:
                     nullable: false
@@ -56,8 +55,32 @@ databaseChangeLog:
                   name: lon
                   type: varchar(100)
               - column:
-                  name: url
+                  name: website_url
                   type: varchar(500)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
             tableName: institution
         - addForeignKeyConstraint:
             baseColumnNames: district_id

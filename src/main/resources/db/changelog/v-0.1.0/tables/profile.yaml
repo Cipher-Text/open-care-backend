@@ -74,16 +74,6 @@ databaseChangeLog:
                   type: timestamp
             tableName: profile
         - addForeignKeyConstraint:
-            baseColumnNames: user_id
-            baseTableName: profile
-            constraintName: profile_fk_user
-            deferrable: false
-            initiallyDeferred: false
-            onUpdate: CASCADE
-            referencedColumnNames: id
-            referencedTableName: user
-            validate: true
-        - addForeignKeyConstraint:
             baseColumnNames: district_id
             baseTableName: profile
             constraintName: profile_fk_district

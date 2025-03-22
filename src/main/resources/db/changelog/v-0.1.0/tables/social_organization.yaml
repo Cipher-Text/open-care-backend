@@ -21,6 +21,9 @@ databaseChangeLog:
                   name: bn_name
                   type: varchar(100)
               - column:
+                  name: organization_type
+                  type: varchar(10)
+              - column:
                   name: founded_date
                   type: timestamp
               - column:
@@ -58,19 +61,23 @@ databaseChangeLog:
                     nullable: false
                   name: created_by
                   type: varchar(100)
+                  defaultValue: 'admin'
               - column:
                   constraints:
                     nullable: false
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
               - column:
                   constraints:
                     nullable: false
                   name: updated_by
                   type: varchar(100)
+                  defaultValue: 'admin'
               - column:
                   constraints:
                     nullable: false
                   name: updated_at
                   type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
             tableName: social_organization

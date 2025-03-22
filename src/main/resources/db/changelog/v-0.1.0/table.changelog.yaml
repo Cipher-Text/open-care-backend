@@ -21,9 +21,6 @@ databaseChangeLog:
       file: tables/medical_test.yaml
       relativeToChangelogFile: true
   - include:
-      file: tables/user.yaml
-      relativeToChangelogFile: true
-  - include:
       file: tables/profile.yaml
       relativeToChangelogFile: true
   - include:
@@ -36,12 +33,6 @@ databaseChangeLog:
       file: tables/doctor.yaml
       relativeToChangelogFile: true
   - include:
-      file: tables/user_role.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: tables/role_permission.yaml
-      relativeToChangelogFile: true
-  - include:
       file: tables/doctor_degree.yaml
       relativeToChangelogFile: true
   - include:
@@ -52,12 +43,6 @@ databaseChangeLog:
       relativeToChangelogFile: true
   - include:
       file: tables/hospital_medical_test.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: tables/authentication_token.yaml
-      relativeToChangelogFile: true
-  - include:
-      file: tables/password_reset_token.yaml
       relativeToChangelogFile: true
   - include:
       file: tables/rating.yaml

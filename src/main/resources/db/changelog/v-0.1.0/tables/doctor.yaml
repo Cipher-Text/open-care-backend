@@ -13,7 +13,7 @@ databaseChangeLog:
                   name: id
                   type: bigserial
               - column:
-                  name: user_id
+                  name: profile_id
                   type: int8
               - column:
                   constraints:
@@ -90,14 +90,14 @@ databaseChangeLog:
                   type: timestamp
             tableName: doctor
         - addForeignKeyConstraint:
-            baseColumnNames: user_id
+            baseColumnNames: profile_id
             baseTableName: doctor
-            constraintName: doctor_fk_user
+            constraintName: doctor_fk_profile
             deferrable: false
             initiallyDeferred: false
             onUpdate: CASCADE
             referencedColumnNames: id
-            referencedTableName: user
+            referencedTableName: profile
             validate: true
         - addForeignKeyConstraint:
             baseColumnNames: district_id

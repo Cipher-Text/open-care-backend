@@ -8,6 +8,28 @@
   "resetPasswordAllowed": true,
   "editUsernameAllowed": false,
   "bruteForceProtected": true,
+  "identityProviders": [
+    {
+      "alias": "google",
+      "displayName": "Google",
+      "providerId": "google",
+      "enabled": true,
+      "updateProfileFirstLoginMode": "on",
+      "trustEmail": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "clientId": "811254127841-uvg1vrkt40gcl9gr4p35tk7ldgfehe5h.apps.googleusercontent.com",
+        "clientSecret": "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",
+        "useJwksUrl": "true",
+        "defaultScope": "openid email profile",
+        "hostedDomain": ""
+      }
+    }
+  ],
   "clients": [
     {
       "clientId": "open-care-frontend",
