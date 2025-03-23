@@ -1,0 +1,16 @@
+-- Docker commands for development
+docker build -f Dockerfile.dev -t open-care-backend:dev .
+docker run -d -p 6500:6500 --name open-care-backend-dev open-care-backend:dev
+
+-- Docker commands for qa
+docker build -f Dockerfile.qa -t open-care-backend:qa .
+docker run -d -p 6500:6500 --name open-care-backend-qa open-care-backend:qa
+
+-- Docker commands for production
+docker build -f Dockerfile.prod -t open-care-backend:prod .
+docker run -d -p 6500:6500 --name open-care-backend-prod open-care-backend:prod
+
+chmod +x deploy.sh
+./deploy.sh qa  # Deploys QA environment
+./deploy.sh prod  # Deploys Production environment
+./deploy.sh dev  # Deploys Dev environment

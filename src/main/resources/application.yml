@@ -1,5 +1,5 @@
 server:
-  port: 6500
+  port: ${SERVER_PORT:6500}
 
 spring:
   application:
@@ -26,8 +26,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/opencare
-          jwk-set-uri: http://localhost:8080/realms/opencare/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_SERVER_URL:http://localhost:8080}/realms/${KEYCLOAK_REALM:opencare}
+          jwk-set-uri: ${KEYCLOAK_SERVER_URL:http://localhost:8080}/realms/${KEYCLOAK_REALM:opencare}/protocol/openid-connect/certs
 
   # Connection timeouts
   mvc:
@@ -37,24 +37,24 @@ spring:
 # Keycloak connections
 app:
   keycloak:
-    server-url: http://localhost:8080
-    realm: opencare
-    client-id: open-care-backend
-    client-secret: u3L5IEUSLoBoPzFghcMUvdSJSUedr6Fm
+    server-url: ${KEYCLOAK_SERVER_URL:http://localhost:8080}
+    realm: ${KEYCLOAK_REALM:opencare}
+    client-id: ${KEYCLOAK_CLIENT_ID:open-care-backend}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET:u3L5IEUSLoBoPzFghcMUvdSJSUedr6Fm}
     admin:
-      client-id: admin-cli
-      username: admin
-      password: admin
+      client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
+      username: ${KEYCLOAK_ADMIN_USERNAME:admin}
+      password: ${KEYCLOAK_ADMIN_PASSWORD:admin}
 
   # Rate limiting
   rate-limiting:
-    enabled: true
-    limit: 100
-    refresh-period: 60
+    enabled: ${RATE_LIMITING_ENABLED:true}
+    limit: ${RATE_LIMITING_LIMIT:100}
+    refresh-period: ${RATE_LIMITING_REFRESH_PERIOD:60}
 
   # Application URLs
   frontend:
-    redirect-uri: http://localhost:5173
+    redirect-uri: ${FRONTEND_REDIRECT_URI:http://localhost:5173}
 
 # Security headers
 security:
@@ -81,6 +81,6 @@ springdoc:
 # Logging Configuration
 logging:
   level:
-    root: error
-    sql: debug
-    web: debug
+    root: ${LOGGING_LEVEL_ROOT:error}
+    sql: ${LOGGING_LEVEL_SQL:debug}
+    web: ${LOGGING_LEVEL_WEB:debug}

@@ -1,0 +1,28 @@
+# Stage 1: Build the application with Maven using Java 17
+FROM maven:3.8.5-openjdk-17-slim AS build
+
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml ./
+RUN mvn dependency:go-offline
+
+# Copy the application source code and build the application
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Create the final image using Java 17
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+# Copy the built JAR file from the build stage (use wildcard to avoid version issues)
+COPY --from=build /app/target/open-care-backend-*.jar ./app.jar
+
+EXPOSE 6500
+
+# Allow setting environment-specific Spring profiles (default to 'qa')
+ENV SPRING_PROFILES_ACTIVE=qa
+
+# Run the Spring Boot application with profile-based configuration
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
