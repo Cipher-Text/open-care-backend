@@ -54,7 +54,7 @@ app:
 
   # Application URLs
   frontend:
-    redirect-uri: http://localhost:4200
+    redirect-uri: http://localhost:5173
 
 # Security headers
 security:
