@@ -1,4 +1,4 @@
-name,bn_name,number_of_bed,union_id,upazila_id,district_id,organization_type,hospital_type,url,lat,lon
+name,bn_name,number_of_bed,union_id,upazila_id,district_id,organization_type,hospital_type,website_url,lat,lon
 Dhaka Medical College Hospital,ঢাকা মেডিকেল কলেজ হাসপাতাল,1700,null,null,47,GOVERNMENT,COLLEGE,https://dmch.gov.bd/,23.72611495235723,90.39758820237896
 Chittagong Medical College Hospital,চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল,1313,null,null,8,GOVERNMENT,COLLEGE,https://cmch.gov.bd/,22.359314437003892,91.8308167818369
 MAG Osmani Medical College Hospital,এম.এ.জি ওসমানী মেডিকেল কলেজ হাসপাতাল,900,null,null,36,GOVERNMENT,COLLEGE,http://www.somch.gov.bd/hospital/index/bn/,24.905237236477394,91.85508358788452

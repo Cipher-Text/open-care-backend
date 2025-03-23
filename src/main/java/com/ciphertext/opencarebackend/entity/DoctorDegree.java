@@ -16,7 +16,7 @@ import java.util.Date;
 public class DoctorDegree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "doctor_id")
