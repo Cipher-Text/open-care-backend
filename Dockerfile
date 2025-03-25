@@ -1,5 +1,5 @@
 # Stage 1: Build the application using Maven and Java 17
-FROM maven:3.8.5-openjdk-17-slim AS build
+FROM maven:3.9.9-openjdk-23-slim AS build
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Create the final image using Java 17
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:23-jre-jammy
 
 WORKDIR /app
 

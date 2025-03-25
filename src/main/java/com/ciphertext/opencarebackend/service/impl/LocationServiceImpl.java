@@ -11,8 +11,8 @@ import com.ciphertext.opencarebackend.respository.DivisionRepository;
 import com.ciphertext.opencarebackend.respository.UnionRepository;
 import com.ciphertext.opencarebackend.respository.UpazilaRepository;
 import com.ciphertext.opencarebackend.service.LocationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,23 +25,13 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
     private final DivisionRepository divisionRepository;
     private final DistrictRepository districtRepository;
     private final UpazilaRepository upazilaRepository;
     private final UnionRepository unionRepository;
-
-    @Autowired
-    public LocationServiceImpl(DivisionRepository divisionRepository,
-                               DistrictRepository districtRepository,
-                               UpazilaRepository upazilaRepository,
-                               UnionRepository unionRepository) {
-        this.divisionRepository = divisionRepository;
-        this.districtRepository = districtRepository;
-        this.upazilaRepository = upazilaRepository;
-        this.unionRepository = unionRepository;
-    }
 
     @Override
     public List<Division> getAllDivisions() {
