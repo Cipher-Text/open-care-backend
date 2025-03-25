@@ -16,9 +16,8 @@ public class MedicalSpeciality {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "parent_id")
-    private MedicalSpeciality parentMedicalSpeciality;
+    @Column(name = "parent_id")
+    private Integer parentId;
 
     @Column(name="name", nullable = false)
     private String name;

@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.dto.response;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class MedicalSpecialityResponse {
     private Integer id;
-    private MedicalSpecialityResponse parentMedicalSpeciality;
+    private Integer parentId;
     private String name;
     private String bnName;
     private String description;
