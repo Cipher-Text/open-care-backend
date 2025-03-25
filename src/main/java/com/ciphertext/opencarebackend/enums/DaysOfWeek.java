@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum DaysOfWeek {
     SUNDAY("রবিবার", "sun"),
     MONDAY("সোমবার", "mon"),
@@ -12,7 +15,7 @@ public enum DaysOfWeek {
     private final String banglaName;
     private final String abbreviatedName;
 
-    private DaysOfWeek(String banglaName, String abbreviatedName) {
+    DaysOfWeek(String banglaName, String abbreviatedName) {
         this.banglaName = banglaName;
         this.abbreviatedName = abbreviatedName;
     }

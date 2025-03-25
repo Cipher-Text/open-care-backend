@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum HospitalType {
     GENERAL("সাধারণ", "General"),
     CANCER("ক্যান্সার", "Cancer"),

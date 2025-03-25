@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Gender {
     MALE("পুরুষ"),
     FEMALE("মহিলা"),

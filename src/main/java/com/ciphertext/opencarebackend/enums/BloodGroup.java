@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BloodGroup {
     A_POSITIVE("A+", "এ পজিটিভ"),
     A_NEGATIVE("A-", "এ নেগেটিভ"),

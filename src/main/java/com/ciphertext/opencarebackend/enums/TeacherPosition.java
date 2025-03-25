@@ -1,8 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
-/**
- * @author sadman @Date ৩/৬/২৩
- */
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TeacherPosition {
     PROFESSOR("অধ্যাপক"),
     ASSOCIATE_PROFESSOR("সহযোগী অধ্যাপক"),

@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Country {
     AFGHANISTAN("Afghanistan", "আফগানিস্তান", "افغانستان", "AF"),
     ALBANIA("Albania", "আলবেনিয়া", "Shqipëri", "AL"),
