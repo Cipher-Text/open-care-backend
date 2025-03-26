@@ -15,8 +15,8 @@ public class InstitutionResponse {
     private Integer establishedYear;
     private Integer enroll;
     private DistrictResponse district;
-    private HospitalType hospitalType;
-    private OrganizationType organizationType;
+    private String hospitalType;
+    private String organizationType;
     private String lat;
     private String lon;
     private String websiteUrl;
