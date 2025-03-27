@@ -13,13 +13,9 @@ databaseChangeLog:
                   name: id
                   type: bigserial
               - column:
-                  constraints:
-                    nullable: false
                   name: username
                   type: varchar(100)
               - column:
-                  constraints:
-                    nullable: false
                   name: keycloak_user_id
                   type: varchar(100)
               - column:
@@ -28,6 +24,9 @@ databaseChangeLog:
               - column:
                   name: email
                   type: varchar(100)
+              - column:
+                  name: photo
+                  type: bytea
               - column:
                   name: name
                   type: varchar(100)
@@ -55,23 +54,33 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: varchar(100)
+                  defaultValue: 'admin'
               - column:
                   constraints:
                     nullable: false
                   name: created_at
                   type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
               - column:
                   constraints:
                     nullable: false
                   name: updated_by
                   type: varchar(100)
+                  defaultValue: 'admin'
               - column:
                   constraints:
                     nullable: false
                   name: updated_at
                   type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
             tableName: profile
         - addForeignKeyConstraint:
             baseColumnNames: district_id

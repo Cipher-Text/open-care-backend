@@ -20,27 +20,14 @@ public class Doctor extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name", nullable = false)
-    private String name;
-
-    @Column(name="bn_name")
-    private String bnName;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    private Gender gender;
-
     @Column(name="bmdc_no")
     private String bmdcNo;
 
-    @Column(name="phone")
-    private String phone;
+    @Column(name="degrees")
+    private String degrees;
 
-    @Column(name="email")
-    private String email;
-
-    @Column(name="address")
-    private String address;
+    @Column(name="specializations")
+    private String specializations;
 
     @Column(name="start_date")
     private LocalDate startDate;
@@ -48,13 +35,13 @@ public class Doctor extends Auditable<String> {
     @Column(name="description")
     private String description;
 
-    @Column(name="photo")
-    private byte[] image;
+    @Column(name="is_verified")
+    private Boolean isVerified;
 
     @Column(name = "is_active")
     private Boolean isActive;
 
-//    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 }

@@ -22,6 +22,9 @@ public class Profile extends Auditable<String> {
     @Column(name = "keycloak_user_id", nullable = false)
     private String keycloakUserId;
 
+    @Column(name = "photo")
+    private byte[] photo;
+
     @Column(name = "phone")
     private String phone;
 

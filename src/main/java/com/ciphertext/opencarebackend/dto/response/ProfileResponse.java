@@ -12,11 +12,12 @@ public class ProfileResponse {
     private Long id;
     private String username;
     private String keycloakUserId;
+    private byte[] photo;
     private String phone;
     private String email;
     private String name;
     private String bnName;
-    private Gender gender;
+    private String gender;
     private Date dateOfBirth;
     private String address;
     private DistrictResponse district;
