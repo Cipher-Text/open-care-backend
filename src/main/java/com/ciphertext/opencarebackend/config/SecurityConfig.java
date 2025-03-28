@@ -101,6 +101,7 @@ public class SecurityConfig {
                         "/api/divisions/**",
                         "/api/upazilas/**",
                         "/api/organization-types/**",
+                        "/api/social-organization/**",
                         "/api/hospital-types/**");
     }
 }
