@@ -1,7 +1,6 @@
 package com.ciphertext.opencarebackend.dto.response;
 
 import com.ciphertext.opencarebackend.entity.Doctor;
-import com.ciphertext.opencarebackend.enums.TeacherPosition;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ public class DoctorWorkplaceResponse {
     private Long id;
     private Doctor doctor;
     private String doctorPosition;
-    private TeacherPosition teacherPosition;
+    private String teacherPosition;
     private MedicalSpecialityResponse medicalSpeciality;
     private InstitutionResponse institution;
     private HospitalResponse hospital;
