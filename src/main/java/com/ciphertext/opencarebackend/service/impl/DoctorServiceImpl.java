@@ -2,12 +2,10 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
 import com.ciphertext.opencarebackend.entity.Doctor;
-import com.ciphertext.opencarebackend.enums.OrganizationType;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.respository.DoctorRepository;
 import com.ciphertext.opencarebackend.respository.specification.Filter;
-import com.ciphertext.opencarebackend.respository.specification.InJoin;
 import com.ciphertext.opencarebackend.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.*;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.*;
+import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateIndividualFilter;
+import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateJoinTableFilter;
+import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.JOIN;
+import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.LIKE;
 import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
 import static org.springframework.data.jpa.domain.Specification.where;
 
