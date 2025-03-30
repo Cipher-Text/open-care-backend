@@ -92,16 +92,25 @@ public class SecurityConfig {
                         "/actuator/**"
                 )
                 .requestMatchers(HttpMethod.GET,
+                        "/api/blood-groups/**",
+                        "/api/countries/**",
+                        "/api/days-of-week/**",
+                        "/api/degree-types/**",
+                        "/api/gender/**",
+                        "/api/hospital-types/**",
+                        "/api/organization-types/**",
+                        "/api/social-organization-types/**",
+                        "/api/teacher-positions/**")
+                .requestMatchers(HttpMethod.GET,
+                        "/api/districts/**",
+                        "/api/divisions/**",
+                        "/api/upazilas/**")
+                .requestMatchers(HttpMethod.GET,
                         "/api/specialities/**",
                         "/api/medical-tests/**",
                         "/api/institutions/**",
                         "/api/hospitals/**",
                         "/api/doctors/**",
-                        "/api/districts/**",
-                        "/api/divisions/**",
-                        "/api/upazilas/**",
-                        "/api/organization-types/**",
-                        "/api/social-organization/**",
-                        "/api/hospital-types/**");
+                        "/api/social-organization/**");
     }
 }
