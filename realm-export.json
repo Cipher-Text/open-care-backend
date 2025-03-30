@@ -97,6 +97,10 @@
       "path": "/Moderator"
     },
     {
+      "name": "Hospital Admin",
+      "path": "/Hospital Admin"
+    },
+    {
       "name": "Operator",
       "path": "/Operator"
     },
