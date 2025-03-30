@@ -38,7 +38,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/doctors/").hasAuthority("create-doctor")
+                        .requestMatchers(HttpMethod.PUT, "/api/doctors/").hasAuthority("update-doctor")
+                        .requestMatchers(HttpMethod.DELETE, "/api/doctors/").hasAuthority("delete-doctor")
+
+                        .requestMatchers(HttpMethod.POST, "/api/hospitals/").hasAuthority("create-hospital")
+                        .requestMatchers(HttpMethod.PUT, "/api/hospitals/").hasAuthority("update-hospital")
+                        .requestMatchers(HttpMethod.DELETE, "/api/hospitals/").hasAuthority("delete-hospital")
+
+                        .requestMatchers(HttpMethod.POST, "/api/social-organization/").hasAuthority("create-social-organization")
+                        .requestMatchers(HttpMethod.PUT, "/api/social-organization/").hasAuthority("update-social-organization")
+                        .requestMatchers(HttpMethod.DELETE, "/api/social-organization/").hasAuthority("delete-social-organization")
+
+                        .requestMatchers(HttpMethod.POST, "/api/institutions/").hasAuthority("create-institution")
+                        .requestMatchers(HttpMethod.PUT, "/api/institutions/").hasAuthority("update-institution")
+                        .requestMatchers(HttpMethod.DELETE, "/api/institutions/").hasAuthority("delete-institution")
+
+                        .requestMatchers(HttpMethod.POST, "/api/medical-tests/").hasAuthority("create-master-data")
+                        .requestMatchers(HttpMethod.PUT, "/api/medical-tests/").hasAuthority("update-master-data")
+                        .requestMatchers(HttpMethod.DELETE, "/api/medical-tests/").hasAuthority("delete-master-data")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
