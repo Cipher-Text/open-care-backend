@@ -66,7 +66,15 @@
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": true,
       "authorizationServicesEnabled": true,
-      "attributes": {}
+      "attributes": {},
+      "protocolMappers": [
+        { "name": "phone", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "phone", "user.attribute": "phone", "id.token.claim": "true", "access.token.claim": "true" }},
+        { "name": "gender", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "gender", "user.attribute": "gender", "id.token.claim": "true", "access.token.claim": "true" }},
+        { "name": "dob", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "dob", "user.attribute": "dob", "id.token.claim": "true", "access.token.claim": "true" }},
+        { "name": "district_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "district_id", "user.attribute": "district_id", "id.token.claim": "true", "access.token.claim": "true" }},
+        { "name": "upazila_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "upazila_id", "user.attribute": "upazila_id", "id.token.claim": "true", "access.token.claim": "true" }},
+        { "name": "union_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "union_id", "user.attribute": "union_id", "id.token.claim": "true", "access.token.claim": "true" }}
+      ]
     }
   ],
   "groups": [
@@ -210,7 +218,15 @@
       ],
       "groups": [
         "/Super Admin"
-      ]
+      ],
+      "attributes": {
+        "phone": "018xxxxxxxx",
+        "gender": "Male",
+        "dob": "1990-01-01",
+        "district_id": "10",
+        "upazila_id": "20",
+        "union_id": "30"
+      }
     }
   ]
 }
