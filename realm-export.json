@@ -35,7 +35,6 @@
       "clientId": "open-care-frontend",
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "frontend-client-secret",
       "redirectUris": [
         "http://localhost:3000/*"
       ],
@@ -68,12 +67,90 @@
       "authorizationServicesEnabled": true,
       "attributes": {},
       "protocolMappers": [
-        { "name": "phone", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "phone", "user.attribute": "phone", "id.token.claim": "true", "access.token.claim": "true" }},
-        { "name": "gender", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "gender", "user.attribute": "gender", "id.token.claim": "true", "access.token.claim": "true" }},
-        { "name": "dob", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "dob", "user.attribute": "dob", "id.token.claim": "true", "access.token.claim": "true" }},
-        { "name": "district_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "district_id", "user.attribute": "district_id", "id.token.claim": "true", "access.token.claim": "true" }},
-        { "name": "upazila_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "upazila_id", "user.attribute": "upazila_id", "id.token.claim": "true", "access.token.claim": "true" }},
-        { "name": "union_id", "protocol": "openid-connect", "protocolMapper": "oidc-usermodel-attribute-mapper", "config": { "claim.name": "union_id", "user.attribute": "union_id", "id.token.claim": "true", "access.token.claim": "true" }}
+        {
+          "name": "user-attributes",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "user_attributes",
+            "user.attribute": "*",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "phone",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "phone",
+            "user.attribute": "phone",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "gender",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "gender",
+            "user.attribute": "gender",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "dob",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "dob",
+            "user.attribute": "dob",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "district_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "district_id",
+            "user.attribute": "district_id",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "upazila_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "upazila_id",
+            "user.attribute": "upazila_id",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "union_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "claim.name": "union_id",
+            "user.attribute": "union_id",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
       ]
     }
   ],
@@ -212,7 +289,7 @@
         "create-hospital",
         "update-hospital",
         "delete-hospital",
-        "crate-social-organization",
+        "create-social-organization",
         "update-social-organization",
         "delete-social-organization"
       ],
