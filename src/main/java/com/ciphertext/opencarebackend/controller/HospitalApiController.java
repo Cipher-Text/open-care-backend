@@ -35,7 +35,7 @@ public class HospitalApiController {
             @RequestParam(required = false) String bnName,
             @RequestParam(required = false) Integer numberOfBed,
             @RequestParam(required = false) List<Integer> districtIds,
-            @RequestParam(required = false) Integer upazillaId,
+            @RequestParam(required = false) Integer upazilaId,
             @RequestParam(required = false) Integer unionId,
             @RequestParam(required = false) List<String> hospitalTypes,
             @RequestParam(required = false) String organizationType,
@@ -48,7 +48,7 @@ public class HospitalApiController {
                 .bnName(bnName)
                 .numberOfBed(numberOfBed)
                 .districtIds(districtIds)
-                .upazilaId(upazillaId)
+                .upazilaId(upazilaId)
                 .unionId(unionId)
                 .hospitalTypes(hospitalTypes)
                 .organizationType(organizationType)
