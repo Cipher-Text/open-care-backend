@@ -1,0 +1,2 @@
+id,user_type,username,keycloak_user_id,name,bn_name,gender,user_type,phone,email,district_id
+1241,SUPER_ADMIN,superadmin,f8d100c4-0225-4643-9b54-dff4aabbf21a,Cipher Text,Cipher Text,MALE,SUPER_ADMIN,018xxxxxxxx,superadmin@example.com,20

@@ -13,6 +13,9 @@ databaseChangeLog:
                   name: id
                   type: bigserial
               - column:
+                  name: user_type
+                  type: varchar(100)
+              - column:
                   name: username
                   type: varchar(100)
               - column:

@@ -1,6 +1,7 @@
 package com.ciphertext.opencarebackend.entity;
 
 import com.ciphertext.opencarebackend.enums.Gender;
+import com.ciphertext.opencarebackend.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,10 @@ public class Profile extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @Column(name = "username", nullable = false)
     private String username;

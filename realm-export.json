@@ -264,6 +264,7 @@
   },
   "users": [
     {
+      "id": "f8d100c4-0225-4643-9b54-dff4aabbf21a",
       "username": "superadmin",
       "enabled": true,
       "email": "superadmin@example.com",
@@ -298,7 +299,7 @@
       ],
       "attributes": {
         "phone": "018xxxxxxxx",
-        "gender": "Male",
+        "gender": "MALE",
         "dob": "1990-01-01",
         "district_id": "10",
         "upazila_id": "20",

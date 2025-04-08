@@ -49,7 +49,12 @@ databaseChangeLog:
             tableName: hospital
             quotchar: '"'
         - loadData:
-            file: seeds/profile.csv
+            file: seeds/doctor_profile.csv
+            relativeToChangelogFile: true
+            tableName: profile
+            quotchar: '"'
+        - loadData:
+            file: seeds/user_profile.csv
             relativeToChangelogFile: true
             tableName: profile
             quotchar: '"'
