@@ -4,8 +4,11 @@ import com.ciphertext.opencarebackend.dto.UserProfileUpdate;
 import com.ciphertext.opencarebackend.dto.response.ProfileResponse;
 import com.ciphertext.opencarebackend.entity.Profile;
 import com.ciphertext.opencarebackend.mapper.ProfileMapper;
+import com.ciphertext.opencarebackend.service.KeycloakAdminService;
 import com.ciphertext.opencarebackend.service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,10 +22,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserApiController {
 
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
+    private final KeycloakAdminService keycloakAdminService;
 
 
     @GetMapping("/profile")
@@ -32,6 +37,10 @@ public class UserApiController {
 
         Profile profile = profileService.getProfileByKeycloakUserId(jwt.getSubject());
         ProfileResponse profileResponse = profileMapper.toResponse(profile);
+
+        UserRepresentation userRepresentation = keycloakAdminService.getUserById(jwt.getSubject());
+
+        log.info("User representation: {}", userRepresentation);
 
         return ResponseEntity.ok(profileResponse);
     }

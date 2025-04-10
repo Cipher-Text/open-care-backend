@@ -17,27 +17,34 @@ public class KeycloakAdminService {
 
     private final String serverUrl;
     private final String realm;
-    private final String clientId;
-    private final String clientSecret;
+    private final String adminRealm;
+    private final String adminClientId;
+    private final String adminUsername;
+    private final String adminPassword;
+
 
     public KeycloakAdminService(
             @Value("${app.keycloak.server-url}") String serverUrl,
             @Value("${app.keycloak.realm}") String realm,
-            @Value("${app.keycloak.client-id}") String clientId,
-            @Value("${app.keycloak.client-secret}") String clientSecret) {
+            @Value("${app.keycloak.admin.realm}") String adminRealm,
+            @Value("${app.keycloak.admin.client-id}") String adminClientId,
+            @Value("${app.keycloak.admin.username}") String adminUsername,
+            @Value("${app.keycloak.admin.password}") String adminPassword) {
         this.serverUrl = serverUrl;
         this.realm = realm;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
+        this.adminRealm = adminRealm;
+        this.adminClientId = adminClientId;
+        this.adminUsername = adminUsername;
+        this.adminPassword = adminPassword;
     }
 
     private Keycloak getKeycloakInstance() {
         return KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
-                .realm("master")  // The realm to log in to (always 'master' for admin operations)
-                .clientId("admin-cli")
-                .username("admin")  // Admin username
-                .password("admin-password")  // Admin password
+                .realm(adminRealm)  // The realm to log in to (always 'master' for admin operations)
+                .clientId(adminClientId)
+                .username(adminUsername)  // Admin username
+                .password(adminPassword)  // Admin password
                 .build();
     }
 

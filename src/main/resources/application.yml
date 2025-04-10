@@ -42,6 +42,7 @@ app:
     client-id: ${KEYCLOAK_CLIENT_ID:open-care-backend}
     client-secret: ${KEYCLOAK_CLIENT_SECRET:u3L5IEUSLoBoPzFghcMUvdSJSUedr6Fm}
     admin:
+      realm: ${KEYCLOAK_ADMIN_REALM:master}
       client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
       username: ${KEYCLOAK_ADMIN_USERNAME:admin}
       password: ${KEYCLOAK_ADMIN_PASSWORD:admin}
