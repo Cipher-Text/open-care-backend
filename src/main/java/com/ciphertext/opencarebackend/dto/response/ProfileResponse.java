@@ -1,6 +1,7 @@
 package com.ciphertext.opencarebackend.dto.response;
 
 import com.ciphertext.opencarebackend.enums.Gender;
+import com.ciphertext.opencarebackend.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 public class ProfileResponse {
     private Long id;
     private String username;
+    private String userType;
     private String keycloakUserId;
     private byte[] photo;
     private String phone;

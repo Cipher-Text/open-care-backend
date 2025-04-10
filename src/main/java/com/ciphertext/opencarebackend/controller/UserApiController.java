@@ -1,12 +1,16 @@
 package com.ciphertext.opencarebackend.controller;
 
-import com.ciphertext.opencarebackend.dto.UserProfile;
 import com.ciphertext.opencarebackend.dto.UserProfileUpdate;
+import com.ciphertext.opencarebackend.dto.response.ProfileResponse;
+import com.ciphertext.opencarebackend.entity.Profile;
+import com.ciphertext.opencarebackend.mapper.ProfileMapper;
+import com.ciphertext.opencarebackend.service.ProfileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,21 +18,22 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserApiController {
 
+    private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
+
+
     @GetMapping("/profile")
-    public ResponseEntity<UserProfile> getUserProfile(Authentication authentication) {
+    public ResponseEntity<ProfileResponse> getUserProfile(Authentication authentication) {
         // Extract user info from the JWT token
         Jwt jwt = (Jwt) authentication.getPrincipal();
 
-        UserProfile profile = new UserProfile();
-        profile.setId(jwt.getSubject());
-        profile.setUsername((String) jwt.getClaims().get("preferred_username"));
-        profile.setEmail((String) jwt.getClaims().get("email"));
-        profile.setFirstName((String) jwt.getClaims().get("given_name"));
-        profile.setLastName((String) jwt.getClaims().get("family_name"));
+        Profile profile = profileService.getProfileByKeycloakUserId(jwt.getSubject());
+        ProfileResponse profileResponse = profileMapper.toResponse(profile);
 
-        return ResponseEntity.ok(profile);
+        return ResponseEntity.ok(profileResponse);
     }
 
     @GetMapping("/roles")
