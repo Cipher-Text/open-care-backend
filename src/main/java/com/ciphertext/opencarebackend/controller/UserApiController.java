@@ -1,8 +1,10 @@
 package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.UserProfileUpdate;
+import com.ciphertext.opencarebackend.dto.request.ProfileRequest;
 import com.ciphertext.opencarebackend.dto.response.ProfileResponse;
 import com.ciphertext.opencarebackend.entity.Profile;
+import com.ciphertext.opencarebackend.enums.Gender;
 import com.ciphertext.opencarebackend.mapper.ProfileMapper;
 import com.ciphertext.opencarebackend.service.KeycloakAdminService;
 import com.ciphertext.opencarebackend.service.ProfileService;
@@ -65,10 +67,26 @@ public class UserApiController {
 
     @PutMapping("/profile")
     public ResponseEntity<String> updateUserProfile(
-            @RequestBody UserProfileUpdate profileUpdate,
+            @RequestBody ProfileRequest profileRequest,
             Authentication authentication) {
-        // Implementation for updating user profile
-        // You would use KeycloakAdminClient to update user details
+        // Extract user info from the JWT token
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        String keycloakUserId = jwt.getSubject();
+        log.info("Updating profile for Keycloak user ID: {}", keycloakUserId);
+        UserRepresentation userRepresentation = keycloakAdminService.getUserById(keycloakUserId);
+        userRepresentation.setUsername(profileRequest.getUsername());
+        userRepresentation.setFirstName(profileRequest.getFirstName());
+        userRepresentation.setLastName(profileRequest.getLastName());
+        userRepresentation.setEmail(profileRequest.getEmail());
+        keycloakAdminService.updateUser(keycloakUserId, userRepresentation);
+        Profile profile = profileService.getProfileByKeycloakUserId(keycloakUserId);
+        profile.setUsername(profileRequest.getUsername());
+        profile.setName(profileRequest.getFirstName() + " " + profileRequest.getLastName());
+        profile.setEmail(profileRequest.getEmail());
+        profile.setPhone(profileRequest.getPhone());
+        profile.setAddress(profileRequest.getAddress());
+        profile.setGender(Gender.valueOf(profileRequest.getGender()));
+        profile.setDateOfBirth(profileRequest.getDateOfBirth());
         return ResponseEntity.ok("Profile updated successfully");
     }
 }

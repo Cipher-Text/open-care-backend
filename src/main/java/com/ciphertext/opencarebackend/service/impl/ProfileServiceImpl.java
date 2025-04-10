@@ -26,4 +26,27 @@ public class ProfileServiceImpl implements ProfileService {
                     return new ResourceNotFoundException("Profile not found for Keycloak user ID: " + keycloakUserId);
                 });
     }
+
+    @Override
+    public Profile updateProfile(String keycloakUserId, Profile profile) {
+        log.info("Updating profile for Keycloak user ID: {}", keycloakUserId);
+        Profile existingProfile = getProfileByKeycloakUserId(keycloakUserId);
+        existingProfile.setName(profile.getName());
+        existingProfile.setEmail(profile.getEmail());
+        existingProfile.setPhone(profile.getPhone());
+        existingProfile.setDateOfBirth(profile.getDateOfBirth());
+        existingProfile.setAddress(profile.getAddress());
+        existingProfile.setDistrict(profile.getDistrict());
+        existingProfile.setUpazila(profile.getUpazila());
+        existingProfile.setUnion(profile.getUnion());
+        existingProfile.setGender(profile.getGender());
+        existingProfile.setDateOfBirth(profile.getDateOfBirth());
+        return profileRepository.save(existingProfile);
+    }
+
+    @Override
+    public Profile createProfile(Profile profile) {
+        log.info("Creating new profile for Keycloak user ID: {}", profile.getKeycloakUserId());
+        return profileRepository.save(profile);
+    }
 }

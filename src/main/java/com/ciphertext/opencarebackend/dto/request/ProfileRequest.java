@@ -1,8 +1,5 @@
 package com.ciphertext.opencarebackend.dto.request;
 
-import com.ciphertext.opencarebackend.dto.response.DistrictResponse;
-import com.ciphertext.opencarebackend.dto.response.UnionResponse;
-import com.ciphertext.opencarebackend.dto.response.UpazilaResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +9,7 @@ import java.util.Date;
 @Setter
 public class ProfileRequest {
     private String username;
-    private String keycloakUserId;
+    private String userType;
     private byte[] photo;
     private String phone;
     private String email;
