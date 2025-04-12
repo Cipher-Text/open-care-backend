@@ -20,6 +20,9 @@ public interface ProfileMapper {
     @Mapping(source = "userType", target = "userType", qualifiedByName = "userTypeStringToEnum")
     Profile toEntity(ProfileRequest request);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void partialUpdate(ProfileRequest request, @MappingTarget Profile profile);
+
     @Named("genderEnumToString")
     default String genderEnumToString(Gender gender) {
         return gender != null ? gender.name() : null;

@@ -78,15 +78,16 @@ public class UserApiController {
         userRepresentation.setFirstName(profileRequest.getFirstName());
         userRepresentation.setLastName(profileRequest.getLastName());
         userRepresentation.setEmail(profileRequest.getEmail());
+
+        Map<String, List<String>> attributes = userRepresentation.getAttributes();
+        log.info("User attributes before update: {}", attributes);
+
         keycloakAdminService.updateUser(keycloakUserId, userRepresentation);
+
+        // Update the profile in the database
         Profile profile = profileService.getProfileByKeycloakUserId(keycloakUserId);
-        profile.setUsername(profileRequest.getUsername());
-        profile.setName(profileRequest.getFirstName() + " " + profileRequest.getLastName());
-        profile.setEmail(profileRequest.getEmail());
-        profile.setPhone(profileRequest.getPhone());
-        profile.setAddress(profileRequest.getAddress());
-        profile.setGender(Gender.valueOf(profileRequest.getGender()));
-        profile.setDateOfBirth(profileRequest.getDateOfBirth());
+        profileMapper.partialUpdate(profileRequest, profile);
+        profileService.updateProfile(keycloakUserId, profile);
         return ResponseEntity.ok("Profile updated successfully");
     }
 }
