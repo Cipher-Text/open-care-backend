@@ -64,6 +64,16 @@ databaseChangeLog:
             tableName: doctor
             quotchar: '"'
         - loadData:
+            file: seeds/doctor_degree.csv
+            relativeToChangelogFile: true
+            tableName: doctor_degree
+            quotchar: '"'
+        - loadData:
+            file: seeds/doctor_workplace.csv
+            relativeToChangelogFile: true
+            tableName: doctor_workplace
+            quotchar: '"'
+        - loadData:
             file: seeds/rating_options.csv
             relativeToChangelogFile: true
             tableName: rating_options

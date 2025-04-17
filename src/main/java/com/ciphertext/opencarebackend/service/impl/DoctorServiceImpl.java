@@ -23,7 +23,7 @@ import static com.ciphertext.opencarebackend.respository.specification.QueryFilt
 import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateJoinTableFilter;
 import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.JOIN;
 import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.LIKE;
-import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
+import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.*;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
@@ -51,6 +51,15 @@ public class DoctorServiceImpl implements DoctorService {
             for (Filter input : filterList) {
                 specification = specification.and(createSpecification(input));
             }
+        }
+        if (doctorFilter.getDegreeId() != null) {
+            specification = specification.and(hasDegree(doctorFilter.getDegreeId()));
+        }
+        if (doctorFilter.getHospitalId() != null) {
+            specification = specification.and(worksAtHospital(doctorFilter.getHospitalId()));
+        }
+        if (doctorFilter.getSpecialityId() != null) {
+            specification = specification.and(hasSpeciality(doctorFilter.getSpecialityId()));
         }
         log.info("Fetching doctors with filters: {}", doctorFilter);
         return doctorRepository.findAll(specification, pagingSort);
@@ -124,15 +133,6 @@ public class DoctorServiceImpl implements DoctorService {
 
         if (doctorFilter.getUnionId() != null)
             filters.add(generateJoinTableFilter("id", "profile.union", JOIN, doctorFilter.getUnionId()));
-
-        if (doctorFilter.getDegreeId() != null)
-            filters.add(generateJoinTableFilter("id", "doctorDegrees.degree", JOIN, doctorFilter.getDegreeId()));
-
-        if (doctorFilter.getHospitalId() != null)
-            filters.add(generateJoinTableFilter("id", "doctorWorkplaces.hospital", JOIN, doctorFilter.getHospitalId()));
-
-        if(doctorFilter.getSpecialityId() != null)
-            filters.add(generateJoinTableFilter("id", "doctorSpecialities.speciality", JOIN, doctorFilter.getSpecialityId()));
 
         return filters;
     }

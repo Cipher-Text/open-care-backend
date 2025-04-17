@@ -1,6 +1,8 @@
 package com.ciphertext.opencarebackend.respository.specification;
 
+import com.ciphertext.opencarebackend.entity.*;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -94,6 +96,30 @@ public class SpecificationBuilder {
                 return equal[0];
             };
 
+        };
+    }
+
+    public static Specification<Doctor> hasDegree(Integer degreeId) {
+        return (root, query, cb) -> {
+            Join<Doctor, DoctorDegree> degreeJoin = root.join("doctorDegrees", JoinType.INNER);
+            Join<DoctorDegree, Degree> degree = degreeJoin.join("degree", JoinType.INNER);
+            return cb.equal(degree.get("id"), degreeId);
+        };
+    }
+
+    public static Specification<Doctor> worksAtHospital(Integer hospitalId) {
+        return (root, query, cb) -> {
+            Join<Doctor, DoctorWorkplace> workplaceJoin = root.join("doctorWorkplaces", JoinType.INNER);
+            Join<DoctorWorkplace, Hospital> hospital = workplaceJoin.join("hospital", JoinType.INNER);
+            return cb.equal(hospital.get("id"), hospitalId);
+        };
+    }
+
+    public static Specification<Doctor> hasSpeciality(Integer specialityId) {
+        return (root, query, cb) -> {
+            Join<Doctor, DoctorDegree> degreeJoin = root.join("doctorDegrees", JoinType.INNER);
+            Join<DoctorDegree, MedicalSpeciality> speciality = degreeJoin.join("medicalSpeciality", JoinType.INNER);
+            return cb.equal(speciality.get("id"), specialityId);
         };
     }
 }
