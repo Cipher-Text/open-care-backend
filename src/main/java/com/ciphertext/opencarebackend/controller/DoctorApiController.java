@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.controller;
 
+import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
 import com.ciphertext.opencarebackend.dto.request.DoctorRequest;
 import com.ciphertext.opencarebackend.dto.response.DoctorResponse;
 import com.ciphertext.opencarebackend.entity.Doctor;
@@ -8,10 +9,16 @@ import com.ciphertext.opencarebackend.mapper.DoctorMapper;
 import com.ciphertext.opencarebackend.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,7 +29,46 @@ public class DoctorApiController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
 
-    @GetMapping
+    @GetMapping("")
+    public ResponseEntity<Map<String, Object>> getAllDoctorsPage(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String bnName,
+            @RequestParam(required = false) String bmdcNo,
+            @RequestParam(required = false) Integer hospitalId,
+            @RequestParam(required = false) Integer degreeId,
+            @RequestParam(required = false) Integer specialityId,
+            @RequestParam(required = false) Integer districtId,
+            @RequestParam(required = false) Integer upazilaId,
+            @RequestParam(required = false) Integer unionId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pagingSort = PageRequest.of(page, size);
+        DoctorFilter doctorFilter = DoctorFilter.builder()
+                .name(name)
+                .bnName(bnName)
+                .bmdcNo(bmdcNo)
+                .hospitalId(hospitalId)
+                .degreeId(degreeId)
+                .specialityId(specialityId)
+                .districtId(districtId)
+                .upazilaId(upazilaId)
+                .unionId(unionId)
+                .build();
+        Page<Doctor> pageDoctors = doctorService.getPaginatedDataWithFilters(doctorFilter, pagingSort);
+
+        Page<DoctorResponse> pageDoctorResponses = pageDoctors.map(doctorMapper::toResponse);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("doctors", pageDoctorResponses.getContent());
+        response.put("currentPage", pageDoctors.getNumber());
+        response.put("totalItems", pageDoctors.getTotalElements());
+        response.put("totalPages", pageDoctors.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<DoctorResponse>> getAllDoctors() {
         log.info("Retrieving all doctors");
 
