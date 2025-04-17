@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sadman
@@ -44,4 +46,10 @@ public class Doctor extends Auditable<String> {
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    @OneToMany(mappedBy = "doctor")
+    private Set<DoctorDegree> doctorDegrees = new HashSet<>();
+
+    @OneToMany(mappedBy = "doctor")
+    private Set<DoctorWorkplace> doctorWorkplaces = new HashSet<>();
 }

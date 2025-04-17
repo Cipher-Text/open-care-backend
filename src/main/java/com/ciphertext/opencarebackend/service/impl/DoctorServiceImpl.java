@@ -103,7 +103,7 @@ public class DoctorServiceImpl implements DoctorService {
         } else return ResponseEntity.ok().body("Doctor is Deleted Successfully");
     }
 
-    public List<Filter> generateQueryFilters(DoctorFilter doctorFilter) {
+    private List<Filter> generateQueryFilters(DoctorFilter doctorFilter) {
 
         List<Filter> filters = new ArrayList<>();
 
@@ -125,7 +125,14 @@ public class DoctorServiceImpl implements DoctorService {
         if (doctorFilter.getUnionId() != null)
             filters.add(generateJoinTableFilter("id", "profile.union", JOIN, doctorFilter.getUnionId()));
 
+        if (doctorFilter.getDegreeId() != null)
+            filters.add(generateJoinTableFilter("id", "doctorDegrees.degree", JOIN, doctorFilter.getDegreeId()));
 
+        if (doctorFilter.getHospitalId() != null)
+            filters.add(generateJoinTableFilter("id", "doctorWorkplaces.hospital", JOIN, doctorFilter.getHospitalId()));
+
+        if(doctorFilter.getSpecialityId() != null)
+            filters.add(generateJoinTableFilter("id", "doctorSpecialities.speciality", JOIN, doctorFilter.getSpecialityId()));
 
         return filters;
     }
