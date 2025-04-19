@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+     minio:
+          image: minio/minio:latest
+          container_name: minio
+          restart: always
+          ports:
+               - "9000:9000"   # S3 API
+               - "9001:9001"   # Web UI
+          environment:
+               MINIO_ROOT_USER: minioadmin       # Change for production
+               MINIO_ROOT_PASSWORD: minioadmin123  # Change for production
+          volumes:
+               - minio_data:/data
+          command: server /data --console-address ":9001"
+
+volumes:
+     minio_data:
