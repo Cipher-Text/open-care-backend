@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/files/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/doctors/").hasAuthority("create-doctor")
                         .requestMatchers(HttpMethod.PUT, "/api/doctors/").hasAuthority("update-doctor")
