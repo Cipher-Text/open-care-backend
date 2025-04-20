@@ -1,9 +1,15 @@
 package com.ciphertext.opencarebackend.dto.response;
 
+import com.ciphertext.opencarebackend.entity.DoctorDegree;
+import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,4 +23,6 @@ public class DoctorResponse {
     private Boolean isActive;
     private Boolean isDeleted;
     private ProfileResponse profile;
+    private List<DoctorDegreeResponse> doctorDegrees;
+    private List<DoctorWorkplaceResponse> doctorWorkplaces;
 }

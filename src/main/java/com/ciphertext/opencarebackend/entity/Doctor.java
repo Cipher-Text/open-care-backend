@@ -47,9 +47,4 @@ public class Doctor extends Auditable<String> {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    @OneToMany(mappedBy = "doctor")
-    private Set<DoctorDegree> doctorDegrees = new HashSet<>();
-
-    @OneToMany(mappedBy = "doctor")
-    private Set<DoctorWorkplace> doctorWorkplaces = new HashSet<>();
 }

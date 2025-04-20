@@ -2,11 +2,18 @@ package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
 import com.ciphertext.opencarebackend.dto.request.DoctorRequest;
+import com.ciphertext.opencarebackend.dto.response.DoctorDegreeResponse;
 import com.ciphertext.opencarebackend.dto.response.DoctorResponse;
+import com.ciphertext.opencarebackend.dto.response.DoctorWorkplaceResponse;
 import com.ciphertext.opencarebackend.entity.Doctor;
+import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
+import com.ciphertext.opencarebackend.mapper.DoctorDegreeMapper;
 import com.ciphertext.opencarebackend.mapper.DoctorMapper;
+import com.ciphertext.opencarebackend.mapper.DoctorWorkplaceMapper;
+import com.ciphertext.opencarebackend.service.DoctorDegreeService;
 import com.ciphertext.opencarebackend.service.DoctorService;
+import com.ciphertext.opencarebackend.service.DoctorWorkplaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +35,10 @@ import java.util.stream.Collectors;
 public class DoctorApiController {
     private final DoctorService doctorService;
     private final DoctorMapper doctorMapper;
+    private final DoctorWorkplaceService doctorWorkplaceService;
+    private final DoctorWorkplaceMapper doctorWorkplaceMapper;
+    private final DoctorDegreeService doctorDegreeService;
+    private final DoctorDegreeMapper doctorDegreeMapper;
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getAllDoctorsPage(
@@ -87,6 +98,15 @@ public class DoctorApiController {
 
         Doctor doctor = doctorService.getDoctorById(id);
         DoctorResponse doctorResponse = doctorMapper.toResponse(doctor);
+
+        List<DoctorDegreeResponse> doctorDegreeResponses =
+                doctorDegreeService.getDoctorDegreesByDoctorId(doctor.getId())
+                        .stream().map(doctorDegreeMapper::toResponse).collect(Collectors.toList());
+        List<DoctorWorkplaceResponse> doctorWorkplaceResponses =
+                doctorWorkplaceService.getDoctorWorkplacesByDoctorId(doctor.getId())
+                .stream().map(doctorWorkplaceMapper::toResponse).collect(Collectors.toList());
+        doctorResponse.setDoctorDegrees(doctorDegreeResponses);
+        doctorResponse.setDoctorWorkplaces(doctorWorkplaceResponses);
 
         return ResponseEntity.ok(doctorResponse);
     }
