@@ -2,11 +2,15 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
 import com.ciphertext.opencarebackend.entity.Doctor;
+import com.ciphertext.opencarebackend.entity.DoctorDegree;
+import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.respository.DoctorRepository;
 import com.ciphertext.opencarebackend.respository.specification.Filter;
 import com.ciphertext.opencarebackend.service.DoctorService;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -59,7 +63,11 @@ public class DoctorServiceImpl implements DoctorService {
             specification = specification.and(worksAtHospital(doctorFilter.getHospitalId()));
         }
         if (doctorFilter.getSpecialityId() != null) {
-            specification = specification.and(hasSpeciality(doctorFilter.getSpecialityId()));
+            Specification<Doctor> specialitySpec =
+                    hasDegreeSpeciality(doctorFilter.getSpecialityId())
+                            .or(hasHospitalSpeciality(doctorFilter.getSpecialityId()));
+
+            specification = specification.and(specialitySpec);
         }
         log.info("Fetching doctors with filters: {}", doctorFilter);
         return doctorRepository.findAll(specification, pagingSort);
@@ -110,6 +118,76 @@ public class DoctorServiceImpl implements DoctorService {
         if (doctorRepository.findById(doctorId).isPresent()) {
             return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
         } else return ResponseEntity.ok().body("Doctor is Deleted Successfully");
+    }
+
+    public static Specification<Doctor> hasDegree(Integer degreeId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorDegree
+            Root<DoctorDegree> degreeRoot = query.from(DoctorDegree.class);
+            Predicate doctorJoin = cb.equal(degreeRoot.get("doctor").get("id"), root.get("id"));
+            Predicate degreeMatch = cb.equal(degreeRoot.get("degree").get("id"), degreeId);
+
+            return cb.and(doctorJoin, degreeMatch);
+        };
+    }
+
+    public static Specification<Doctor> hasDegreeSpeciality(Integer specialityId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorDegree
+            Root<DoctorDegree> degreeRoot = query.from(DoctorDegree.class);
+            Predicate doctorJoin = cb.equal(degreeRoot.get("doctor").get("id"), root.get("id"));
+            Predicate specialityMatch = cb.equal(degreeRoot.get("medicalSpeciality").get("id"), specialityId);
+
+            return cb.and(doctorJoin, specialityMatch);
+        };
+    }
+
+    public static Specification<Doctor> hasHospitalSpeciality(Integer specialityId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorWorkplace
+            Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
+            Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
+            Predicate specialityMatch = cb.equal(workplaceRoot.get("medicalSpeciality").get("id"), specialityId);
+
+            return cb.and(doctorJoin, specialityMatch);
+        };
+    }
+
+    public static Specification<Doctor> worksAtHospital(Integer hospitalId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorWorkplace
+            Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
+            Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
+            Predicate hospitalMatch = cb.equal(workplaceRoot.get("hospital").get("id"), hospitalId);
+
+            return cb.and(doctorJoin, hospitalMatch);
+        };
+    }
+
+    public static Specification<Doctor> worksAtInstitution(Integer institutionId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorWorkplace
+            Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
+            Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
+            Predicate institutionMatch = cb.equal(workplaceRoot.get("institution").get("id"), institutionId);
+
+            return cb.and(doctorJoin, institutionMatch);
+        };
     }
 
     private List<Filter> generateQueryFilters(DoctorFilter doctorFilter) {
