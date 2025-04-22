@@ -98,6 +98,10 @@ public class HospitalMedicalTestServiceImpl implements HospitalMedicalTestServic
 
         List<Filter> filters = new ArrayList<>();
 
+        if(medicalTestFilter.getName() != null && !medicalTestFilter.getName().isEmpty()) {
+            filters.add(generateIndividualFilter("name", LIKE, medicalTestFilter.getName()));
+        }
+
         if(medicalTestFilter.getHospitalId() != null) {
             filters.add(generateJoinTableFilter("id", "hospital", JOIN, medicalTestFilter.getHospitalId()));
         }

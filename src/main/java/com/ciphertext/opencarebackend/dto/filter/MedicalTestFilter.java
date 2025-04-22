@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Builder
 @Getter
 public class MedicalTestFilter {
+    private String name;
     private Integer hospitalId;
     private Integer medicalTestId;
     private Integer parentMedicalTestId;

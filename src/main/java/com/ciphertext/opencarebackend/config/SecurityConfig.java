@@ -59,6 +59,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/medical-tests/").hasAuthority("create-master-data")
                         .requestMatchers(HttpMethod.PUT, "/api/medical-tests/").hasAuthority("update-master-data")
                         .requestMatchers(HttpMethod.DELETE, "/api/medical-tests/").hasAuthority("delete-master-data")
+
+                        .requestMatchers(HttpMethod.POST, "/api/hospital-medical-tests/").hasAuthority("create-hospital-medical-test")
+                        .requestMatchers(HttpMethod.PUT, "/api/hospital-medical-tests/").hasAuthority("update-hospital-medical-test")
+                        .requestMatchers(HttpMethod.DELETE, "/api/hospital-medical-tests/").hasAuthority("delete-hospital-medical-test")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

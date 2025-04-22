@@ -34,6 +34,7 @@ public class HospitalMedicalTestApiController {
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getMedicalTestsByHospitalId(
+            @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer hospitalId,
             @RequestParam(required = false) Integer medicalTestId,
             @RequestParam(required = false) Integer parentMedicalTestId,
@@ -44,6 +45,7 @@ public class HospitalMedicalTestApiController {
 
         Pageable pagingSort = PageRequest.of(page, size);
         MedicalTestFilter medicalTestFilter = MedicalTestFilter.builder()
+                .name(name)
                 .hospitalId(hospitalId)
                 .medicalTestId(medicalTestId)
                 .parentMedicalTestId(parentMedicalTestId)
