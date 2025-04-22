@@ -15,4 +15,6 @@ public class DoctorFilter {
     private Integer specialityId;
     private Integer degreeId;
     private Integer hospitalId;
+    private Integer workInstitutionId;
+    private Integer studyInstitutionId;
 }

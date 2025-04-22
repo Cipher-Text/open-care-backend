@@ -137,6 +137,7 @@ public class SecurityConfig {
                         "/api/institutions/**",
                         "/api/hospitals/**",
                         "/api/doctors/**",
+                        "/api/hospital-medical-tests/**",
                         "/api/social-organization/**");
     }
 }

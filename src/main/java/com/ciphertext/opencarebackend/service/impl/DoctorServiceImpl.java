@@ -62,6 +62,12 @@ public class DoctorServiceImpl implements DoctorService {
         if (doctorFilter.getHospitalId() != null) {
             specification = specification.and(worksAtHospital(doctorFilter.getHospitalId()));
         }
+        if( doctorFilter.getWorkInstitutionId() != null) {
+            specification = specification.and(worksAtInstitution(doctorFilter.getWorkInstitutionId()));
+        }
+        if (doctorFilter.getStudyInstitutionId() != null) {
+            specification = specification.and(studyAtInstitution(doctorFilter.getStudyInstitutionId()));
+        }
         if (doctorFilter.getSpecialityId() != null) {
             Specification<Doctor> specialitySpec =
                     hasDegreeSpeciality(doctorFilter.getSpecialityId())
@@ -185,6 +191,20 @@ public class DoctorServiceImpl implements DoctorService {
             Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
             Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
             Predicate institutionMatch = cb.equal(workplaceRoot.get("institution").get("id"), institutionId);
+
+            return cb.and(doctorJoin, institutionMatch);
+        };
+    }
+
+    public static Specification<Doctor> studyAtInstitution(Integer institutionId) {
+        return (root, query, cb) -> {
+            // Prevent duplicate results
+            query.distinct(true);
+
+            // Join Doctor -> DoctorDegree
+            Root<DoctorDegree> degreeRoot = query.from(DoctorDegree.class);
+            Predicate doctorJoin = cb.equal(degreeRoot.get("doctor").get("id"), root.get("id"));
+            Predicate institutionMatch = cb.equal(degreeRoot.get("institution").get("id"), institutionId);
 
             return cb.and(doctorJoin, institutionMatch);
         };

@@ -1,17 +1,29 @@
 package com.ciphertext.opencarebackend.service.impl;
 
+import com.ciphertext.opencarebackend.dto.filter.MedicalTestFilter;
 import com.ciphertext.opencarebackend.entity.HospitalMedicalTest;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.respository.HospitalMedicalTestRepository;
+import com.ciphertext.opencarebackend.respository.specification.Filter;
 import com.ciphertext.opencarebackend.service.HospitalMedicalTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateIndividualFilter;
+import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateJoinTableFilter;
+import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.*;
+import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 @Slf4j
@@ -21,11 +33,18 @@ public class HospitalMedicalTestServiceImpl implements HospitalMedicalTestServic
     private final HospitalMedicalTestRepository hospitalMedicalTestRepository;
 
     @Override
-    public List<HospitalMedicalTest> getHospitalMedicalTestsByDoctorId(Long hospitalId) {
-        log.info("Fetching all doctor workplaces");
-        List<HospitalMedicalTest> hospitalMedicalTests = hospitalMedicalTestRepository.findAll();
-        log.info("Retrieved {} doctor workplaces", hospitalMedicalTests.size());
-        return hospitalMedicalTests;
+    public Page<HospitalMedicalTest> getPaginatedDataWithFilters(MedicalTestFilter medicalTestFilter, Pageable pagingSort) {
+        log.info("Fetching hospitals with filters: {}", medicalTestFilter);
+        List<Filter> filterList = generateQueryFilters(medicalTestFilter);
+        Specification<HospitalMedicalTest> specification = where(null);
+        if(!filterList.isEmpty()) {
+            specification = where(createSpecification(filterList.removeFirst()));
+            for (Filter input : filterList) {
+                specification = specification.and(createSpecification(input));
+            }
+        }
+        log.info("Fetching hospitals with filters: {}", medicalTestFilter);
+        return hospitalMedicalTestRepository.findAll(specification, pagingSort);
     }
 
     @Override
@@ -73,5 +92,32 @@ public class HospitalMedicalTestServiceImpl implements HospitalMedicalTestServic
         if (hospitalMedicalTestRepository.findById(hospitalMedicalTestId).isPresent()) {
             return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
         } else return ResponseEntity.ok().body("Doctor Workplace is Deleted Successfully");
+    }
+
+    public List<Filter> generateQueryFilters(MedicalTestFilter medicalTestFilter) {
+
+        List<Filter> filters = new ArrayList<>();
+
+        if(medicalTestFilter.getHospitalId() != null) {
+            filters.add(generateJoinTableFilter("id", "hospital", JOIN, medicalTestFilter.getHospitalId()));
+        }
+
+        if(medicalTestFilter.getMedicalTestId() != null) {
+            filters.add(generateJoinTableFilter("id", "medicalTest", JOIN, medicalTestFilter.getMedicalTestId()));
+        }
+
+        if(medicalTestFilter.getParentMedicalTestId() != null) {
+            filters.add(generateJoinTableFilter("parentId", "medicalTest", JOIN, medicalTestFilter.getParentMedicalTestId()));
+        }
+
+        if(medicalTestFilter.getMinPrice() != null) {
+            filters.add(generateIndividualFilter("price", GREATER_THAN_EQUALS, medicalTestFilter.getMinPrice()));
+        }
+
+        if(medicalTestFilter.getMaxPrice() != null) {
+            filters.add(generateIndividualFilter("price", LESS_THAN_EQUALS, medicalTestFilter.getMaxPrice()));
+        }
+
+        return filters;
     }
 }

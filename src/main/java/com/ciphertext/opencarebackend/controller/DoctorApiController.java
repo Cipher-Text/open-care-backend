@@ -6,7 +6,6 @@ import com.ciphertext.opencarebackend.dto.response.DoctorDegreeResponse;
 import com.ciphertext.opencarebackend.dto.response.DoctorResponse;
 import com.ciphertext.opencarebackend.dto.response.DoctorWorkplaceResponse;
 import com.ciphertext.opencarebackend.entity.Doctor;
-import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.mapper.DoctorDegreeMapper;
 import com.ciphertext.opencarebackend.mapper.DoctorMapper;
@@ -46,6 +45,8 @@ public class DoctorApiController {
             @RequestParam(required = false) String bnName,
             @RequestParam(required = false) String bmdcNo,
             @RequestParam(required = false) Integer hospitalId,
+            @RequestParam(required = false) Integer workInstitutionId,
+            @RequestParam(required = false) Integer studyInstitutionId,
             @RequestParam(required = false) Integer degreeId,
             @RequestParam(required = false) Integer specialityId,
             @RequestParam(required = false) Integer districtId,
@@ -60,6 +61,8 @@ public class DoctorApiController {
                 .bnName(bnName)
                 .bmdcNo(bmdcNo)
                 .hospitalId(hospitalId)
+                .studyInstitutionId(studyInstitutionId)
+                .workInstitutionId(workInstitutionId)
                 .degreeId(degreeId)
                 .specialityId(specialityId)
                 .districtId(districtId)

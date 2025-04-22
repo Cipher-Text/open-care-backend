@@ -1,8 +1,6 @@
 package com.ciphertext.opencarebackend.respository.specification;
 
-import com.ciphertext.opencarebackend.entity.*;
 import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -57,12 +55,24 @@ public class SpecificationBuilder {
 
             case GREATER_THAN_EQUALS ->
                     (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(input.getField()),
+                            (Integer) input.getValue());
+
+            case LESS_THAN_EQUALS ->
+                    (root, query, cb) -> cb.lessThanOrEqualTo(root.get(input.getField()),
+                            (Integer) input.getValue());
+
+            case RANGE ->
+                    (root, query, cb) -> cb.between(root.get(input.getField()),
+                            (Integer) input.getValue(), (Integer) input.getRangeSecondValue());
+
+            case DATE_GREATER_THAN_EQUALS ->
+                    (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(input.getField()),
                             (Date) input.getValue());
 
-            case LESS_THAN_EQUALS -> (root, query, cb) -> cb.lessThanOrEqualTo(root.get(input.getField()),
+            case DATE_LESS_THAN_EQUALS -> (root, query, cb) -> cb.lessThanOrEqualTo(root.get(input.getField()),
                     (Date) input.getValue());
 
-            case RANGE -> (root, query, cb) -> {
+            case DATE_RANGE -> (root, query, cb) -> {
                 Date startOfDay = (Date) input.getValue();
                 Date endOfDay = (Date) input.getRangeSecondValue();
                 return cb.between(root.get(input.getField()), startOfDay, endOfDay);

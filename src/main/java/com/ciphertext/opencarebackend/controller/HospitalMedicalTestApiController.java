@@ -1,40 +1,69 @@
 package com.ciphertext.opencarebackend.controller;
 
+import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
+import com.ciphertext.opencarebackend.dto.filter.MedicalTestFilter;
 import com.ciphertext.opencarebackend.dto.request.HospitalMedicalTestRequest;
+import com.ciphertext.opencarebackend.dto.response.DoctorResponse;
 import com.ciphertext.opencarebackend.dto.response.HospitalMedicalTestResponse;
+import com.ciphertext.opencarebackend.entity.Doctor;
 import com.ciphertext.opencarebackend.entity.HospitalMedicalTest;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.mapper.HospitalMedicalTestMapper;
 import com.ciphertext.opencarebackend.service.HospitalMedicalTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/hospitals")
+@RequestMapping("/api/hospital-medical-tests")
 @RequiredArgsConstructor
 public class HospitalMedicalTestApiController {
     private final HospitalMedicalTestService hospitalMedicalTestService;
     private final HospitalMedicalTestMapper hospitalMedicalTestMapper;
 
-    @GetMapping("/{hospitalId}/medical-tests")
-    public ResponseEntity<List<HospitalMedicalTestResponse>> getHospitalMedicalTestsByDoctorId(@PathVariable Long hospitalId) {
-        log.info("Retrieving all hospital medical tests");
+    @GetMapping("")
+    public ResponseEntity<Map<String, Object>> getMedicalTestsByHospitalId(
+            @RequestParam(required = false) Integer hospitalId,
+            @RequestParam(required = false) Integer medicalTestId,
+            @RequestParam(required = false) Integer parentMedicalTestId,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
-        List<HospitalMedicalTest> hospitalMedicalTests = hospitalMedicalTestService.getHospitalMedicalTestsByDoctorId(hospitalId);
-        List<HospitalMedicalTestResponse> hospitalMedicalTestResponses = hospitalMedicalTests.stream()
-                .map(hospitalMedicalTestMapper::toResponse)
-                .collect(Collectors.toList());
+        Pageable pagingSort = PageRequest.of(page, size);
+        MedicalTestFilter medicalTestFilter = MedicalTestFilter.builder()
+                .hospitalId(hospitalId)
+                .medicalTestId(medicalTestId)
+                .parentMedicalTestId(parentMedicalTestId)
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .build();
+        Page<HospitalMedicalTest> pageHospitalMedicalTests = hospitalMedicalTestService.getPaginatedDataWithFilters(medicalTestFilter, pagingSort);
 
-        return ResponseEntity.ok(hospitalMedicalTestResponses);
+        Page<HospitalMedicalTestResponse> pageHospitalMedicalTestResponses = pageHospitalMedicalTests.map(hospitalMedicalTestMapper::toResponse);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("hospitalMedicalTests", pageHospitalMedicalTestResponses.getContent());
+        response.put("currentPage", pageHospitalMedicalTestResponses.getNumber());
+        response.put("totalItems", pageHospitalMedicalTestResponses.getTotalElements());
+        response.put("totalPages", pageHospitalMedicalTestResponses.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{hospitalId}/medical-tests/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<HospitalMedicalTestResponse> getHospitalMedicalTestById(@PathVariable Long id)
             throws ResourceNotFoundException {
         log.info("Retrieving hospital medical test with ID: {}", id);
@@ -45,7 +74,7 @@ public class HospitalMedicalTestApiController {
         return ResponseEntity.ok(hospitalMedicalTestResponse);
     }
 
-    @PostMapping("/{hospitalId}/medical-tests")
+    @PostMapping("")
     public ResponseEntity<HospitalMedicalTestResponse> createHospitalMedicalTest(@RequestBody HospitalMedicalTestRequest hospitalMedicalTestRequest) {
         log.info("Creating hospital medical test");
 
@@ -56,7 +85,7 @@ public class HospitalMedicalTestApiController {
         return ResponseEntity.ok(hospitalMedicalTestResponse);
     }
 
-    @PutMapping("/{hospitalId}/medical-tests/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<HospitalMedicalTestResponse> updateHospitalMedicalTest(@RequestBody HospitalMedicalTestRequest hospitalMedicalTestRequest, @PathVariable Long id)
             throws ResourceNotFoundException {
         log.info("Updating hospital medical test with ID: {}", id);
@@ -68,7 +97,7 @@ public class HospitalMedicalTestApiController {
         return ResponseEntity.ok(hospitalResponse);
     }
 
-    @DeleteMapping("/{hospitalId}/medical-tests/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHospitalMedicalTest(@PathVariable Long id)
             throws ResourceNotFoundException {
         log.info("Deleting hospital medical test with ID: {}", id);
