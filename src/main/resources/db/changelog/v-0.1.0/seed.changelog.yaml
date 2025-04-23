@@ -83,3 +83,8 @@ databaseChangeLog:
             relativeToChangelogFile: true
             tableName: social_organization
             quotchar: '"'
+        - loadData:
+            file: seeds/medicine.csv
+            relativeToChangelogFile: true
+            tableName: medicine
+            quotchar: '"'

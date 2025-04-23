@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9221f323-8ad8-40be-8c86-68e49eb0785c
+      author: sadman
+      changes:
+        - createTable:
+            columns:
+                - column:
+                    constraints:
+                        nullable: false
+                        primaryKey: true
+                        primaryKeyName: medicine_id_pk
+                    name: id
+                    type: bigserial
+                - column:
+                    name: brand_id
+                    type: int4
+                - column:
+                    name: brand_name
+                    type: varchar(500)
+                - column:
+                    name: type
+                    type: varchar(100)
+                - column:
+                    name: slug
+                    type: varchar(100)
+                - column:
+                    name: dosage_form
+                    type: varchar(100)
+                - column:
+                    name: generic
+                    type: varchar(500)
+                - column:
+                    name: strength
+                    type: varchar(100)
+                - column:
+                    name: manufacturer
+                    type: varchar(500)
+                - column:
+                    name: package_container
+                    type: varchar(1000)
+                - column:
+                    name: package_size
+                    type: varchar(500)
+            tableName: medicine

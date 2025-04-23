@@ -56,3 +56,6 @@ databaseChangeLog:
   - include:
       file: tables/social_organization.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/medicine.yaml
+      relativeToChangelogFile: true
