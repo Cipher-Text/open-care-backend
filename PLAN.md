@@ -1,26 +1,21 @@
-# Comprehensive Dynamic Ad System Schema
+# Revised Comprehensive Dynamic Ad System Schema
 
-Here's a consolidated schema for your location-based ad system with monetization capabilities:
+Here's a consolidated schema for your location-based ad system with monetization capabilities, implementing the requested changes:
 
 ## Core Tables
 
-### `ad_placement_type`
+### `ad_placement_type` (merged with pricing)
 ```sql
 CREATE TABLE ad_placement_type (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL, -- e.g. 'popup', 'scroll', 'footer', 'dedicated_page'
     description VARCHAR(255),
     position VARCHAR(50) NOT NULL, -- 'popup', 'scroll', 'footer', etc.
-    base_price DECIMAL NOT NULL
-);
-```
-
-### `ad_target_type`
-```sql
-CREATE TABLE ad_target_type (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL, -- 'doctor', 'hospital', 'institution'
-    description VARCHAR(255)
+    base_price DECIMAL NOT NULL,
+    duration_in_days INTEGER NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
 );
 ```
 
@@ -33,8 +28,8 @@ CREATE TABLE advertisement (
     image_url VARCHAR(255),
     target_url VARCHAR(255),
 
-    -- Targeting information
-    target_type_id INTEGER REFERENCES ad_target_type(id) ON UPDATE CASCADE,
+    -- Targeting information using enum
+    target_type target_type_enum NOT NULL, -- ENUM('doctor', 'hospital', 'institution')
     target_id BIGINT, -- FK to doctor/hospital/institution based on type
     placement_type_id INTEGER REFERENCES ad_placement_type(id),
 
@@ -69,17 +64,9 @@ CREATE TABLE advertisement (
 );
 ```
 
-### `ad_pricing`
+## Create Enum for Target Type
 ```sql
-CREATE TABLE ad_pricing (
-    id SERIAL PRIMARY KEY,
-    placement_type_id INTEGER REFERENCES ad_placement_type(id),
-    duration_in_days INTEGER NOT NULL,
-    price DECIMAL NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
+CREATE TYPE target_type_enum AS ENUM ('doctor', 'hospital', 'institution');
 ```
 
 ## Supporting Tables
@@ -128,7 +115,7 @@ CREATE TABLE ad_campaign (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     advertiser_id BIGINT NOT NULL,
-    advertiser_type VARCHAR(50) NOT NULL, -- 'doctor', 'hospital', etc.
+    advertiser_type target_type_enum NOT NULL, -- Using the same enum
     budget DECIMAL,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
@@ -154,7 +141,7 @@ SELECT
     a.id,
     a.title,
     apt.name as placement_type,
-    att.name as target_type,
+    a.target_type,
     COUNT(CASE WHEN al.action = 'view' THEN 1 END) as total_views,
     COUNT(CASE WHEN al.action = 'click' THEN 1 END) as total_clicks,
     (COUNT(CASE WHEN al.action = 'click' THEN 1 END) * 100.0 /
@@ -164,20 +151,23 @@ SELECT
     u.name as upazila
 FROM advertisement a
 LEFT JOIN ad_placement_type apt ON a.placement_type_id = apt.id
-LEFT JOIN ad_target_type att ON a.target_type_id = att.id
 LEFT JOIN ad_log al ON a.id = al.advertisement_id
 LEFT JOIN ad_payment ap ON a.id = ap.advertisement_id
 LEFT JOIN district d ON a.district_id = d.id
 LEFT JOIN upazila u ON a.upazila_id = u.id
-GROUP BY a.id, apt.name, att.name, ap.amount, d.name, u.name;
+GROUP BY a.id, apt.name, a.target_type, ap.amount, d.name, u.name;
 ```
 
-This comprehensive schema provides:
-1. Flexible ad placement and targeting options
-2. Location-based delivery at multiple geographic levels
-3. Detailed analytics tracking
-4. Monetization and payment tracking
-5. Performance reporting capabilities
-6. Support for different advertiser types (doctors, hospitals, etc.)
+## Key Changes Made
 
-Would you like me to provide sample queries for common operations or suggest API endpoints to interact with this system?
+1. **Converted `ad_target_type` to an Enum**:
+    - Created a PostgreSQL enum type `target_type_enum` with values 'doctor', 'hospital', 'institution'
+    - Removed the separate `ad_target_type` table
+    - Updated references in the `advertisement` and `ad_campaign` tables
+
+2. **Merged `ad_placement_type` and `ad_pricing`**:
+    - Combined pricing information into the `ad_placement_type` table
+    - Added duration_in_days, is_active, and timestamp fields from the previous pricing table
+    - Removed the separate `ad_pricing` table
+
+This revised schema maintains all the original functionality while implementing a more efficient structure with enums and fewer tables as requested.
