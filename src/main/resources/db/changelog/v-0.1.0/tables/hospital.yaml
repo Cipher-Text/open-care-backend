@@ -110,3 +110,43 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: union
             validate: true
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_name
+            columns:
+              - column:
+                  name: name
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_district
+            columns:
+              - column:
+                  name: district_id
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_upazila
+            columns:
+              - column:
+                  name: upazila_id
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_union
+            columns:
+              - column:
+                  name: union_id
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_type
+            columns:
+              - column:
+                  name: hospital_type
+              - column:
+                  name: organization_type
+        - createIndex:
+            tableName: hospital
+            indexName: idx_hospital_location
+            columns:
+              - column:
+                  name: lat
+              - column:
+                  name: lon

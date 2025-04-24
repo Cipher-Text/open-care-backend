@@ -42,3 +42,9 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: district
             validate: true
+        - createIndex:
+            tableName: upazila
+            indexName: idx_upazila_name
+            columns:
+              - column:
+                  name: name

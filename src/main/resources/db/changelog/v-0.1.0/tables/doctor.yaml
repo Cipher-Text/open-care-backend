@@ -77,3 +77,23 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: profile
             validate: true
+        - createIndex:
+            tableName: doctor
+            indexName: idx_doctor_bmdc_no
+            columns:
+              - column:
+                  name: bmdc_no
+        - createIndex:
+            tableName: doctor
+            indexName: idx_doctor_verification
+            columns:
+              - column:
+                  name: is_verified
+              - column:
+                  name: is_active
+        - createIndex:
+            tableName: doctor
+            indexName: idx_doctor_profile
+            columns:
+              - column:
+                  name: profile_id

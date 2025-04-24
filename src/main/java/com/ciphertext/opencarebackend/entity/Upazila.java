@@ -10,7 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="upazila")
+@Table(name="upazila", indexes = {
+        @Index(name = "idx_upazila_name", columnList = "name")
+})
 public class Upazila {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

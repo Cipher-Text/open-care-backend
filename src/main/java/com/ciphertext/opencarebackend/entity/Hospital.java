@@ -13,7 +13,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="hospital")
+@Table(name="hospital", indexes = {
+    @Index(name = "idx_hospital_name", columnList = "name"),
+    @Index(name = "idx_hospital_district", columnList = "district_id"),
+    @Index(name = "idx_hospital_upazila", columnList = "upazila_id"),
+    @Index(name = "idx_hospital_union", columnList = "union_id"),
+    @Index(name = "idx_hospital_type", columnList = "hospital_type, organization_type"),
+    @Index(name = "idx_hospital_location", columnList = "lat, lon")
+})
 public class Hospital extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

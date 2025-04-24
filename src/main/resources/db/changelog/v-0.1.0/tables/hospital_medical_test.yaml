@@ -52,3 +52,15 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: medical_test
             validate: true
+        - createIndex:
+            tableName: hospital_medical_test
+            indexName: idx_hospital_medical_test_hospital
+            columns:
+              - column:
+                  name: hospital_id
+        - createIndex:
+            tableName: hospital_medical_test
+            indexName: idx_hospital_medical_test_test
+            columns:
+              - column:
+                  name: medical_test_id

@@ -12,7 +12,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name="doctor")
+@Table(name="doctor", indexes = {
+    @Index(name = "idx_doctor_bmdc_no", columnList = "bmdc_no"),
+    @Index(name = "idx_doctor_verification", columnList = "is_verified, is_active"),
+    @Index(name = "idx_doctor_profile", columnList = "profile_id")
+})
 public class Doctor extends Auditable<String> {
 
     @Id

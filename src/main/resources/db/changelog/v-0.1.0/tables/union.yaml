@@ -44,3 +44,9 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: upazila
             validate: true
+        - createIndex:
+            tableName: union
+            indexName: idx_union_name
+            columns:
+              - column:
+                  name: name

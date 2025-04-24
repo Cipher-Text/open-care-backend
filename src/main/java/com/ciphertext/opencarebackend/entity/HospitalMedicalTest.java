@@ -11,7 +11,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="hospital_medical_test")
+@Table(name="hospital_medical_test", indexes = {
+        @Index(name = "idx_hospital_medical_test_hospital", columnList = "hospital_id"),
+        @Index(name = "idx_hospital_medical_test_test", columnList = "medical_test_id")
+})
 public class HospitalMedicalTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

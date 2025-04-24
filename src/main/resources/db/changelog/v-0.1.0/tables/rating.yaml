@@ -60,11 +60,15 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: hospital
             validate: true
-
-
-
-
-
-
-
-
+        - createIndex:
+            tableName: rating
+            indexName: idx_rating_doctor
+            columns:
+              - column:
+                  name: doctor_id
+        - createIndex:
+            tableName: rating
+            indexName: idx_rating_hospital
+            columns:
+              - column:
+                  name: hospital_id

@@ -48,3 +48,9 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: division
             validate: true
+        - createIndex:
+            tableName: district
+            indexName: idx_district_name
+            columns:
+              - column:
+                  name: name

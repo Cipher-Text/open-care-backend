@@ -14,7 +14,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="district")
+@Table(name="district", indexes = {
+        @Index(name = "idx_district_name", columnList = "name")
+})
 public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
