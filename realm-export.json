@@ -170,7 +170,13 @@
         "delete-doctor",
         "create-hospital",
         "update-hospital",
-        "delete-hospital"
+        "delete-hospital",
+        "create-social-organization",
+        "update-social-organization",
+        "delete-social-organization",
+        "create-hospital-medical-test",
+        "update-hospital-medical-test",
+        "delete-hospital-medical-test"
       ]
     },
     {
@@ -259,6 +265,18 @@
       {
         "name": "delete-social-organization",
         "description": "Delete Social Organization Permission"
+      },
+      {
+        "name": "create-hospital-medical-test",
+        "description": "Create Hospital Medical Test Permission"
+      },
+      {
+        "name": "update-hospital-medical-test",
+        "description": "Update Hospital Medical Test Permission"
+      },
+      {
+        "name": "delete-hospital-medical-test",
+        "description": "Delete Hospital Medical Test Permission"
       }
     ]
   },
@@ -276,23 +294,6 @@
           "value": "123456",
           "temporary": false
         }
-      ],
-      "realmRoles": [
-        "create-master-data",
-        "update-master-data",
-        "delete-master-data",
-        "create-institution",
-        "update-institution",
-        "delete-institution",
-        "create-doctor",
-        "update-doctor",
-        "delete-doctor",
-        "create-hospital",
-        "update-hospital",
-        "delete-hospital",
-        "create-social-organization",
-        "update-social-organization",
-        "delete-social-organization"
       ],
       "groups": [
         "/Super Admin"
