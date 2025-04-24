@@ -43,3 +43,39 @@ databaseChangeLog:
                     name: package_size
                     type: varchar(500)
             tableName: medicine
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_brand_name
+            columns:
+                - column:
+                    name: brand_name
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_generic
+            columns:
+                - column:
+                    name: generic
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_manufacturer
+            columns:
+                - column:
+                    name: manufacturer
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_slug
+            columns:
+                - column:
+                    name: slug
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_type
+            columns:
+                - column:
+                    name: type
+        - createIndex:
+            tableName: medicine
+            indexName: idx_medicine_dosage_form
+            columns:
+                - column:
+                    name: dosage_form
