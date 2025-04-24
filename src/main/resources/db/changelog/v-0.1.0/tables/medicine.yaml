@@ -1,81 +1,144 @@
 databaseChangeLog:
-  - changeSet:
-      id: 9221f323-8ad8-40be-8c86-68e49eb0785c
-      author: sadman
-      changes:
-        - createTable:
-            columns:
-                - column:
-                    constraints:
-                        nullable: false
-                        primaryKey: true
-                        primaryKeyName: medicine_id_pk
-                    name: id
-                    type: bigserial
-                - column:
-                    name: brand_id
-                    type: int4
-                - column:
-                    name: brand_name
-                    type: varchar(500)
-                - column:
-                    name: type
-                    type: varchar(100)
-                - column:
-                    name: slug
-                    type: varchar(100)
-                - column:
-                    name: dosage_form
-                    type: varchar(100)
-                - column:
-                    name: generic
-                    type: varchar(500)
-                - column:
-                    name: strength
-                    type: varchar(100)
-                - column:
-                    name: manufacturer
-                    type: varchar(500)
-                - column:
-                    name: package_container
-                    type: varchar(1000)
-                - column:
-                    name: package_size
-                    type: varchar(500)
-            tableName: medicine
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_brand_name
-            columns:
-                - column:
-                    name: brand_name
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_generic
-            columns:
-                - column:
-                    name: generic
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_manufacturer
-            columns:
-                - column:
-                    name: manufacturer
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_slug
-            columns:
-                - column:
-                    name: slug
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_type
-            columns:
-                - column:
-                    name: type
-        - createIndex:
-            tableName: medicine
-            indexName: idx_medicine_dosage_form
-            columns:
-                - column:
-                    name: dosage_form
+    - changeSet:
+          id: create-medicine-table
+          author: sadman
+          changes:
+              - createTable:
+                    tableName: medicine
+                    columns:
+                        - column:
+                              name: id
+                              type: bigserial
+                              constraints:
+                                  primaryKey: true
+                                  primaryKeyName: medicine_pk
+                                  nullable: false
+                        - column:
+                              name: brand_id
+                              type: integer
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: brand_name
+                              type: varchar(500)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: type
+                              type: varchar(100)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: slug
+                              type: varchar(100)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: dosage_form
+                              type: varchar(100)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: generic
+                              type: varchar(500)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: strength
+                              type: varchar(100)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: manufacturer
+                              type: varchar(500)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: package_container
+                              type: varchar(1000)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: package_size
+                              type: varchar(500)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: search_vector
+                              type: tsvector
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_brand_name
+                    columns:
+                        - column:
+                              name: brand_name
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_generic
+                    columns:
+                        - column:
+                              name: generic
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_manufacturer
+                    columns:
+                        - column:
+                              name: manufacturer
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_slug
+                    columns:
+                        - column:
+                              name: slug
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_type
+                    columns:
+                        - column:
+                              name: type
+
+              - createIndex:
+                    tableName: medicine
+                    indexName: idx_medicine_dosage_form
+                    columns:
+                        - column:
+                              name: dosage_form
+
+              - sql:
+                    sql: CREATE INDEX idx_medicine_brand_name_lower ON medicine (lower(brand_name))
+
+              - sql:
+                    sql: CREATE INDEX idx_medicine_generic_lower ON medicine (lower(generic))
+
+              - sql:
+                    sql: CREATE INDEX idx_medicine_manufacturer_lower ON medicine (lower(manufacturer))
+
+              - sql:
+                    sql: CREATE INDEX idx_medicine_search_vector ON medicine USING gin(search_vector)
+
+              - sql:
+                    sql: |
+                        CREATE OR REPLACE FUNCTION medicine_search_vector_update() RETURNS trigger AS $$
+                        BEGIN
+                          NEW.search_vector :=
+                            to_tsvector('english', COALESCE(NEW.brand_name, '')) ||
+                            to_tsvector('english', COALESCE(NEW.generic, '')) ||
+                            to_tsvector('english', COALESCE(NEW.manufacturer, '')) ||
+                            to_tsvector('english', COALESCE(NEW.type, ''));
+                          RETURN NEW;
+                        END
+                        $$ LANGUAGE plpgsql
+
+              - sql:
+                    sql: |
+                        CREATE TRIGGER medicine_search_vector_trigger
+                        BEFORE INSERT OR UPDATE ON medicine
+                        FOR EACH ROW EXECUTE FUNCTION medicine_search_vector_update()
+
+              - sql:
+                    sql: UPDATE medicine SET search_vector = NULL

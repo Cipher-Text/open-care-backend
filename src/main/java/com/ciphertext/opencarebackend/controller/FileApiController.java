@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/files")
-public class FileController {
+public class FileApiController {
 
     @Autowired
     private MinioService minioService;
