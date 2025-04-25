@@ -3,36 +3,47 @@ networks:
     driver: bridge
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres-open-care
+  # Keycloak Authentication Server
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
     networks:
       - app_network
-    environment:
-      POSTGRES_DB: open-care
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Code#Prophet2024
-    ports:
-      - "5434:5432" # Changed host port to 5433
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: 46.102.157.211
+      KC_DB_URL_PORT: 6968
+      KC_DB_URL_DATABASE: open_care_keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: MiniMacsad8#ImRuL1
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+    ports:
+      - "8180:8080"
 
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: open-care-backend
+  # MinIO Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: minio
     networks:
       - app_network
+    restart: always
     ports:
-      - "6500:6500"
+      - "9100:9000"   # S3 API
+      - "9101:9001"   # Web UI
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-open-care:5432/open-care?currentSchema=public
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Code#Prophet2024
-    depends_on:
-      - postgres
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
 
 volumes:
-  postgres_data:
+  minio_data:
