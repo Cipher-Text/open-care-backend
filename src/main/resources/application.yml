@@ -7,7 +7,7 @@ spring:
 
   # Postgres configuration
   datasource:
-    url: jdbc:postgresql://${DB_HOSTNAME:localhost}:5432/open_care_new
+    url: jdbc:postgresql://${DB_HOSTNAME:localhost}:${DB_PORT:5432}/open_care
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:12345678}
 
