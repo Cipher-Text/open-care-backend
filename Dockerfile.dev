@@ -1,18 +1,18 @@
-# Stage 1: Build the application with Maven using Java 17
-FROM maven:3.9.6-amazoncorretto-21 AS build
+# Stage 1: Build the application with Maven using Java 21
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
 
 WORKDIR /app
 
 # Copy pom.xml and download dependencies
 COPY pom.xml ./
-RUN mvn dependency:go-offline
+RUN mvn dependency:go-offline -B
 
 # Copy the application source code and build the application
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -B
 
-# Stage 2: Create the final image using Java 17
-FROM amazoncorretto:23
+# Stage 2: Create the final image using a smaller base image
+FROM amazoncorretto:21-alpine
 
 WORKDIR /app
 
