@@ -59,3 +59,15 @@ databaseChangeLog:
   - include:
       file: tables/medicine.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/advertisement_type.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/advertisement.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/advertisement_log.yaml
+      relativeToChangelogFile: true
+#  - include:
+#      file: tables/advertisement_payment.yaml
+#      relativeToChangelogFile: true

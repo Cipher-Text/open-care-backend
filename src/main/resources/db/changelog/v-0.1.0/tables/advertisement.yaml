@@ -1,0 +1,132 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-advertisement-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: advertisement
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: TEXT
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  name: target_url
+                  type: VARCHAR(255)
+              - column:
+                  name: target_type # ('doctor', 'hospital', 'institution')
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_id
+                  type: BIGINT
+              - column:
+                  name: advertisement_type_id
+                  type: INTEGER
+              - column:
+                  name: district_id
+                  type: INTEGER
+              - column:
+                  name: upazila_id
+                  type: INTEGER
+              - column:
+                  name: union_id
+                  type: INTEGER
+              - column:
+                  name: speciality_id
+                  type: INTEGER
+              - column:
+                  name: age_group
+                  type: VARCHAR(50)
+              - column:
+                  name: gender
+                  type: VARCHAR(20)
+              - column:
+                  name: language_preference
+                  type: VARCHAR(50)
+              - column:
+                  name: start_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValue: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: views
+                  type: INTEGER
+                  defaultValue: 0
+              - column:
+                  name: clicks
+                  type: INTEGER
+                  defaultValue: 0
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+        - addForeignKeyConstraint:
+            baseColumnNames: advertisement_type_id
+            baseTableName: advertisement
+            referencedColumnNames: id
+            referencedTableName: advertisement_type
+            constraintName: fk_advertisement_advertisement_type
+        - addForeignKeyConstraint:
+            baseColumnNames: district_id
+            baseTableName: advertisement
+            referencedColumnNames: id
+            referencedTableName: district
+            constraintName: fk_advertisement_district
+        - addForeignKeyConstraint:
+            baseColumnNames: upazila_id
+            baseTableName: advertisement
+            referencedColumnNames: id
+            referencedTableName: upazila
+            constraintName: fk_advertisement_upazila
+        - addForeignKeyConstraint:
+            baseColumnNames: union_id
+            baseTableName: advertisement
+            referencedColumnNames: id
+            referencedTableName: union
+            constraintName: fk_advertisement_union

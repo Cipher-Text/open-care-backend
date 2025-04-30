@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+        id: create-advertisement-type-table
+        author: sadman
+        changes:
+          - createTable:
+              columns:
+                - column:
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                      primaryKeyName: advertisement_type_id_pk
+                    name: id
+                    type: serial
+                    startWith: 38
+                - column:
+                    constraints:
+                      nullable: false
+                    name: name
+                    type: varchar(100)
+                - column:
+                    constraints:
+                      nullable: false
+                    name: description
+                    type: varchar(255)
+                - column:
+                    constraints:
+                      nullable: false
+                    name: position
+                    type: varchar(50)
+                - column:
+                    constraints:
+                      nullable: false
+                    name: base_price
+                    type: decimal
+                - column:
+                    constraints:
+                      nullable: false
+                    name: duration_in_days
+                    type: integer
+                - column:
+                    constraints:
+                      nullable: false
+                    name: is_active
+                    type: boolean
+                - column:
+                    constraints:
+                      nullable: false
+                    name: created_at
+                    type: timestamp
+                - column:
+                    constraints:
+                      nullable: false
+                    name: updated_at
+                    type: timestamp
+              tableName: advertisement_type

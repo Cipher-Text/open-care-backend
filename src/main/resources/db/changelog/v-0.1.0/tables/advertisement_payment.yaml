@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-advertisement-payment-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: advertisement_payment
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: advertisement_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: advertisement(id)
+              - column:
+                  name: amount
+                  type: DECIMAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_method
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transaction_reference
+                  type: VARCHAR(100)
+              - column:
+                  name: payment_details
+                  type: JSONB
+              - column:
+                  name: paid_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: NOW()
+
+        - addNotNullConstraint:
+            tableName: advertisement_payment
+            columnName: advertisement_id
+            columnDataType: BIGINT
+
+        - addNotNullConstraint:
+            tableName: advertisement_payment
+            columnName: amount
+            columnDataType: DECIMAL
+
+        - addNotNullConstraint:
+            tableName: advertisement_payment
+            columnName: payment_method
+            columnDataType: VARCHAR(50)
+
+        - addNotNullConstraint:
+            tableName: advertisement_payment
+            columnName: status
+            columnDataType: VARCHAR(20)
