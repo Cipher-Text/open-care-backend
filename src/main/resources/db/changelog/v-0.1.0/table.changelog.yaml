@@ -68,6 +68,6 @@ databaseChangeLog:
   - include:
       file: tables/advertisement_log.yaml
       relativeToChangelogFile: true
-#  - include:
-#      file: tables/advertisement_payment.yaml
-#      relativeToChangelogFile: true
+  - include:
+      file: tables/advertisement_payment.yaml
+      relativeToChangelogFile: true

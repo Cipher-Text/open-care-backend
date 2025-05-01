@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-advertisement-payment-table
-      author: your_name
+      author: sadman
       changes:
         - createTable:
             tableName: advertisement_payment
@@ -15,9 +15,6 @@ databaseChangeLog:
               - column:
                   name: advertisement_id
                   type: bigint
-                  constraints:
-                    nullable: false
-                    references: advertisement(id)
               - column:
                   name: amount
                   type: DECIMAL
@@ -46,23 +43,9 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: NOW()
-
-        - addNotNullConstraint:
-            tableName: advertisement_payment
-            columnName: advertisement_id
-            columnDataType: BIGINT
-
-        - addNotNullConstraint:
-            tableName: advertisement_payment
-            columnName: amount
-            columnDataType: DECIMAL
-
-        - addNotNullConstraint:
-            tableName: advertisement_payment
-            columnName: payment_method
-            columnDataType: VARCHAR(50)
-
-        - addNotNullConstraint:
-            tableName: advertisement_payment
-            columnName: status
-            columnDataType: VARCHAR(20)
+        - addForeignKeyConstraint:
+            baseTableName: advertisement_payment
+            baseColumnNames: advertisement_id
+            referencedTableName: advertisement
+            referencedColumnNames: id
+            constraintName: fk_advertisement_payment_advertisement
