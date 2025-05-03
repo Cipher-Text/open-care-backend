@@ -17,6 +17,7 @@ public class DoctorResponse {
     private Long id;
     private String bmdcNo;
     private LocalDate startDate;
+    private Integer yearOfExperience;
     private String degrees;
     private String specializations;
     private String description;
