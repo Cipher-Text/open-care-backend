@@ -156,6 +156,7 @@ public class SecurityConfig {
                         "/api/upazilas/**")
                 .requestMatchers(HttpMethod.GET,
                         "/api/specialities/**",
+                        "/api/degrees/**",
                         "/api/medical-tests/**",
                         "/api/institutions/**",
                         "/api/hospitals/**",
