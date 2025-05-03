@@ -25,8 +25,7 @@ import java.util.List;
 
 import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateIndividualFilter;
 import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateJoinTableFilter;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.JOIN;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.LIKE;
+import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.*;
 import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.*;
 import static org.springframework.data.jpa.domain.Specification.where;
 
@@ -215,10 +214,10 @@ public class DoctorServiceImpl implements DoctorService {
         List<Filter> filters = new ArrayList<>();
 
         if (doctorFilter.getName() != null)
-            filters.add(generateIndividualFilter("profile.name", LIKE, doctorFilter.getName()));
+            filters.add(generateJoinTableFilter("name", "profile", LIKE_JOIN, doctorFilter.getName()));
 
         if (doctorFilter.getBnName() != null)
-            filters.add(generateIndividualFilter("profile.bnName", LIKE, doctorFilter.getBnName()));
+            filters.add(generateJoinTableFilter("bnName", "profile", LIKE_JOIN, doctorFilter.getBnName()));
 
         if (doctorFilter.getBmdcNo() != null)
             filters.add(generateIndividualFilter("bmdcNo", LIKE, doctorFilter.getBmdcNo()));
