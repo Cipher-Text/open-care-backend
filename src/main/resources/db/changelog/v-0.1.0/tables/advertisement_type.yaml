@@ -12,10 +12,11 @@ databaseChangeLog:
                       primaryKeyName: advertisement_type_id_pk
                     name: id
                     type: serial
-                    startWith: 38
+                    startWith: 1
                 - column:
                     constraints:
                       nullable: false
+                      unique: true
                     name: name
                     type: varchar(100)
                 - column:
@@ -43,14 +44,17 @@ databaseChangeLog:
                       nullable: false
                     name: is_active
                     type: boolean
+                    defaultValueBoolean: true
                 - column:
                     constraints:
                       nullable: false
                     name: created_at
                     type: timestamp
+                    defaultValueComputed: 'CURRENT_TIMESTAMP'
                 - column:
                     constraints:
                       nullable: false
                     name: updated_at
                     type: timestamp
+                    defaultValueComputed: 'CURRENT_TIMESTAMP'
               tableName: advertisement_type

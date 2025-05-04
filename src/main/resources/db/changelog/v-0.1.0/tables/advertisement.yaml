@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-advertisement-table
-      author: your_name
+      author: sadman
       changes:
         - createTable:
             tableName: advertisement
@@ -47,7 +47,7 @@ databaseChangeLog:
                   name: union_id
                   type: INTEGER
               - column:
-                  name: speciality_id
+                  name: medical_specialty_id
                   type: INTEGER
               - column:
                   name: age_group
@@ -55,9 +55,6 @@ databaseChangeLog:
               - column:
                   name: gender
                   type: VARCHAR(20)
-              - column:
-                  name: language_preference
-                  type: VARCHAR(50)
               - column:
                   name: start_time
                   type: TIMESTAMP
@@ -112,6 +109,12 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: advertisement_type
             constraintName: fk_advertisement_advertisement_type
+        - addForeignKeyConstraint:
+            baseColumnNames: medical_specialty_id
+            baseTableName: advertisement
+            referencedColumnNames: id
+            referencedTableName: medical_specialty
+            constraintName: fk_advertisement_medical_specialty
         - addForeignKeyConstraint:
             baseColumnNames: district_id
             baseTableName: advertisement

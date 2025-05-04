@@ -1,0 +1,11 @@
+name,description,position,base_price,duration_in_days,is_active
+"Doctor Profile Highlight","Featured placement of doctor profile in search results","search_top",500.00,30,true
+"Hospital Banner","Large banner ad on specialty pages","page_top",1200.00,60,true
+"Clinic Listing Promo","Promoted clinic listing in directory","directory_sidebar",300.00,30,true
+"Medical Institute Spotlight","Featured institution profile on homepage","home_middle",2000.00,90,true
+"Doctor Video Ad","Short video profile in relevant specialty sections","video_slot",800.00,30,true
+"Emergency Service Badge","Highlighted emergency service tag on listings","badge",150.00,365,true
+"Medical Equipment Promo","Featured medical equipment advertisement","equipment_section",750.00,60,true
+"Conference Sponsor","Conference/event sponsorship placement","event_banner",3000.00,90,true
+"New Hospital Announcement","Special announcement for new facilities","announcement_bar",450.00,14,true
+"Specialty Doctor Carousel","Rotating featured doctors in specialty pages","carousel",950.00,30,true
