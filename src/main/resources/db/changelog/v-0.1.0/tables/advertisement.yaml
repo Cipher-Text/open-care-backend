@@ -47,7 +47,7 @@ databaseChangeLog:
                   name: union_id
                   type: INTEGER
               - column:
-                  name: medical_specialty_id
+                  name: medical_speciality_id
                   type: INTEGER
               - column:
                   name: age_group
@@ -110,11 +110,11 @@ databaseChangeLog:
             referencedTableName: advertisement_type
             constraintName: fk_advertisement_advertisement_type
         - addForeignKeyConstraint:
-            baseColumnNames: medical_specialty_id
+            baseColumnNames: medical_speciality_id
             baseTableName: advertisement
             referencedColumnNames: id
-            referencedTableName: medical_specialty
-            constraintName: fk_advertisement_medical_specialty
+            referencedTableName: medical_speciality
+            constraintName: fk_advertisement_medical_speciality
         - addForeignKeyConstraint:
             baseColumnNames: district_id
             baseTableName: advertisement
