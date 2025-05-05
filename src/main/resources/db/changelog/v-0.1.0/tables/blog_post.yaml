@@ -1,0 +1,397 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-blog-category-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_category
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: VARCHAR(120)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValue: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by
+            baseTableName: blog_category
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_category_created_by
+        - addForeignKeyConstraint:
+            baseColumnNames: updated_by
+            baseTableName: blog_category
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_category_updated_by
+
+  - changeSet:
+      id: create-blog-post-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_post
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: VARCHAR(300)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: excerpt
+                  type: TEXT
+              - column:
+                  name: content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: feature_image
+                  type: VARCHAR(500)
+              - column:
+                  name: meta_title
+                  type: VARCHAR(255)
+              - column:
+                  name: meta_description
+                  type: TEXT
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: published_at
+                  type: timestamp
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: 'DRAFT'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_featured
+                  type: BOOLEAN
+                  defaultValue: false
+              - column:
+                  name: view_count
+                  type: INTEGER
+                  defaultValue: 0
+              - column:
+                  name: speciality_id
+                  type: INTEGER
+              - column:
+                  name: created_by
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: blog_post
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_post_author
+        - addForeignKeyConstraint:
+            baseColumnNames: speciality_id
+            baseTableName: blog_post
+            referencedColumnNames: id
+            referencedTableName: speciality
+            constraintName: fk_blog_post_speciality
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by
+            baseTableName: blog_post
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_post_created_by
+        - addForeignKeyConstraint:
+            baseColumnNames: updated_by
+            baseTableName: blog_post
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_post_updated_by
+
+  - changeSet:
+      id: create-blog-post-category-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_post_category
+            columns:
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: blog_post_category
+            columnNames: post_id, category_id
+            constraintName: pk_blog_post_category
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: blog_post_category
+            referencedColumnNames: id
+            referencedTableName: blog_post
+            constraintName: fk_blog_post_category_post
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: blog_post_category
+            referencedColumnNames: id
+            referencedTableName: blog_category
+            constraintName: fk_blog_post_category_category
+
+  - changeSet:
+      id: create-blog-tag-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_tag
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: VARCHAR(120)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_by
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by
+            baseTableName: blog_tag
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_tag_created_by
+
+  - changeSet:
+      id: create-blog-post-tag-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_post_tag
+            columns:
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: blog_post_tag
+            columnNames: post_id, tag_id
+            constraintName: pk_blog_post_tag
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: blog_post_tag
+            referencedColumnNames: id
+            referencedTableName: blog_post
+            constraintName: fk_blog_post_tag_post
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseColumnNames: tag_id
+            baseTableName: blog_post_tag
+            referencedColumnNames: id
+            referencedTableName: blog_tag
+            constraintName: fk_blog_post_tag_tag
+
+  - changeSet:
+      id: create-blog-comment-table
+      author: imran110219
+      changes:
+        - createTable:
+            tableName: blog_comment
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_id
+                  type: BIGINT
+              - column:
+                  name: content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_email
+                  type: VARCHAR(255)
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: 'PENDING'
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: blog_comment
+            referencedColumnNames: id
+            referencedTableName: blog_post
+            constraintName: fk_blog_comment_post
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseColumnNames: parent_id
+            baseTableName: blog_comment
+            referencedColumnNames: id
+            referencedTableName: blog_comment
+            constraintName: fk_blog_comment_parent
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: blog_comment
+            referencedColumnNames: id
+            referencedTableName: users
+            constraintName: fk_blog_comment_user
+
+  - changeSet:
+      id: create-blog-indexes
+      author: imran110219
+      changes:
+        - createIndex:
+            indexName: idx_blog_post_slug
+            tableName: blog_post
+            columns:
+              - column:
+                  name: slug
+        - createIndex:
+            indexName: idx_blog_post_status_date
+            tableName: blog_post
+            columns:
+              - column:
+                  name: status
+              - column:
+                  name: published_at
+        - createIndex:
+            indexName: idx_blog_post_featured
+            tableName: blog_post
+            columns:
+              - column:
+                  name: is_featured
+        - createIndex:
+            indexName: idx_blog_category_slug
+            tableName: blog_category
+            columns:
+              - column:
+                  name: slug
+        - createIndex:
+            indexName: idx_blog_tag_slug
+            tableName: blog_tag
+            columns:
+              - column:
+                  name: slug
