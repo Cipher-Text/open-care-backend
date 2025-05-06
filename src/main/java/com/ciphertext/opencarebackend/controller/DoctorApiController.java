@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -109,28 +106,41 @@ public class DoctorApiController {
                 .stream().map(doctorWorkplaceMapper::toResponse).collect(Collectors.toList());
         doctorResponse.setDoctorDegrees(doctorDegreeResponses);
         doctorResponse.setDoctorWorkplaces(doctorWorkplaceResponses);
-        if(!doctorDegreeResponses.isEmpty()) {
-            doctorResponse.setDegrees(doctorDegreeResponses.stream()
+        // Handle degrees (abbreviations)
+        if (!doctorDegreeResponses.isEmpty()) {
+            Set<String> degreeAbbreviations = doctorDegreeResponses.stream()
                     .map(DoctorDegreeResponse::getDegree)
-                    .filter(Objects::nonNull) // Filter out null DegreeResponse objects
+                    .filter(Objects::nonNull)
                     .map(DegreeResponse::getAbbreviation)
-                    .filter(Objects::nonNull) // Filter out null name strings
-                    .collect(Collectors.joining(", ")));
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toCollection(LinkedHashSet::new));
 
-            doctorResponse.setSpecializations(doctorDegreeResponses.stream()
-                    .map(DoctorDegreeResponse::getMedicalSpeciality)
-                    .filter(Objects::nonNull) // Filter out null MedicalSpecialityResponse objects
-                    .map(MedicalSpecialityResponse::getName)
-                    .filter(Objects::nonNull) // Filter out null name strings
-                    .collect(Collectors.joining(", ")));
+            if (!degreeAbbreviations.isEmpty()) {
+                doctorResponse.setDegrees(String.join(", ", degreeAbbreviations));
+            }
         }
-        if(!doctorWorkplaceResponses.isEmpty()) {
-            doctorResponse.setSpecializations(doctorWorkplaceResponses.stream()
-                    .map(DoctorWorkplaceResponse::getMedicalSpeciality)
-                    .filter(Objects::nonNull) // Filter out null WorkplaceResponse objects
-                    .map(MedicalSpecialityResponse::getName)
-                    .filter(Objects::nonNull) // Filter out null name strings
-                    .collect(Collectors.joining(", ")));
+
+        // Handle specializations (merge from both degrees and workplaces)
+        Set<String> allSpecializations = new LinkedHashSet<>();
+
+        // Add specializations from degrees
+        doctorDegreeResponses.stream()
+                .map(DoctorDegreeResponse::getMedicalSpeciality)
+                .filter(Objects::nonNull)
+                .map(MedicalSpecialityResponse::getName)
+                .filter(Objects::nonNull)
+                .forEach(allSpecializations::add);
+
+        // Add specializations from workplaces
+        doctorWorkplaceResponses.stream()
+                .map(DoctorWorkplaceResponse::getMedicalSpeciality)
+                .filter(Objects::nonNull)
+                .map(MedicalSpecialityResponse::getName)
+                .filter(Objects::nonNull)
+                .forEach(allSpecializations::add);
+
+        if (!allSpecializations.isEmpty()) {
+            doctorResponse.setSpecializations(String.join(", ", allSpecializations));
         }
 
         return ResponseEntity.ok(doctorResponse);
