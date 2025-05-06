@@ -22,7 +22,7 @@ public class DoctorResponse {
     private String specializations;
     private String description;
     private Boolean isActive;
-    private Boolean isDeleted;
+    private Boolean isVerified;
     private ProfileResponse profile;
     private List<DoctorDegreeResponse> doctorDegrees;
     private List<DoctorWorkplaceResponse> doctorWorkplaces;

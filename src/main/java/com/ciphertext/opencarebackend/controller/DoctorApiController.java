@@ -2,9 +2,7 @@ package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.filter.DoctorFilter;
 import com.ciphertext.opencarebackend.dto.request.DoctorRequest;
-import com.ciphertext.opencarebackend.dto.response.DoctorDegreeResponse;
-import com.ciphertext.opencarebackend.dto.response.DoctorResponse;
-import com.ciphertext.opencarebackend.dto.response.DoctorWorkplaceResponse;
+import com.ciphertext.opencarebackend.dto.response.*;
 import com.ciphertext.opencarebackend.entity.Doctor;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.mapper.DoctorDegreeMapper;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -110,6 +109,29 @@ public class DoctorApiController {
                 .stream().map(doctorWorkplaceMapper::toResponse).collect(Collectors.toList());
         doctorResponse.setDoctorDegrees(doctorDegreeResponses);
         doctorResponse.setDoctorWorkplaces(doctorWorkplaceResponses);
+        if(!doctorDegreeResponses.isEmpty()) {
+            doctorResponse.setDegrees(doctorDegreeResponses.stream()
+                    .map(DoctorDegreeResponse::getDegree)
+                    .filter(Objects::nonNull) // Filter out null DegreeResponse objects
+                    .map(DegreeResponse::getAbbreviation)
+                    .filter(Objects::nonNull) // Filter out null name strings
+                    .collect(Collectors.joining(", ")));
+
+            doctorResponse.setSpecializations(doctorDegreeResponses.stream()
+                    .map(DoctorDegreeResponse::getMedicalSpeciality)
+                    .filter(Objects::nonNull) // Filter out null MedicalSpecialityResponse objects
+                    .map(MedicalSpecialityResponse::getName)
+                    .filter(Objects::nonNull) // Filter out null name strings
+                    .collect(Collectors.joining(", ")));
+        }
+        if(!doctorWorkplaceResponses.isEmpty()) {
+            doctorResponse.setSpecializations(doctorWorkplaceResponses.stream()
+                    .map(DoctorWorkplaceResponse::getMedicalSpeciality)
+                    .filter(Objects::nonNull) // Filter out null WorkplaceResponse objects
+                    .map(MedicalSpecialityResponse::getName)
+                    .filter(Objects::nonNull) // Filter out null name strings
+                    .collect(Collectors.joining(", ")));
+        }
 
         return ResponseEntity.ok(doctorResponse);
     }
