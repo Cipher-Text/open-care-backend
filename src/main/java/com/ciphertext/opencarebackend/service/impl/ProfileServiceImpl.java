@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
 
@@ -28,7 +28,17 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile updateProfile(String keycloakUserId, Profile profile) {
+    public Profile getProfileById(Long id) throws ResourceNotFoundException {
+        log.info("Fetching profile with ID: {}", id);
+        return profileRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Profile not found with ID: {}", id);
+                    return new ResourceNotFoundException("Profile not found with ID: " + id);
+                });
+    }
+
+    @Override
+    public Profile updateProfileBykeycloakId(String keycloakUserId, Profile profile) {
         log.info("Updating profile for Keycloak user ID: {}", keycloakUserId);
         Profile existingProfile = getProfileByKeycloakUserId(keycloakUserId);
         existingProfile.setName(profile.getName());
@@ -41,6 +51,28 @@ public class ProfileServiceImpl implements ProfileService {
         existingProfile.setUnion(profile.getUnion());
         existingProfile.setGender(profile.getGender());
         existingProfile.setDateOfBirth(profile.getDateOfBirth());
+        return profileRepository.save(existingProfile);
+    }
+
+    @Override
+    public Profile updateProfile(Long id, Profile profile) {
+        log.info("Updating profile with ID: {}", id);
+        Profile existingProfile = getProfileById(id);
+        existingProfile.setName(profile.getName());
+        existingProfile.setBnName(profile.getBnName());
+        existingProfile.setImageUrl(profile.getImageUrl());
+        existingProfile.setUsername(profile.getUsername());
+        existingProfile.setKeycloakUserId(profile.getKeycloakUserId());
+        existingProfile.setAddress(profile.getAddress());
+        existingProfile.setUserType(profile.getUserType());
+        existingProfile.setEmail(profile.getEmail());
+        existingProfile.setPhone(profile.getPhone());
+        existingProfile.setDateOfBirth(profile.getDateOfBirth());
+        existingProfile.setAddress(profile.getAddress());
+        existingProfile.setDistrict(profile.getDistrict());
+        existingProfile.setUpazila(profile.getUpazila());
+        existingProfile.setUnion(profile.getUnion());
+        existingProfile.setGender(profile.getGender());
         return profileRepository.save(existingProfile);
     }
 

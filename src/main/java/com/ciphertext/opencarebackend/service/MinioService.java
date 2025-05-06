@@ -68,6 +68,32 @@ public class MinioService {
     }
 
     /**
+     * Upload a file to MinIO with a specific object name
+     *
+     * @param file The file to upload
+     * @param objectName The object name in MinIO
+     */
+    public String uploadFile(MultipartFile file, String directory) {
+        try {
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String objectName = directory + "/" + UUID.randomUUID().toString() + extension;
+
+            minioClient.putObject(
+                    PutObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .stream(file.getInputStream(), file.getSize(), -1)
+                            .contentType(file.getContentType())
+                            .build());
+
+            return objectName;
+        } catch (Exception e) {
+            throw new RuntimeException("Error uploading file to MinIO", e);
+        }
+    }
+
+    /**
      * Download a file from MinIO
      *
      * @param objectName The object name in MinIO

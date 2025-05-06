@@ -168,6 +168,9 @@
         "create-doctor",
         "update-doctor",
         "delete-doctor",
+        "create-profile",
+        "update-profile",
+        "delete-profile",
         "create-hospital",
         "update-hospital",
         "delete-hospital",
@@ -241,6 +244,18 @@
       {
         "name": "delete-doctor",
         "description": "Delete Doctor Permission"
+      },
+      {
+          "name": "create-profile",
+          "description": "Create Profile Permission"
+      },
+      {
+          "name": "update-profile",
+          "description": "Update Profile Permission"
+      },
+      {
+          "name": "delete-profile",
+          "description": "Delete Profile Permission"
       },
       {
         "name": "create-hospital",

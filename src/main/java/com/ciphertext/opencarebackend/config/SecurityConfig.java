@@ -47,6 +47,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/doctors/").hasAuthority("update-doctor")
                         .requestMatchers(HttpMethod.DELETE, "/api/doctors/").hasAuthority("delete-doctor")
 
+                        .requestMatchers(HttpMethod.POST, "/api/profiles/").hasAuthority("create-profile")
+                        .requestMatchers(HttpMethod.PUT, "/api/profiles/").hasAuthority("update-profile")
+                        .requestMatchers(HttpMethod.DELETE, "/api/profiles/").hasAuthority("delete-profile")
+
                         .requestMatchers(HttpMethod.POST, "/api/hospitals/").hasAuthority("create-hospital")
                         .requestMatchers(HttpMethod.PUT, "/api/hospitals/").hasAuthority("update-hospital")
                         .requestMatchers(HttpMethod.DELETE, "/api/hospitals/").hasAuthority("delete-hospital")

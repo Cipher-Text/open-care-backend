@@ -32,6 +32,9 @@ public class Hospital extends Auditable<String> {
     @Column(name="bn_name")
     private String bnName;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name="number_of_bed", nullable = false)
     private Integer numberOfBed;
 

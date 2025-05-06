@@ -21,14 +21,14 @@ public class Profile extends Auditable<String> {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "keycloak_user_id", nullable = false)
+    @Column(name = "keycloak_user_id")
     private String keycloakUserId;
 
-    @Column(name = "photo")
-    private byte[] photo;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @Column(name = "phone")
     private String phone;

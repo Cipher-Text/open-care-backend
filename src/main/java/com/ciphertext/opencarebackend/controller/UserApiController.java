@@ -1,10 +1,8 @@
 package com.ciphertext.opencarebackend.controller;
 
-import com.ciphertext.opencarebackend.dto.UserProfileUpdate;
 import com.ciphertext.opencarebackend.dto.request.ProfileRequest;
 import com.ciphertext.opencarebackend.dto.response.ProfileResponse;
 import com.ciphertext.opencarebackend.entity.Profile;
-import com.ciphertext.opencarebackend.enums.Gender;
 import com.ciphertext.opencarebackend.mapper.ProfileMapper;
 import com.ciphertext.opencarebackend.service.KeycloakAdminService;
 import com.ciphertext.opencarebackend.service.ProfileService;
@@ -87,7 +85,7 @@ public class UserApiController {
         // Update the profile in the database
         Profile profile = profileService.getProfileByKeycloakUserId(keycloakUserId);
         profileMapper.partialUpdate(profileRequest, profile);
-        profileService.updateProfile(keycloakUserId, profile);
+        profileService.updateProfileBykeycloakId(keycloakUserId, profile);
         return ResponseEntity.ok("Profile updated successfully");
     }
 }

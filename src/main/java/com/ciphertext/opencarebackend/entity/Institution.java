@@ -27,6 +27,9 @@ public class Institution extends Auditable<String> {
     @Column(name="bn_name", nullable = false)
     private String bnName;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name="established_year")
     private Integer establishedYear;
 
