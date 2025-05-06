@@ -23,7 +23,7 @@ public class DoctorWorkplaceServiceImpl implements DoctorWorkplaceService {
     @Override
     public List<DoctorWorkplace> getDoctorWorkplacesByDoctorId(Long doctorId) {
         log.info("Fetching all doctor workplaces");
-        List<DoctorWorkplace> doctorWorkplaces = doctorWorkplaceRepository.findAll();
+        List<DoctorWorkplace> doctorWorkplaces = doctorWorkplaceRepository.findByDoctorId(doctorId);
         log.info("Retrieved {} doctor workplaces", doctorWorkplaces.size());
         return doctorWorkplaces;
     }

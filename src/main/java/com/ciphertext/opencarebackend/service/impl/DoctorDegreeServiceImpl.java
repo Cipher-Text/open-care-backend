@@ -23,7 +23,7 @@ public class DoctorDegreeServiceImpl implements DoctorDegreeService {
     @Override
     public List<DoctorDegree> getDoctorDegreesByDoctorId(Long doctorId) {
         log.info("Fetching all doctor degrees");
-        List<DoctorDegree> doctorDegrees = doctorDegreeRepository.findAll();
+        List<DoctorDegree> doctorDegrees = doctorDegreeRepository.findByDoctorId(doctorId);
         log.info("Retrieved {} doctor degrees", doctorDegrees.size());
         return doctorDegrees;
     }
