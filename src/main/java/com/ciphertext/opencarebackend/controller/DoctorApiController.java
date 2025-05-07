@@ -40,6 +40,7 @@ public class DoctorApiController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String bnName,
             @RequestParam(required = false) String bmdcNo,
+            @RequestParam(required = false) Boolean isCurrentWorkplace,
             @RequestParam(required = false) Integer hospitalId,
             @RequestParam(required = false) Integer workInstitutionId,
             @RequestParam(required = false) Integer studyInstitutionId,
@@ -56,6 +57,7 @@ public class DoctorApiController {
                 .name(name)
                 .bnName(bnName)
                 .bmdcNo(bmdcNo)
+                .isCurrentWorkplace(isCurrentWorkplace)
                 .hospitalId(hospitalId)
                 .studyInstitutionId(studyInstitutionId)
                 .workInstitutionId(workInstitutionId)

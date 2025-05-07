@@ -59,10 +59,10 @@ public class DoctorServiceImpl implements DoctorService {
             specification = specification.and(hasDegree(doctorFilter.getDegreeId()));
         }
         if (doctorFilter.getHospitalId() != null) {
-            specification = specification.and(worksAtHospital(doctorFilter.getHospitalId()));
+            specification = specification.and(worksAtHospital(doctorFilter.getHospitalId(), doctorFilter.getIsCurrentWorkplace()));
         }
         if( doctorFilter.getWorkInstitutionId() != null) {
-            specification = specification.and(worksAtInstitution(doctorFilter.getWorkInstitutionId()));
+            specification = specification.and(worksAtInstitution(doctorFilter.getWorkInstitutionId(), doctorFilter.getIsCurrentWorkplace()));
         }
         if (doctorFilter.getStudyInstitutionId() != null) {
             specification = specification.and(studyAtInstitution(doctorFilter.getStudyInstitutionId()));
@@ -167,7 +167,7 @@ public class DoctorServiceImpl implements DoctorService {
         };
     }
 
-    public static Specification<Doctor> worksAtHospital(Integer hospitalId) {
+    public static Specification<Doctor> worksAtHospital(Integer hospitalId, Boolean isCurrentWorkplace) {
         return (root, query, cb) -> {
             // Prevent duplicate results
             query.distinct(true);
@@ -176,12 +176,17 @@ public class DoctorServiceImpl implements DoctorService {
             Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
             Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
             Predicate hospitalMatch = cb.equal(workplaceRoot.get("hospital").get("id"), hospitalId);
-
+            if(isCurrentWorkplace != null) {
+                Predicate currentWorkplaceMatch = isCurrentWorkplace ?
+                        cb.isNull(workplaceRoot.get("endDate")) :
+                        cb.isNotNull(workplaceRoot.get("endDate"));
+                return cb.and(doctorJoin, hospitalMatch, currentWorkplaceMatch);
+            }
             return cb.and(doctorJoin, hospitalMatch);
         };
     }
 
-    public static Specification<Doctor> worksAtInstitution(Integer institutionId) {
+    public static Specification<Doctor> worksAtInstitution(Integer institutionId, Boolean isCurrentWorkplace) {
         return (root, query, cb) -> {
             // Prevent duplicate results
             query.distinct(true);
@@ -190,6 +195,12 @@ public class DoctorServiceImpl implements DoctorService {
             Root<DoctorWorkplace> workplaceRoot = query.from(DoctorWorkplace.class);
             Predicate doctorJoin = cb.equal(workplaceRoot.get("doctor").get("id"), root.get("id"));
             Predicate institutionMatch = cb.equal(workplaceRoot.get("institution").get("id"), institutionId);
+            if(isCurrentWorkplace != null) {
+                Predicate currentWorkplaceMatch = isCurrentWorkplace ?
+                        cb.isNull(workplaceRoot.get("endDate")) :
+                        cb.isNotNull(workplaceRoot.get("endDate"));
+                return cb.and(doctorJoin, institutionMatch, currentWorkplaceMatch);
+            }
 
             return cb.and(doctorJoin, institutionMatch);
         };

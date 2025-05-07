@@ -9,6 +9,7 @@ public class DoctorFilter {
     private String name;
     private String bnName;
     private String bmdcNo;
+    private Boolean isCurrentWorkplace;
     private Integer districtId;
     private Integer upazilaId;
     private Integer unionId;
