@@ -84,6 +84,11 @@ databaseChangeLog:
             tableName: social_organization
             quotchar: '"'
         - loadData:
+            file: seeds/hospital_medical_test.csv
+            relativeToChangelogFile: true
+            tableName: hospital_medical_test
+            quotchar: '"'
+        - loadData:
             file: seeds/medicine.csv
             relativeToChangelogFile: true
             tableName: medicine
