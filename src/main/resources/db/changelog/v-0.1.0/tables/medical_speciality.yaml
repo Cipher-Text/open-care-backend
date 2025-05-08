@@ -27,6 +27,12 @@ databaseChangeLog:
                   name: bn_name
                   type: varchar(100)
               - column:
+                  name: icon
+                  type: varchar(100)
+              - column:
+                  name: image_url
+                  type: varchar(250)
+              - column:
                   name: description
                   type: varchar(200)
             tableName: medical_speciality

@@ -40,6 +40,11 @@ public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
 
     @Override
+    public Long getHospitalCount() {
+        return hospitalRepository.count();
+    }
+
+    @Override
     public List<Hospital> getAllHospitals() {
         log.info("Fetching all hospitals");
         List<Hospital> hospitals = hospitalRepository.findAll();

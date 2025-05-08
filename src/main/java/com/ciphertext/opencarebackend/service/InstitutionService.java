@@ -12,6 +12,7 @@ import java.util.List;
  * @author Sadman
  */
 public interface InstitutionService {
+    Long getInstitutionCount();
     List<Institution> getAllInstitutions();
     Institution getInstitutionById(int id) throws ResourceNotFoundException;
     Page<Institution> getPaginatedDataWithFilters(InstitutionFilter institutionFilter, Pageable pagingSort);

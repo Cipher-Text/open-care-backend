@@ -1,19 +1,26 @@
 package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.home.*;
+import com.ciphertext.opencarebackend.service.DoctorService;
+import com.ciphertext.opencarebackend.service.HospitalService;
+import com.ciphertext.opencarebackend.service.InstitutionService;
+import com.ciphertext.opencarebackend.service.ProfileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/home")
-@CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class HomeApiController {
+    private final InstitutionService institutionService;
+    private final ProfileService profileService;
+    private final HospitalService hospitalService;
+    private final DoctorService doctorService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getHomeData() {
@@ -87,7 +94,12 @@ public class HomeApiController {
                 Arrays.asList("Cardiology", "Neurology", "Oncology"), 1965));
 
         // Stats
-        Stats stats = new Stats(5367, 432, 128, 250000);
+        Stats stats = Stats.builder()
+                .totalDoctors(doctorService.getDoctorCount())
+                .totalHospitals(hospitalService.getHospitalCount())
+                .totalInstitutes(institutionService.getInstitutionCount())
+                .totalUsers(profileService.getProfileCount())
+                .build();
 
         featuredData.setDoctors(doctors);
         featuredData.setHospitals(hospitals);

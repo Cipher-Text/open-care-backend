@@ -11,5 +11,7 @@ public class MedicalSpecialityResponse {
     private Integer parentId;
     private String name;
     private String bnName;
+    private String icon;
+    private String imageUrl;
     private String description;
 }

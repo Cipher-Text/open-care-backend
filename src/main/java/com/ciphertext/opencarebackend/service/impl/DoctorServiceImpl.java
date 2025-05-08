@@ -37,6 +37,11 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
 
     @Override
+    public Long getDoctorCount() {
+        return doctorRepository.count();
+    }
+
+    @Override
     public List<Doctor> getAllDoctors() {
         log.info("Fetching all doctors");
         List<Doctor> doctors = doctorRepository.findAll();

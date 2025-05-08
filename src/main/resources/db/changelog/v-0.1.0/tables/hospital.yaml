@@ -50,6 +50,15 @@ databaseChangeLog:
                   name: organization_type
                   type: varchar(50)
               - column:
+                  name: email
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(100)
+              - column:
+                  name: address
+                  type: varchar(500)
+              - column:
                   name: lat
                   type: varchar(100)
               - column:

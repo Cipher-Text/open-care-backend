@@ -25,6 +25,12 @@ public class MedicalSpeciality {
     @Column(name="bn_name", nullable = false)
     private String bnName;
 
+    @Column(name="icon")
+    private String icon;
+
+    @Column(name="image_url")
+    private String imageUrl;
+
     @Column(name="description")
     private String description;
 }

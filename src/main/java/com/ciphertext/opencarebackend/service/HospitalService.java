@@ -13,6 +13,7 @@ import java.util.List;
  * @author Sadman
  */
 public interface HospitalService {
+    Long getHospitalCount();
     List<Hospital> getAllHospitals();
     Page<Hospital> getPaginatedDataWithFilters(HospitalFilter hospitalFilter, Pageable pagingSort);
     Hospital getHospitalById(int id) throws ResourceNotFoundException;

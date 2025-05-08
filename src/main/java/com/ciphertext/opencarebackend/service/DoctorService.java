@@ -13,6 +13,7 @@ import java.util.List;
  * @author Sadman
  */
 public interface DoctorService {
+    Long getDoctorCount();
     List<Doctor> getAllDoctors();
     Page<Doctor> getPaginatedDataWithFilters(DoctorFilter doctorFilter, Pageable pagingSort);
     Doctor getDoctorById(Long id) throws ResourceNotFoundException;

@@ -1,6 +1,7 @@
 package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.entity.Profile;
+import com.ciphertext.opencarebackend.enums.UserType;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.respository.ProfileRepository;
 import com.ciphertext.opencarebackend.service.ProfileService;
@@ -16,6 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfileServiceImpl implements ProfileService {
 
     private final ProfileRepository profileRepository;
+
+    @Override
+    public Long getProfileCount() {
+        return profileRepository.countAllByUserType(UserType.USER);
+    }
 
     @Override
     public Profile getProfileByKeycloakUserId(String keycloakUserId) throws ResourceNotFoundException {

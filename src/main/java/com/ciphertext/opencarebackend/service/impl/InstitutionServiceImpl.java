@@ -34,6 +34,11 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository institutionRepository;
 
     @Override
+    public Long getInstitutionCount() {
+        return institutionRepository.count();
+    }
+
+    @Override
     public List<Institution> getAllInstitutions() {
         log.info("Fetching all institutions");
         List<Institution> institutions = institutionRepository.findAll();
