@@ -1,10 +1,8 @@
 package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.home.*;
-import com.ciphertext.opencarebackend.service.DoctorService;
-import com.ciphertext.opencarebackend.service.HospitalService;
-import com.ciphertext.opencarebackend.service.InstitutionService;
-import com.ciphertext.opencarebackend.service.ProfileService;
+import com.ciphertext.opencarebackend.dto.response.MedicalSpecialityResponse;
+import com.ciphertext.opencarebackend.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +19,14 @@ public class HomeApiController {
     private final ProfileService profileService;
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
+    private final DoctorWorkplaceService doctorWorkplaceService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getHomeData() {
         Map<String, Object> homeData = new HashMap<>();
         homeData.put("featuredData", getFeaturedData());
         homeData.put("blogPosts", getBlogPosts());
-        homeData.put("popularSpecialties", getPopularSpecialties());
+        homeData.put("popularSpecialties", doctorWorkplaceService.getTopMedicalSpecialities(10));
         return ResponseEntity.ok(homeData);
     }
 
@@ -42,8 +41,8 @@ public class HomeApiController {
     }
 
     @GetMapping("/specialties")
-    public ResponseEntity<List<Specialty>> getSpecialtiesEndpoint() {
-        return ResponseEntity.ok(getPopularSpecialties());
+    public ResponseEntity<List<MedicalSpecialityResponse>> getSpecialtiesEndpoint() {
+        return ResponseEntity.ok(doctorWorkplaceService.getTopMedicalSpecialities(10));
     }
 
     private FeaturedData getFeaturedData() {
@@ -137,21 +136,6 @@ public class HomeApiController {
                 "Stay informed with the most recent information about COVID-19 prevention and treatment."));
 
         return blogPosts;
-    }
-
-    private List<Specialty> getPopularSpecialties() {
-        List<Specialty> specialties = new ArrayList<>();
-
-        specialties.add(new Specialty("Cardiology", "❤️"));
-        specialties.add(new Specialty("Pediatrics", "👶"));
-        specialties.add(new Specialty("Orthopedics", "🦴"));
-        specialties.add(new Specialty("Dermatology", "🧴"));
-        specialties.add(new Specialty("Neurology", "🧠"));
-        specialties.add(new Specialty("Gynecology", "👩"));
-        specialties.add(new Specialty("Ophthalmology", "👁️"));
-        specialties.add(new Specialty("Dentistry", "🦷"));
-
-        return specialties;
     }
 
     @GetMapping("/testimonials")

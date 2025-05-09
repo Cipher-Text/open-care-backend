@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.service.impl;
 
+import com.ciphertext.opencarebackend.dto.response.MedicalSpecialityResponse;
 import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -77,4 +79,26 @@ public class DoctorWorkplaceServiceImpl implements DoctorWorkplaceService {
             return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
         } else return ResponseEntity.ok().body("Doctor Workplace is Deleted Successfully");
     }
+
+    @Override
+    public List<MedicalSpecialityResponse> getTopMedicalSpecialities(Integer limit) {
+        List<Object[]> results = doctorWorkplaceRepository.findMedicalSpecialitiesWithDoctorCount(limit);
+        return results.stream()
+                .map(this::mapToMedicalSpecialityResponse)
+                .collect(Collectors.toList());
+    }
+
+    private MedicalSpecialityResponse mapToMedicalSpecialityResponse(Object[] result) {
+        MedicalSpecialityResponse response = new MedicalSpecialityResponse();
+        response.setId((Integer) result[0]);
+        response.setParentId((Integer) result[1]);
+        response.setName((String) result[2]);
+        response.setBnName((String) result[3]);
+        response.setIcon((String) result[4]);
+        response.setImageUrl((String) result[5]);
+        response.setDescription((String) result[6]);
+        response.setDoctorCount(((Number) result[7]).longValue());
+        return response;
+    }
+
 }

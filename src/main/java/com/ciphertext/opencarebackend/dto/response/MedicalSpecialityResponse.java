@@ -14,4 +14,5 @@ public class MedicalSpecialityResponse {
     private String icon;
     private String imageUrl;
     private String description;
+    private Long doctorCount;
 }

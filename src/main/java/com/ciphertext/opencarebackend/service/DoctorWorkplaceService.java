@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.service;
 
+import com.ciphertext.opencarebackend.dto.response.MedicalSpecialityResponse;
 import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -15,4 +16,5 @@ public interface DoctorWorkplaceService {
     DoctorWorkplace createDoctorWorkplace(DoctorWorkplace doctorWorkplace);
     DoctorWorkplace updateDoctorWorkplace(DoctorWorkplace newDoctorWorkplace, Long doctorWorkplaceId);
     ResponseEntity<Object> deleteDoctorWorkplaceById(Long doctorWorkplaceId);
+    List<MedicalSpecialityResponse> getTopMedicalSpecialities(Integer limit);
 }
