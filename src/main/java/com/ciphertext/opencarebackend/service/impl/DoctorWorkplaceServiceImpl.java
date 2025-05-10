@@ -91,13 +91,10 @@ public class DoctorWorkplaceServiceImpl implements DoctorWorkplaceService {
     private MedicalSpecialityResponse mapToMedicalSpecialityResponse(Object[] result) {
         MedicalSpecialityResponse response = new MedicalSpecialityResponse();
         response.setId((Integer) result[0]);
-        response.setParentId((Integer) result[1]);
-        response.setName((String) result[2]);
-        response.setBnName((String) result[3]);
-        response.setIcon((String) result[4]);
-        response.setImageUrl((String) result[5]);
-        response.setDescription((String) result[6]);
-        response.setDoctorCount(((Number) result[7]).longValue());
+        response.setName((String) result[1]);
+        response.setBnName((String) result[2]);
+        response.setIcon((String) result[3]);
+        response.setDoctorCount(((Long) result[4]));
         return response;
     }
 

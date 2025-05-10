@@ -44,7 +44,7 @@ public class Doctor extends Auditable<String> {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
