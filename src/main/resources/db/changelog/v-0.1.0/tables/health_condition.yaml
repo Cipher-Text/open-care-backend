@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-health-condition-table
+      author: yourname
+      changes:
+        - createTable:
+            tableName: health_condition
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_health_condition_profile
+                    references: profile(id)
+
+              - column:
+                  name: condition_type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              # Allergy-specific
+              - column:
+                  name: severity
+                  type: VARCHAR(20)
+
+              - column:
+                  name: reaction
+                  type: TEXT
+
+              # Diagnosis-specific
+              - column:
+                  name: diagnosis_date
+                  type: DATE
+
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+
+              # Common fields
+              - column:
+                  name: icd_code
+                  type: VARCHAR(10)
+
+              - column:
+                  name: notes
+                  type: TEXT
+
+              - column:
+                  name: last_updated
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createIndex:
+            indexName: idx_health_condition_profile
+            tableName: health_condition
+            columns:
+              - column:
+                  name: profile_id

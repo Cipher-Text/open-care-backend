@@ -71,3 +71,6 @@ databaseChangeLog:
   - include:
       file: tables/advertisement_payment.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/health_vital.yaml
+      relativeToChangelogFile: true

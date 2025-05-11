@@ -1,0 +1,4 @@
+id,profile_id,recorded_at,blood_pressure_systolic,blood_pressure_diastolic,heart_rate,temperature,blood_glucose,oxygen_saturation,height_cm,weight_kg,bmi,measurement_location,notes,created_at
+1,1241,2025-05-10 08:15:00,120,80,72,98.6,95.50,98,175.0,70.5,23.0,home,"Morning checkup",2025-05-10 08:16:00
+2,1241,2025-05-11 09:00:00,130,85,76,99.1,110.00,96,160.0,80.0,31.2,clinic,"Routine visit",2025-05-11 09:01:00
+3,1241,2025-05-09 18:30:00,110,70,65,97.9,88.75,99,180.0,75.0,23.1,hospital,"Post-surgery monitoring",2025-05-09 18:31:00
