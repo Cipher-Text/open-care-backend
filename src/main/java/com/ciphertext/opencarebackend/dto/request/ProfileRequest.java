@@ -20,6 +20,7 @@ public class ProfileRequest {
     private String bnName;
     private String gender;
     private Date dateOfBirth;
+    private String bloodGroup;
     private String address;
     private Integer districtId;
     private Integer upazilaId;

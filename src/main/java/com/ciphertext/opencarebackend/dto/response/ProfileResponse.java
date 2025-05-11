@@ -21,6 +21,7 @@ public class ProfileResponse {
     private String bnName;
     private String gender;
     private Date dateOfBirth;
+    private String bloodGroup;
     private String address;
     private DistrictResponse district;
     private UpazilaResponse upazila;
