@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-health-vital-table
+      author: sadman
+      changes:
+        - createTable:
+            tableName: health_vital
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_health_vital_profile
+                    references: profile(id)
+              - column:
+                  name: recorded_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              # Core metrics
+              - column:
+                  name: blood_pressure_systolic
+                  type: INTEGER
+              - column:
+                  name: blood_pressure_diastolic
+                  type: INTEGER
+              - column:
+                  name: heart_rate
+                  type: INTEGER
+              - column:
+                  name: temperature
+                  type: DECIMAL(4,1)
+              - column:
+                  name: blood_glucose
+                  type: DECIMAL(5,2)
+              - column:
+                  name: oxygen_saturation
+                  type: INTEGER
+
+              # Body composition
+              - column:
+                  name: height_cm
+                  type: DECIMAL(5,1)
+              - column:
+                  name: weight_kg
+                  type: DECIMAL(5,1)
+              - column:
+                  name: bmi
+                  type: DECIMAL(4,1)
+
+              # Metadata
+              - column:
+                  name: measurement_location
+                  type: VARCHAR(50)
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+
+        - createIndex:
+            indexName: idx_health_vital_profile
+            tableName: health_vital
+            columns:
+              - column:
+                  name: profile_id
+
+

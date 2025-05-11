@@ -43,6 +43,9 @@ databaseChangeLog:
                   name: date_of_birth
                   type: date
               - column:
+                  name: blood_group
+                  type: varchar(10)
+              - column:
                   name: address
                   type: varchar(512)
               - column:

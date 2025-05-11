@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-health-medication-table
+      author: yourname
+      changes:
+        - createTable:
+            tableName: health_medication
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_health_medication_profile
+                    references: profile(id)
+
+              - column:
+                  name: medication_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: rxnorm_code
+                  type: VARCHAR(10)
+
+              # Dosage
+              - column:
+                  name: dosage_amount
+                  type: VARCHAR(20)
+
+              - column:
+                  name: dosage_unit
+                  type: VARCHAR(20)
+
+              - column:
+                  name: frequency
+                  type: VARCHAR(50)
+
+              # Duration
+              - column:
+                  name: start_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: end_date
+                  type: DATE
+
+              # Prescriber info
+              - column:
+                  name: prescribed_by
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_health_medication_doctor
+                    references: doctor(id)
+
+              - column:
+                  name: prescription_notes
+                  type: TEXT
+
+              # Compliance
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+
+              - column:
+                  name: last_taken
+                  type: TIMESTAMP
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createIndex:
+            indexName: idx_health_medication_profile
+            tableName: health_medication
+            columns:
+              - column:
+                  name: profile_id

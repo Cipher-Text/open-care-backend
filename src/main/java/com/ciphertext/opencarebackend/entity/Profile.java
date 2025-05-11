@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.entity;
 
+import com.ciphertext.opencarebackend.enums.BloodGroup;
 import com.ciphertext.opencarebackend.enums.Gender;
 import com.ciphertext.opencarebackend.enums.UserType;
 import jakarta.persistence.*;
@@ -48,6 +49,10 @@ public class Profile extends Auditable<String> {
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
+    @Column(name = "blood_group")
+    @Enumerated(EnumType.STRING)
+    private BloodGroup bloodGroup;
 
     @Column(name = "address")
     private String address;
