@@ -18,7 +18,7 @@ public class DoctorRequest {
     private String specializations;
     private String description;
     private Boolean isActive;
-    private Boolean isDeleted;
+    private Boolean isVerified;
     private String username;
     private byte[] photo;
     private String phone;
