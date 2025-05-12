@@ -52,7 +52,7 @@ cd opencare-backend
 
 2. **Run the Docker container**:
    ```bash
-   docker run -p 6500:6500 opencare-backend
+   docker run -p 6700:6700 opencare-backend
    ```
 
 ### Database Migration

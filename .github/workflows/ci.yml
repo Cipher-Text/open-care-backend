@@ -91,7 +91,7 @@ jobs:
             sudo docker stop open-care-backend-${{ env.ENV_NAME }} || true
             sudo docker rm open-care-backend-${{ env.ENV_NAME }} || true
             sudo docker system prune -af
-            sudo docker run -d --name open-care-backend-${{ env.ENV_NAME }} -p 6500:6500 --restart always \
+            sudo docker run -d --name open-care-backend-${{ env.ENV_NAME }} -p 6700:6700 --restart always \
               --env SPRING_PROFILES_ACTIVE=${{ env.ENV_NAME }} \
               --env-file /home/alwyzon/open-care-backend/.env.${{ env.ENV_NAME }} \
               ${{ secrets.DOCKER_USERNAME }}/open-care-backend:${{ env.ENV_NAME }}-latest

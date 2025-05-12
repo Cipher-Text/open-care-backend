@@ -42,7 +42,7 @@ docker system prune -af
 
 # Run the new container
 echo "🚀 Starting new container..."
-docker run -d --name $CONTAINER_NAME -p 6500:6500 --restart always \
+docker run -d --name $CONTAINER_NAME -p 6700:6700 --restart always \
   --env SPRING_PROFILES_ACTIVE=$ENV \
   --env-file $ENV_FILE \
   $IMAGE_NAME || { echo "❌ Failed to start the container!"; exit 1; }

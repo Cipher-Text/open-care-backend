@@ -19,7 +19,7 @@ WORKDIR /app
 # Copy the built JAR file from the build stage (use wildcard to avoid version issues)
 COPY --from=build /app/target/open-care-backend-*.jar ./app.jar
 
-EXPOSE 6500
+EXPOSE 6700
 
 # Allow setting environment-specific Spring profiles (default to 'qa')
 ENV SPRING_PROFILES_ACTIVE=qa

@@ -31,7 +31,7 @@ USER spring:spring
 COPY --from=build /app/target/open-care-backend-*.jar ./app.jar
 
 # Expose the port your application runs on
-EXPOSE 6500
+EXPOSE 6700
 
 # Allow setting environment-specific Spring profiles (default to 'dev')
 ENV SPRING_PROFILES_ACTIVE=dev
