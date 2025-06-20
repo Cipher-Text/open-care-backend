@@ -93,3 +93,23 @@ databaseChangeLog:
             relativeToChangelogFile: true
             tableName: medicine
             quotchar: '"'
+        - loadData:
+            file: seeds/advertisement_type.csv
+            relativeToChangelogFile: true
+            tableName: advertisement_type
+            quotchar: '"'
+        - loadData:
+            file: seeds/advertisement.csv
+            relativeToChangelogFile: true
+            tableName: advertisement
+            quotchar: '"'
+        - loadData:
+            file: seeds/advertisement_payment.csv
+            relativeToChangelogFile: true
+            tableName: advertisement_payment
+            quotchar: '"'
+        - loadData:
+            file: seeds/advertisement_log.csv
+            relativeToChangelogFile: true
+            tableName: advertisement_log
+            quotchar: '"'

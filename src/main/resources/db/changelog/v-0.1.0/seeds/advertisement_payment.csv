@@ -1,8 +1,8 @@
 advertisement_id,amount,payment_method,status,transaction_reference,payment_details,paid_at
-1,5000.00,"credit_card","completed","PAY-123456789",'{"card_last4":"4242","card_brand":"visa","auth_code":"AUTH123"}',"2023-06-15 10:30:45"
-2,12000.00,"bank_transfer","completed","BANK-987654321",'{"bank_name":"DBBL","account_last4":"1234"}',"2023-06-16 14:22:10"
-3,3000.00,"mobile_banking","completed","BKASH-5556677",'{"provider":"bKash","phone":"017XX123456"}',"2023-06-17 09:15:33"
-4,20000.00,"credit_card","completed","PAY-112233445",'{"card_last4":"5555","card_brand":"mastercard","auth_code":"AUTH456"}',"2023-06-18 16:45:22"
-1,5000.00,"credit_card","refunded","REF-123456789",'{"reason":"advertisement_ended_early"}',"2023-07-31 11:20:15"
-5,7500.00,"mobile_banking","failed","BKASH-888999",'{"provider":"Nagad","phone":"019XX654321","error":"insufficient_funds"}',NULL
-6,9500.00,"bank_transfer","pending","BANK-4455667788",'{"bank_name":"EBL","account_last4":"5678"}',NULL
+1,5000.00,"credit_card","completed","PAY-123456789","card_last4:4242|card_brand:visa|auth_code:AUTH123","2023-06-15 10:30:45"
+2,12000.00,"bank_transfer","completed","BANK-987654321","bank_name:DBBL|account_last4:1234","2023-06-16 14:22:10"
+3,3000.00,"mobile_banking","completed","BKASH-5556677","provider:bKash|phone:017XX123456","2023-06-17 09:15:33"
+4,20000.00,"credit_card","completed","PAY-112233445","card_last4:5555|card_brand:mastercard|auth_code:AUTH456","2023-06-18 16:45:22"
+1,5000.00,"credit_card","refunded","REF-123456789","reason:advertisement_ended_early","2023-07-31 11:20:15"
+5,7500.00,"mobile_banking","failed","BKASH-888999","provider:Nagad|phone:019XX654321|error:insufficient_funds",NULL
+6,9500.00,"bank_transfer","pending","BANK-4455667788","bank_name:EBL|account_last4:5678",NULL

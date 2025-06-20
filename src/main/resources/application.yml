@@ -21,7 +21,7 @@ spring:
       ddl-auto: update
 
   liquibase:
-    drop-first: false
+    drop-first: true
     default-schema: public
     change-log: classpath:db/changelog/db.changelog-master.yaml
 

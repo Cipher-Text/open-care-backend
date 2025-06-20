@@ -35,7 +35,7 @@ databaseChangeLog:
                   type: VARCHAR(100)
               - column:
                   name: payment_details
-                  type: JSONB
+                  type: VARCHAR(500)
               - column:
                   name: paid_at
                   type: TIMESTAMP

@@ -28,7 +28,7 @@ databaseChangeLog:
                   type: VARCHAR(45)
               - column:
                   name: user_agent
-                  type: TEXT
+                  type: VARCHAR(255)
               - column:
                   name: district_id
                   type: INTEGER
