@@ -48,9 +48,21 @@ databaseChangeLog:
                 - column:
                     constraints:
                       nullable: false
+                    name: created_by
+                    type: varchar(100)
+                    defaultValue: 'admin'
+                - column:
+                    constraints:
+                      nullable: false
                     name: created_at
                     type: timestamp
                     defaultValueComputed: 'CURRENT_TIMESTAMP'
+                - column:
+                    constraints:
+                      nullable: false
+                    name: updated_by
+                    type: varchar(100)
+                    defaultValue: 'admin'
                 - column:
                     constraints:
                       nullable: false
