@@ -38,6 +38,16 @@ spring:
     async:
       request-timeout: 30000
 
+  # cache configuration
+  cache:
+    type: caffeine
+    cache-names:
+      - githubContributors
+      - latestBlogPosts
+      - topDoctors
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=30m
+
 # Keycloak connections
 app:
   keycloak:
