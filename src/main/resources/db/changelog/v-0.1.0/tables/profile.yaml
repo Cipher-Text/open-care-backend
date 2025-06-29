@@ -49,6 +49,18 @@ databaseChangeLog:
                   name: address
                   type: varchar(512)
               - column:
+                  name: facebook_profile_url
+                  type: varchar(255)
+              - column:
+                  name: linkedin_profile_url
+                  type: varchar(255)
+              - column:
+                  name: x_profile_url
+                  type: varchar(255)
+              - column:
+                  name: research_gate_profile_url
+                  type: varchar(255)
+              - column:
                   name: district_id
                   type: int4
               - column:
