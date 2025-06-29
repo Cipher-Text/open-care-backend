@@ -96,3 +96,7 @@ minio:
   accessKey: ${MINIO_ACCESS_KEY:minioadmin}
   secretKey: ${MINIO_SECRET_KEY:minioadmin123}
   bucketName: ${MINIO_BUCKET_NAME:opencare}
+
+# GitHub Configuration
+github:
+  token: ${GITHUB_TOKEN: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}
