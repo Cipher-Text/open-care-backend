@@ -21,6 +21,9 @@ databaseChangeLog:
                   name: bn_name
                   type: varchar(200)
               - column:
+                  name: logo_url
+                  type: varchar(500)
+              - column:
                   name: organization_type
                   type: varchar(10)
               - column:
