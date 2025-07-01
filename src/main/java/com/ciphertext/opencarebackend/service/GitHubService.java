@@ -10,7 +10,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GitHubService {
@@ -39,7 +41,7 @@ public class GitHubService {
     @Cacheable("githubContributors")
     public String fetchContributors() {
         ObjectMapper mapper = new ObjectMapper();
-        ArrayNode allContributors = mapper.createArrayNode();
+        Map<String, ObjectNode> uniqueContributors = new HashMap<>();
 
         List<String> repositoryUrls = gitHubProperties.getRepositories().stream()
                 .map(repo -> "https://api.github.com/repos/" + repo + "/contributors")
@@ -50,15 +52,37 @@ public class GitHubService {
             try {
                 JsonNode array = mapper.readTree(response);
                 if (array.isArray()) {
-                    array.forEach(allContributors::add);
+                    for (JsonNode contributor : array) {
+                        String login = contributor.get("login").asText();
+                        int contributions = contributor.get("contributions").asInt();
+
+                        if (uniqueContributors.containsKey(login)) {
+                            ObjectNode existing = uniqueContributors.get(login);
+                            int current = existing.get("contributions").asInt();
+                            existing.put("contributions", current + contributions);
+                        } else {
+                            ObjectNode copy = contributor.deepCopy();
+                            uniqueContributors.put(login, copy);
+                        }
+                    }
                 }
             } catch (Exception e) {
                 // Optionally log or handle error
             }
         }
 
+        // Sort contributors by contributions descending
+        List<ObjectNode> sortedContributors = uniqueContributors.values().stream()
+                .sorted((a, b) -> Integer.compare(
+                        b.get("contributions").asInt(),
+                        a.get("contributions").asInt()))
+                .toList();
+
+        ArrayNode resultArray = mapper.createArrayNode();
+        sortedContributors.forEach(resultArray::add);
+
         ObjectNode result = mapper.createObjectNode();
-        result.set("contributors", allContributors);
+        result.set("contributors", resultArray);
         return result.toString();
     }
 }
