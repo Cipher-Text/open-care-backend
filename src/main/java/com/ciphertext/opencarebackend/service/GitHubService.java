@@ -1,7 +1,10 @@
 package com.ciphertext.opencarebackend.service;
 
 import com.ciphertext.opencarebackend.properties.GitHubProperties;
-import org.springframework.beans.factory.annotation.Value;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,18 +21,30 @@ public class GitHubService {
         this.gitHubProperties = gitHubProperties;
     }
 
-    @Cacheable("githubContributors")
-    public String fetchContributors() {
-        List<String> repositoryUrls = gitHubProperties.getRepositories().stream()
-                .map(repo -> "https://api.github.com/repos/" + repo + "/contributors")
-                .toList();
-
-        StringBuilder contributors = new StringBuilder();
-        for (String url : repositoryUrls) {
-            contributors.append(fetchContributorsFromUrl(url)).append("\n");
-        }
-        return contributors.toString();
-    }
+//    @Cacheable("githubContributors")
+//    public String fetchContributors() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        ArrayNode allContributors = mapper.createArrayNode();
+//        List<String> repositoryUrls = gitHubProperties.getRepositories().stream()
+//                .map(repo -> "https://api.github.com/repos/" + repo + "/contributors")
+//                .toList();
+//
+//        for (String url : repositoryUrls) {
+//            String response = fetchContributorsFromUrl(url);
+//            try {
+//                JsonNode array = mapper.readTree(response);
+//                if (array.isArray()) {
+//                    array.forEach(allContributors::add);
+//                }
+//            } catch (Exception e) {
+//                // Optionally log or handle error
+//            }
+//        }
+//
+//        ObjectNode result = mapper.createObjectNode();
+//        result.set("contributors", allContributors);
+//        return result.toString();
+//    }
 
     private String fetchContributorsFromUrl(String url) {
         HttpHeaders headers = new HttpHeaders();
@@ -44,5 +59,31 @@ public class GitHubService {
         } else {
             return "Failed to fetch contributors from " + url + ": " + response.getStatusCode();
         }
+    }
+
+    @Cacheable("githubContributors")
+    public String fetchContributors() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode allContributors = mapper.createArrayNode();
+
+        List<String> repositoryUrls = gitHubProperties.getRepositories().stream()
+                .map(repo -> "https://api.github.com/repos/" + repo + "/contributors")
+                .toList();
+
+        for (String url : repositoryUrls) {
+            String response = fetchContributorsFromUrl(url);
+            try {
+                JsonNode array = mapper.readTree(response);
+                if (array.isArray()) {
+                    array.forEach(allContributors::add);
+                }
+            } catch (Exception e) {
+                // Optionally log or handle error
+            }
+        }
+
+        ObjectNode result = mapper.createObjectNode();
+        result.set("contributors", allContributors);
+        return result.toString();
     }
 }
