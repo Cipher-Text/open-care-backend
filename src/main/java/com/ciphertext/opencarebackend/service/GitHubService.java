@@ -21,31 +21,6 @@ public class GitHubService {
         this.gitHubProperties = gitHubProperties;
     }
 
-//    @Cacheable("githubContributors")
-//    public String fetchContributors() {
-//        ObjectMapper mapper = new ObjectMapper();
-//        ArrayNode allContributors = mapper.createArrayNode();
-//        List<String> repositoryUrls = gitHubProperties.getRepositories().stream()
-//                .map(repo -> "https://api.github.com/repos/" + repo + "/contributors")
-//                .toList();
-//
-//        for (String url : repositoryUrls) {
-//            String response = fetchContributorsFromUrl(url);
-//            try {
-//                JsonNode array = mapper.readTree(response);
-//                if (array.isArray()) {
-//                    array.forEach(allContributors::add);
-//                }
-//            } catch (Exception e) {
-//                // Optionally log or handle error
-//            }
-//        }
-//
-//        ObjectNode result = mapper.createObjectNode();
-//        result.set("contributors", allContributors);
-//        return result.toString();
-//    }
-
     private String fetchContributorsFromUrl(String url) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(gitHubProperties.getToken());

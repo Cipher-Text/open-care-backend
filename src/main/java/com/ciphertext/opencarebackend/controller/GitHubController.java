@@ -22,9 +22,17 @@ public class GitHubController {
 
     private final GitHubService gitHubService;
 
-    @GetMapping("/contributors")
+    @GetMapping(value = "/contributors", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getContributors() {
-        return ResponseEntity.ok(gitHubService.fetchContributors());
+        try {
+            String jsonResponse = gitHubService.fetchContributors();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(jsonResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Failed to fetch contributors\"}");
+        }
     }
 
     @Scheduled(fixedRate = 30 * 60 * 1000) // every 30 mins
