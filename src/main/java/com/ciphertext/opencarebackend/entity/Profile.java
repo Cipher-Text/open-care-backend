@@ -57,6 +57,18 @@ public class Profile extends Auditable<String> {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "facebook_profile_url")
+    private String facebookProfileUrl;
+
+    @Column(name = "linkedin_profile_url")
+    private String linkedinProfileUrl;
+
+    @Column(name = "x_profile_url")
+    private String xProfileUrl;
+
+    @Column(name = "research_gate_profile_url")
+    private String researchGateProfileUrl;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "district_id")
     private District district;
