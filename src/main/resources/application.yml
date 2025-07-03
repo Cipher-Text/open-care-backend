@@ -21,7 +21,7 @@ spring:
       ddl-auto: update
 
   liquibase:
-    drop-first: true
+    drop-first: false
     default-schema: public
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
@@ -109,7 +109,7 @@ minio:
 
 # GitHub Configuration
 github:
-  token: ${GITHUB_TOKEN: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}
+  token: ${GITHUB_TOKEN:ghp_your_github_token_here}
   repositories:
     - Cipher-Text/open-care-frontend
     - Cipher-Text/opencare
