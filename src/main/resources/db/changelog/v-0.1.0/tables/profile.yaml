@@ -70,6 +70,12 @@ databaseChangeLog:
                   name: union_id
                   type: int4
               - column:
+                  name: domain
+                  type: varchar(100)
+              - column:
+                  name: domain_id
+                  type: int4
+              - column:
                   constraints:
                     nullable: false
                   name: is_active

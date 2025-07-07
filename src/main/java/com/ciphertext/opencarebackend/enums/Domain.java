@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum Module {
+public enum Domain {
     DOCTOR("Doctor", "ডাক্তার", true),
     HOSPITAL("Hospital", "হাসপাতাল", true),
     ORGANIZATION("Organization", "সংগঠন", false),
@@ -17,7 +17,7 @@ public enum Module {
     private final String banglaName;
     private final Boolean isAdvertisement;
 
-    Module(String name, String banglaName, Boolean isAdvertisement) {
+    Domain(String name, String banglaName, Boolean isAdvertisement) {
         this.name = name;
         this.banglaName = banglaName;
         this.isAdvertisement = isAdvertisement;
@@ -36,9 +36,9 @@ public enum Module {
     }
 
     public static List<String> getAllEnumNamesByIsAdvertisement(Boolean isAdvertisement) {
-        return Arrays.stream(Module.values())
-                .filter(module -> module.getIsAdvertisement().equals(isAdvertisement))
-                .map(Module::getName)
+        return Arrays.stream(Domain.values())
+                .filter(domain -> domain.getIsAdvertisement().equals(isAdvertisement))
+                .map(Domain::getName)
                 .collect(Collectors.toList());
     }
 }

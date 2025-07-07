@@ -1,6 +1,7 @@
 package com.ciphertext.opencarebackend.entity;
 
 import com.ciphertext.opencarebackend.enums.BloodGroup;
+import com.ciphertext.opencarebackend.enums.Domain;
 import com.ciphertext.opencarebackend.enums.Gender;
 import com.ciphertext.opencarebackend.enums.UserType;
 import jakarta.persistence.*;
@@ -80,4 +81,11 @@ public class Profile extends Auditable<String> {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "union_id")
     private Union union;
+
+    @Column(name = "domain")
+    @Enumerated(EnumType.STRING)
+    private Domain domain;
+
+    @Column(name = "domain_id")
+    private Integer domainId;
 }
