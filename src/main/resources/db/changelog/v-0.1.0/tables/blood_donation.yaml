@@ -1,0 +1,109 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_blood_donations_table
+      author: ismail
+      changes:
+        - createTable:
+            tableName: blood_donations
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: donor_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    references: profile(id)
+                    foreignKeyName: fk_donations_donor
+                    deleteCascade: true
+              - column:
+                  name: donation_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: blood_type
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity_ml
+                  type: INTEGER
+                  defaultValue: 450
+                  constraints:
+                    nullable: true
+              - column:
+                  name: donation_type
+                  type: VARCHAR(20)
+                  defaultValue: whole_blood
+                  constraints:
+                    nullable: true
+                    checkConstraint: "donation_type IN ('whole_blood', 'plasma', 'platelets', 'double_red')"
+              - column:
+                  name: health_status
+                  type: VARCHAR(20)
+                  defaultValue: healthy
+                  constraints:
+                    nullable: true
+                    checkConstraint: "health_status IN ('healthy', 'sick', 'medication')"
+              - column:
+                  name: hemoglobin_level
+                  type: DECIMAL(3,1)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: blood_pressure
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: pulse_rate
+                  type: INTEGER
+                  constraints:
+                    nullable: true
+              - column:
+                  name: temperature
+                  type: DECIMAL(3,1)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: notes
+                  type: TEXT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: completed
+                  constraints:
+                    nullable: true
+                    checkConstraint: "status IN ('scheduled', 'completed', 'cancelled', 'rejected')"
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'

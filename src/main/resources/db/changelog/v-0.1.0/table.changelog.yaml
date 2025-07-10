@@ -74,3 +74,6 @@ databaseChangeLog:
   - include:
       file: tables/health_vital.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/blood_donation.yaml
+      relativeToChangelogFile: true
