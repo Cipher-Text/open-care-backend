@@ -78,6 +78,15 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: is_blood_donor
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: last_blood_donation_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
                   name: is_active
                   type: boolean
                   defaultValueBoolean: true

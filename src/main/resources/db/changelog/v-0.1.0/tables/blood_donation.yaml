@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_blood_donations_table
+      id: create-blood-donations-table
       author: ismail
       changes:
         - createTable:
@@ -27,8 +27,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: blood_type
-                  type: VARCHAR(5)
+                  name: blood_group
+                  type: VARCHAR(10)
                   constraints:
                     nullable: false
               - column:
@@ -40,49 +40,9 @@ databaseChangeLog:
               - column:
                   name: donation_type
                   type: VARCHAR(20)
-                  defaultValue: whole_blood
+                  defaultValue: WHOLE_BLOOD
                   constraints:
                     nullable: true
-                    checkConstraint: "donation_type IN ('whole_blood', 'plasma', 'platelets', 'double_red')"
-              - column:
-                  name: health_status
-                  type: VARCHAR(20)
-                  defaultValue: healthy
-                  constraints:
-                    nullable: true
-                    checkConstraint: "health_status IN ('healthy', 'sick', 'medication')"
-              - column:
-                  name: hemoglobin_level
-                  type: DECIMAL(3,1)
-                  constraints:
-                    nullable: true
-              - column:
-                  name: blood_pressure
-                  type: VARCHAR(20)
-                  constraints:
-                    nullable: true
-              - column:
-                  name: pulse_rate
-                  type: INTEGER
-                  constraints:
-                    nullable: true
-              - column:
-                  name: temperature
-                  type: DECIMAL(3,1)
-                  constraints:
-                    nullable: true
-              - column:
-                  name: notes
-                  type: TEXT
-                  constraints:
-                    nullable: true
-              - column:
-                  name: status
-                  type: VARCHAR(20)
-                  defaultValue: completed
-                  constraints:
-                    nullable: true
-                    checkConstraint: "status IN ('scheduled', 'completed', 'cancelled', 'rejected')"
               - column:
                   constraints:
                     nullable: false

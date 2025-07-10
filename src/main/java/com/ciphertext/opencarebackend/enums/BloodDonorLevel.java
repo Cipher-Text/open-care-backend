@@ -1,5 +1,8 @@
 package com.ciphertext.opencarebackend.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BloodDonorLevel {
     FIRST_FLOW(1, 5, "🩸", "First Flow", "You've begun your life-saving journey—thank you!"),
     HOPE_GIVER(6, 10, "🌱", "Hope Giver", "Each donation plants a seed of hope in someone’s life."),
