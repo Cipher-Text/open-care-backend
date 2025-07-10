@@ -21,6 +21,8 @@ databaseChangeLog:
                   name: bn_name
                   type: varchar(100)
               - column:
+                  name: registration_code
+              - column:
                   name: image_url
                   type: varchar(250)
               - column:
