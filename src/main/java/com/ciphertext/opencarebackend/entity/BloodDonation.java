@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -35,7 +36,7 @@ public class BloodDonation extends Auditable<String> {
     private String healthStatus;
 
     @Column(name = "hemoglobin_level", precision = 3, scale = 1)
-    private Double hemoglobinLevel;
+    private BigDecimal hemoglobinLevel;
 
     @Column(name = "blood_pressure", length = 20)
     private String bloodPressure;
@@ -44,7 +45,7 @@ public class BloodDonation extends Auditable<String> {
     private Long pulseRate;
 
     @Column(name = "temperature", precision = 3, scale = 1)
-    private Double temperature;
+    private BigDecimal temperature;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;

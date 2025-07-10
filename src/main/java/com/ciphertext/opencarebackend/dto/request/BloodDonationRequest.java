@@ -3,6 +3,7 @@ package com.ciphertext.opencarebackend.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -14,10 +15,10 @@ public class BloodDonationRequest {
     private Long quantityMl;
     private String donationType;
     private String healthStatus;
-    private Double hemoglobinLevel;
+    private BigDecimal hemoglobinLevel;
     private String bloodPressure;
     private Long pulseRate;
-    private Double temperature;
+    private BigDecimal temperature;
     private String notes;
     private String status;
 }
