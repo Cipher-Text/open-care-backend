@@ -3,6 +3,8 @@ services:
           image: postgres:16
           volumes:
                - postgres_data:/var/lib/postgresql/data
+          ports:
+               - "5444:5432"
           environment:
                POSTGRES_DB: keycloak
                POSTGRES_USER: keycloak

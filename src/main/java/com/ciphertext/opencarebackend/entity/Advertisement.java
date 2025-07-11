@@ -2,6 +2,8 @@ package com.ciphertext.opencarebackend.entity;
 
 import com.ciphertext.opencarebackend.enums.AgeGroup;
 import com.ciphertext.opencarebackend.enums.Gender;
+import com.ciphertext.opencarebackend.util.converter.AgeGroupConverter;
+import com.ciphertext.opencarebackend.util.converter.GenderConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -55,12 +57,13 @@ public class Advertisement extends Auditable<String> {
     @JoinColumn(name = "medical_speciality_id")
     private MedicalSpeciality medicalSpeciality;
 
+    @Convert(converter = AgeGroupConverter.class)
     @Column(name = "age_group", length = 50)
-    @Enumerated(EnumType.STRING)
     private AgeGroup ageGroup;
 
+    @Convert(converter = GenderConverter.class)
     @Column(name = "gender", length = 20)
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Column(name = "start_time", nullable = false)
