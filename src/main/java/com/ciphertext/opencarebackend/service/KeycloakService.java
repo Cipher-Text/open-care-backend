@@ -1,6 +1,6 @@
 package com.ciphertext.opencarebackend.service;
 
-import com.ciphertext.opencarebackend.dto.request.UserRegistrationRequest;
+import com.ciphertext.opencarebackend.dto.request.KeycloakRegistrationRequest;
 import com.ciphertext.opencarebackend.dto.response.TokenResponse;
 import com.ciphertext.opencarebackend.exception.KeycloakClientException;
 import com.ciphertext.opencarebackend.exception.KeycloakServerException;
@@ -13,6 +13,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @Service
 public class KeycloakService {
@@ -72,7 +74,7 @@ public class KeycloakService {
         return executeRequest(logoutUrl, formData, Void.class);
     }
 
-    public Mono<Boolean> registerUser(UserRegistrationRequest registrationRequest) {
+    public Mono<String> registerUser(KeycloakRegistrationRequest registrationRequest) {
         return getAdminToken().flatMap(adminToken -> {
             String usersUrl = serverUrl + "/admin/realms/" + realm + "/users";
 
@@ -82,11 +84,25 @@ public class KeycloakService {
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + adminToken)
                     .body(BodyInserters.fromValue(registrationRequest))
                     .retrieve()
-                    .onStatus(HttpStatusCode::is4xxClientError, this::handleClientError)
-                    .onStatus(HttpStatusCode::is5xxServerError, this::handleServerError)
                     .toBodilessEntity()
-                    .map(response -> response.getStatusCode().is2xxSuccessful())
-                    .onErrorReturn(false);
+                    .flatMap(response -> {
+                        if (response.getStatusCode().is2xxSuccessful()) {
+                            // Extract Location header and get user ID
+                            URI location = response.getHeaders().getLocation();
+                            if (location != null) {
+                                String userId = location.getPath().substring(location.getPath().lastIndexOf("/") + 1);
+                                return Mono.just(userId);
+                            } else {
+                                return Mono.error(new IllegalStateException("User created but no Location header returned"));
+                            }
+                        } else {
+                            return Mono.error(new IllegalStateException("Failed to create user: " + response.getStatusCode()));
+                        }
+                    })
+                    .onErrorResume(e -> {
+                        e.printStackTrace();
+                        return Mono.error(new RuntimeException("Keycloak user creation failed", e));
+                    });
         });
     }
 

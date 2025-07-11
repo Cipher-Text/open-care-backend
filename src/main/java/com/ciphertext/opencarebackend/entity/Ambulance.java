@@ -1,42 +1,11 @@
 package com.ciphertext.opencarebackend.entity;
 
-import com.ciphertext.opencarebackend.enums.AgeGroup;
 import com.ciphertext.opencarebackend.enums.AmbulanceType;
-import com.ciphertext.opencarebackend.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-
-//              - column:
-//name: vehicle_number
-//type: VARCHAR(20)
-//constraints:
-//nullable: false
-//unique: true
-//        - column:
-//name: type
-//type: VARCHAR(50)
-//              - column:
-//name: driver_name
-//type: VARCHAR(100)
-//              - column:
-//name: driver_phone
-//type: VARCHAR(20)
-//              - column:
-//name: is_available
-//type: BOOLEAN
-//defaultValue: true
-//        - column:
-//name: hospital_id
-//type: INTEGER
-//constraints:
-//references: hospital(id)
-//foreignKeyName: fk_ambulance_hospital
-//deleteCascade: true
 
 @AllArgsConstructor
 @NoArgsConstructor
