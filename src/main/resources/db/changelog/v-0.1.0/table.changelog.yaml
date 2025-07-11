@@ -80,3 +80,6 @@ databaseChangeLog:
   - include:
       file: tables/blood_requisition.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/ambulance.yaml
+      relativeToChangelogFile: true

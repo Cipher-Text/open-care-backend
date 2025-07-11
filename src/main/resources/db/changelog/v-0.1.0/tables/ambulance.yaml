@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_ambulance_table
+      author: amin
+      changes:
+        - createTable:
+            tableName: ambulance
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vehicle_number
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: driver_name
+                  type: VARCHAR(100)
+              - column:
+                  name: driver_phone
+                  type: VARCHAR(20)
+              - column:
+                  name: is_available
+                  type: BOOLEAN
+                  defaultValue: true
+              - column:
+                  name: hospital_id
+                  type: INTEGER
+                  constraints:
+                      references: hospital(id)
+                      foreignKeyName: fk_ambulance_hospital
+                      deleteCascade: true
+              - column:
+                  name: upazila_id
+                  type: INTEGER
+              - column:
+                  name: district_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
