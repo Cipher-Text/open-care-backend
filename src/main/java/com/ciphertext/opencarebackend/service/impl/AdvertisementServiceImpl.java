@@ -45,6 +45,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement existingAdvertisement = advertisementRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Advertisement not found with id: " + id));
         advertisement.setId(id);
+        advertisement.setCreatedBy(existingAdvertisement.getCreatedBy());
+        advertisement.setCreatedAt(existingAdvertisement.getCreatedAt());
         return advertisementRepository.save(advertisement);
     }
 

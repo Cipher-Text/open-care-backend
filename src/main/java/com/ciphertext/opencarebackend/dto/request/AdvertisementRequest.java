@@ -27,4 +27,5 @@ public class AdvertisementRequest {
     private Boolean isActive;
     private Long views;
     private Long clicks;
+    private String createdBy;
 }

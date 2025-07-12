@@ -18,16 +18,4 @@ public enum Gender {
         return banglaName;
     }
 
-    public static Gender fromString(String value) {
-        if (value == null) return null;
-        try {
-            return Gender.valueOf(value.trim().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return null; // Or throw custom exception if preferred
-        }
-    }
-
-    public static String fromEnum(Gender gender) {
-        return gender != null ? gender.name() : null;
-    }
 }
