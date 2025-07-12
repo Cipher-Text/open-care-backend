@@ -1,49 +1,49 @@
-#networks:
-#  app_network:
-#    driver: bridge
-#
-#services:
-#  # Keycloak Authentication Server
-#  keycloak:
-#    image: quay.io/keycloak/keycloak:latest
-#    container_name: keycloak
-#    networks:
-#      - app_network
-#    volumes:
-#      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
-#    command:
-#      - start-dev
-#      - --import-realm
-#    environment:
-#      KC_DB: postgres
-#      KC_DB_URL_HOST: 46.102.157.211
-#      KC_DB_URL_PORT: 6968
-#      KC_DB_URL_DATABASE: open_care_keycloak
-#      KC_DB_SCHEMA: public
-#      KC_DB_USERNAME: postgres
-#      KC_DB_PASSWORD: MiniMacsad8#ImRuL1
-#      KEYCLOAK_ADMIN: admin
-#      KEYCLOAK_ADMIN_PASSWORD: admin
-#      KC_HTTP_ENABLED: "true"
-#    ports:
-#      - "8180:8080"
-#
-#  # MinIO Object Storage
-#  minio:
-#    image: minio/minio:latest
-#    container_name: minio
-#    networks:
-#      - app_network
-#    restart: always
-#    ports:
-#      - "9100:9000"   # S3 API
-#      - "9101:9001"   # Web UI
-#    environment:
-#      MINIO_ROOT_USER: minioadmin
-#      MINIO_ROOT_PASSWORD: minioadmin123
-#    volumes:
-#      - minio_data:/data
-#    command: server /data --console-address ":9001"
-#
-#volumes:
-#  minio_data:
+networks:
+  app_network:
+    driver: bridge
+
+services:
+  # Keycloak Authentication Server
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    networks:
+      - app_network
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: localhost
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: open_care_keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: 12345678
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+    ports:
+      - "8080:8080"
+
+  # MinIO Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    networks:
+      - app_network
+    restart: always
+    ports:
+      - "9100:9000"   # S3 API
+      - "9101:9001"   # Web UI
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+volumes:
+  minio_data:
