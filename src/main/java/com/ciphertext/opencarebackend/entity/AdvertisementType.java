@@ -1,7 +1,5 @@
 package com.ciphertext.opencarebackend.entity;
 
-
-import com.ciphertext.opencarebackend.util.converter.AdvertisementPositionConverter;
 import com.ciphertext.opencarebackend.enums.AdvertisementPosition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,9 +24,8 @@ public class AdvertisementType extends Auditable<String> {
     @Column(name="description", nullable = false, length = 255)
     private String description;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "position", nullable = false)
-    @Convert(converter = AdvertisementPositionConverter.class)
     private AdvertisementPosition position;
 
     @Column(name = "base_price", nullable = false)

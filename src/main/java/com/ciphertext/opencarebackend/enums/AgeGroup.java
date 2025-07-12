@@ -1,8 +1,6 @@
 package com.ciphertext.opencarebackend.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AgeGroup {
@@ -25,7 +23,7 @@ public enum AgeGroup {
         this.endAge = endAge;
     }
 
-    @JsonValue
+
     public String getLabel() {
         return label;
     }
@@ -36,24 +34,5 @@ public enum AgeGroup {
 
     public int getEndAge() {
         return endAge;
-    }
-
-    public static AgeGroup fromAge(int age) {
-        for (AgeGroup group : values()) {
-            if (age >= group.startAge && age <= group.endAge) {
-                return group;
-            }
-        }
-        throw new IllegalArgumentException("No matching age group for age: " + age);
-    }
-
-    @JsonCreator
-    public static AgeGroup fromLabel(String label) {
-        for (AgeGroup group : values()) {
-            if (group.label.equalsIgnoreCase(label)) {
-                return group;
-            }
-        }
-        throw new IllegalArgumentException("Unknown AgeGroup: " + label);
     }
 }

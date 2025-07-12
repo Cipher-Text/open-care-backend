@@ -1,6 +1,7 @@
 package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.entity.AdvertisementType;
+import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.respository.AdvertisementTypeRepository;
 import com.ciphertext.opencarebackend.service.AdvertisementTypeService;
@@ -35,6 +36,10 @@ public class AdvertisementTypeServiceImpl implements AdvertisementTypeService {
 
     @Override
     public AdvertisementType createAdvertisementType(AdvertisementType advertisementType) {
+        List<String> existingNames = advertisementTypeRepository.findAll().stream().map(AdvertisementType::getName).toList();
+        if (existingNames.contains(advertisementType.getName())){
+            throw new BadRequestException("AdvertisementType already exists with name: " + advertisementType.getName());
+        }
         return advertisementTypeRepository.save(advertisementType);
     }
 
@@ -43,6 +48,8 @@ public class AdvertisementTypeServiceImpl implements AdvertisementTypeService {
         AdvertisementType existing = advertisementTypeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdvertisementType not found with id: " + id));
         advertisementType.setId(id);
+        advertisementType.setCreatedBy(existing.getCreatedBy());
+        advertisementType.setCreatedAt(existing.getCreatedAt());
         return advertisementTypeRepository.save(advertisementType);
     }
 

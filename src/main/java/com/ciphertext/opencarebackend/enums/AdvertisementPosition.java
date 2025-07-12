@@ -1,7 +1,5 @@
 package com.ciphertext.opencarebackend.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AdvertisementPosition {
     HEADER("Header"),
@@ -25,18 +23,8 @@ public enum AdvertisementPosition {
         this.position = position;
     }
 
-    @JsonValue
     public String getPosition() {
         return position;
     }
 
-    @JsonCreator
-    public static AdvertisementPosition fromValue(String value) {
-        for (AdvertisementPosition ap : AdvertisementPosition.values()) {
-            if (ap.getPosition().equalsIgnoreCase(value)) {
-                return ap;
-            }
-        }
-        throw new IllegalArgumentException("Unknown AdvertisementPosition: " + value);
-    }
 }

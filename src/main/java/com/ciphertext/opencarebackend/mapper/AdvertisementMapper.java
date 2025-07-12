@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 public interface AdvertisementMapper {
 
     @Mapping(source = "ageGroup", target = "ageGroup", qualifiedByName = "ageGroupEnumToString")
-//    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderEnumToString")
+    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderEnumToString")
     AdvertisementResponse toResponse(Advertisement advertisement);
 
     @Mapping(source = "ageGroup", target = "ageGroup", qualifiedByName = "ageGroupStringToEnum")
-//    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderStringToEnum")
+    @Mapping(source = "gender", target = "gender", qualifiedByName = "genderStringToEnum")
+    @Mapping(source = "advTypeId", target = "advTypeId")
+//    @Mapping(source = "createdBy", target = "createdBy")
     Advertisement toEntity(AdvertisementRequest request);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
