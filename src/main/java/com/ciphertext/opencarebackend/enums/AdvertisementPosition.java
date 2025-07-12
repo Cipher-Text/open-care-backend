@@ -1,13 +1,23 @@
 package com.ciphertext.opencarebackend.enums;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AdvertisementPosition {
     HEADER("Header"),
     FOOTER("Footer"),
     SIDEBAR("Sidebar"),
-    IN_CONTENT("In Content");
+    IN_CONTENT("In Content"),
+    SEARCH_TOP("search_top"),
+    PAGE_TOP("page_top"),
+    DIRECTORY_SIDEBAR("directory_sidebar"),
+    HOME_MIDDLE("home_middle"),
+    VIDEO_SLOT("video_slot"),
+    BADGE("badge"),
+    EQUIPMENT_SECTION("equipment_section"),
+    EVENT_BANNER("event_banner"),
+    ANNOUNCEMENT_BAR("announcement_bar"),
+    CAROUSEL("carousel");
 
     private final String position;
 
@@ -15,7 +25,18 @@ public enum AdvertisementPosition {
         this.position = position;
     }
 
+    @JsonValue
     public String getPosition() {
         return position;
+    }
+
+    @JsonCreator
+    public static AdvertisementPosition fromValue(String value) {
+        for (AdvertisementPosition ap : AdvertisementPosition.values()) {
+            if (ap.getPosition().equalsIgnoreCase(value)) {
+                return ap;
+            }
+        }
+        throw new IllegalArgumentException("Unknown AdvertisementPosition: " + value);
     }
 }
