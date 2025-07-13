@@ -35,24 +35,39 @@ public class Advertisement extends Auditable<String> {
     @Column(name = "target_id")
     private Long targetId;
 
+    @Column(name = "advertisement_type_id")
+    private Integer advTypeId;
+
     @ManyToOne
-    @JoinColumn(name = "advertisement_type_id")
+    @JoinColumn(name = "advertisement_type_id", insertable=false, updatable=false)
     private AdvertisementType advertisementType;
 
+    @Column(name = "district_id")
+    private Long districtId;
+
     @ManyToOne
-    @JoinColumn(name = "district_id")
+    @JoinColumn(name = "district_id", insertable=false, updatable=false)
     private District district;
 
+    @Column(name = "upazila_id")
+    private Long upazilaId;
+
     @ManyToOne
-    @JoinColumn(name = "upazila_id")
+    @JoinColumn(name = "upazila_id", insertable=false, updatable=false)
     private Upazila upazila;
 
-    @ManyToOne
-    @JoinColumn(name = "union_id")
-    private Union union;
+    @Column(name = "union_id")
+    private Long unionId;
 
     @ManyToOne
-    @JoinColumn(name = "medical_speciality_id")
+    @JoinColumn(name = "union_id", insertable=false, updatable=false)
+    private Union union;
+
+    @Column(name = "medical_speciality_id")
+    private Long medSpecialityId;
+
+    @ManyToOne
+    @JoinColumn(name = "medical_speciality_id", insertable=false, updatable=false)
     private MedicalSpeciality medicalSpeciality;
 
     @Column(name = "age_group", length = 50)

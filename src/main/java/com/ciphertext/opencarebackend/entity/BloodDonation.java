@@ -23,7 +23,7 @@ public class BloodDonation extends Auditable<String> {
     @Column(name = "donation_date", nullable = false)
     private LocalDate donationDate;
 
-    @Column(name = "blood_type", nullable = false, length = 5)
+    @Column(name = "blood_group", nullable = false, length = 5)
     private String bloodType;
 
     @Column(name = "quantity_ml")

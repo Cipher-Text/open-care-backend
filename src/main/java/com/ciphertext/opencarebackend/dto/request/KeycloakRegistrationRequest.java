@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.dto.request;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserRegistrationRequest {
+@Builder
+public class KeycloakRegistrationRequest {
     private String username;
     private String email;
     private String firstName;

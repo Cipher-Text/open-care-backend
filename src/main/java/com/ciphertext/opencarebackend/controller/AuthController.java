@@ -2,7 +2,10 @@ package com.ciphertext.opencarebackend.controller;
 
 import com.ciphertext.opencarebackend.dto.request.*;
 import com.ciphertext.opencarebackend.dto.response.TokenResponse;
+import com.ciphertext.opencarebackend.service.AuthService;
 import com.ciphertext.opencarebackend.service.KeycloakService;
+import com.ciphertext.opencarebackend.service.ProfileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthService authService;
     private final KeycloakService keycloakService;
-
-    public AuthController(KeycloakService keycloakService) {
-        this.keycloakService = keycloakService;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -33,10 +34,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest registrationRequest) {
         try {
-            boolean successful = keycloakService.registerUser(registrationRequest).block();
-            if (successful) {
+            String response = authService.registerUser(registrationRequest);
+            if (!response.isBlank()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User registration failed");

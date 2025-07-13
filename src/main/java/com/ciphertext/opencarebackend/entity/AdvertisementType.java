@@ -1,6 +1,5 @@
 package com.ciphertext.opencarebackend.entity;
 
-
 import com.ciphertext.opencarebackend.enums.AdvertisementPosition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
