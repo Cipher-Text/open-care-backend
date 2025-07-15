@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.enums;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum BloodDonationType {
+public enum BloodComponent {
     WHOLE_BLOOD("Whole Blood"),
     PLASMA("Plasma"),
     PLATELETS("Platelets"),
@@ -11,7 +11,7 @@ public enum BloodDonationType {
 
     private final String name;
 
-    BloodDonationType(String name) {
+    BloodComponent(String name) {
         this.name = name;
     }
 
