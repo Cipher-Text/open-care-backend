@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.enums;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum BloodDonorLevel {
+public enum BloodDonationBadge {
     FIRST_FLOW(1, 5, "🩸", "First Flow", "You've begun your life-saving journey—thank you!"),
     HOPE_GIVER(6, 10, "🌱", "Hope Giver", "Each donation plants a seed of hope in someone’s life."),
     HEALING_HAND(11, 15, "🤲", "Healing Hand", "You're now a consistent force of healing and kindness."),
@@ -31,7 +31,7 @@ public enum BloodDonorLevel {
     private final String levelName;
     private final String description;
 
-    BloodDonorLevel(int minDonations, int maxDonations, String icon, String levelName, String description) {
+    BloodDonationBadge(int minDonations, int maxDonations, String icon, String levelName, String description) {
         this.minDonations = minDonations;
         this.maxDonations = maxDonations;
         this.icon = icon;
@@ -59,8 +59,8 @@ public enum BloodDonorLevel {
         return description;
     }
 
-    public static BloodDonorLevel getLevelByDonationCount(int donationCount) {
-        for (BloodDonorLevel level : BloodDonorLevel.values()) {
+    public static BloodDonationBadge getLevelByDonationCount(int donationCount) {
+        for (BloodDonationBadge level : BloodDonationBadge.values()) {
             if (donationCount >= level.minDonations && donationCount <= level.maxDonations) {
                 return level;
             }
@@ -68,8 +68,8 @@ public enum BloodDonorLevel {
         return null;
     }
 
-    public BloodDonorLevel getNextLevel() {
-        BloodDonorLevel[] levels = BloodDonorLevel.values();
+    public BloodDonationBadge getNextLevel() {
+        BloodDonationBadge[] levels = BloodDonationBadge.values();
         int currentIndex = this.ordinal();
         if (currentIndex < levels.length - 1) {
             return levels[currentIndex + 1];
@@ -78,7 +78,7 @@ public enum BloodDonorLevel {
     }
 
     public int getDonationsToNextLevel(int currentDonations) {
-        BloodDonorLevel nextLevel = getNextLevel();
+        BloodDonationBadge nextLevel = getNextLevel();
         if (nextLevel != null) {
             return Math.max(0, nextLevel.getMinDonations() - currentDonations);
         }

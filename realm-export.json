@@ -184,7 +184,30 @@
     },
     {
       "name": "Admin",
-      "path": "/Admin"
+      "path": "/Admin",
+      "realmRoles": [
+        "create-master-data",
+        "update-master-data",
+        "delete-master-data",
+        "create-institution",
+        "update-institution",
+        "delete-institution",
+        "create-doctor",
+        "update-doctor",
+        "delete-doctor",
+        "create-profile",
+        "update-profile",
+        "delete-profile",
+        "create-hospital",
+        "update-hospital",
+        "delete-hospital",
+        "create-social-organization",
+        "update-social-organization",
+        "delete-social-organization",
+        "create-hospital-medical-test",
+        "update-hospital-medical-test",
+        "delete-hospital-medical-test"
+      ]
     },
     {
       "name": "Moderator",

@@ -22,6 +22,14 @@ databaseChangeLog:
                     foreignKeyName: fk_donations_donor
                     deleteCascade: true
               - column:
+                  name: hospital_id
+                  type: INTEGER
+                  constraints:
+                      nullable: false
+                      references: hospital(id)
+                      foreignKeyName: fk_donations_hospital
+                      deleteCascade: true
+              - column:
                   name: donation_date
                   type: DATE
                   constraints:
@@ -38,7 +46,7 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
-                  name: donation_type
+                  name: blood_component
                   type: VARCHAR(20)
                   defaultValue: WHOLE_BLOOD
                   constraints:
