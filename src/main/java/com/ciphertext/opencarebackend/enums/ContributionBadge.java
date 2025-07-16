@@ -17,14 +17,14 @@ public enum ContributionBadge {
 
     private final int minPoints;
     private final int maxPoints;
-    private final String emoji;
+    private final String icon;
     private final String title;
     private final String description;
 
-    ContributionBadge(int minPoints, int maxPoints, String emoji, String title, String description) {
+    ContributionBadge(int minPoints, int maxPoints, String icon, String title, String description) {
         this.minPoints = minPoints;
         this.maxPoints = maxPoints;
-        this.emoji = emoji;
+        this.icon = icon;
         this.title = title;
         this.description = description;
     }
@@ -37,8 +37,8 @@ public enum ContributionBadge {
         return maxPoints;
     }
 
-    public String getEmoji() {
-        return emoji;
+    public String getIcon() {
+        return icon;
     }
 
     public String getTitle() {
