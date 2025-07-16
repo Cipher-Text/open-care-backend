@@ -83,3 +83,6 @@ databaseChangeLog:
   - include:
       file: tables/ambulance.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/contribution.yaml
+      relativeToChangelogFile: true

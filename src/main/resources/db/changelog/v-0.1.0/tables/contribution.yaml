@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-contributions
+      author: sadman
+      changes:
+        - createTable:
+            tableName: contributions
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: profile_id
+                  type: int8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: contribution_action
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reference_id
+                  type: int8
+              - column:
+                  name: points_awarded
+                  type: int8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_approved
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+        - addForeignKeyConstraint:
+            baseTableName: contributions
+            baseColumnNames: profile_id
+            referencedTableName: profile
+            referencedColumnNames: id
+            constraintName: fk_contributions_profile_id
