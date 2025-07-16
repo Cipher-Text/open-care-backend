@@ -76,6 +76,9 @@ databaseChangeLog:
                   name: domain_id
                   type: int4
               - column:
+                  name: contribution_points
+                  type: int4
+              - column:
                   constraints:
                     nullable: false
                   name: is_blood_donor
