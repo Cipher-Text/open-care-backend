@@ -218,16 +218,24 @@
       "path": "/Hospital Admin"
     },
     {
+      "name": "Social Organization Admin",
+      "path": "/Social Organization Admin"
+    },
+    {
+      "name": "Operator",
+      "path": "/Operator"
+    },
+    {
+      "name": "Doctor",
+      "path": "/Doctor"
+    },
+    {
       "name": "Operator",
       "path": "/Operator"
     },
     {
       "name": "User",
       "path": "/User"
-    },
-    {
-      "name": "Doctor",
-      "path": "/Doctor"
     }
   ],
   "roles": {
@@ -323,7 +331,7 @@
       "id": "f8d100c4-0225-4643-9b54-dff4aabbf21a",
       "username": "superadmin",
       "enabled": true,
-      "email": "superadmin@example.com",
+      "email": "superadmin@opencare.com",
       "firstName": "Super",
       "lastName": "Admin",
       "credentials": [
@@ -337,7 +345,59 @@
         "/Super Admin"
       ],
       "attributes": {
-        "phone": "018xxxxxxxx",
+        "phone": "01811123456",
+        "gender": "MALE",
+        "dob": "1990-01-01",
+        "district_id": "10",
+        "upazila_id": "20",
+        "union_id": "30"
+      }
+    },
+    {
+      "id": "89c8934c-dfd1-4313-bb9a-00672a7ec1fb",
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@opencare.com",
+      "firstName": "Admin",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/Admin"
+      ],
+      "attributes": {
+        "phone": "01811123457",
+        "gender": "MALE",
+        "dob": "1990-01-01",
+        "district_id": "10",
+        "upazila_id": "20",
+        "union_id": "30"
+      }
+    },
+    {
+      "id": "c1d2e3f4-5678-90ab-cdef-1234567890ab",
+      "username": "moderator",
+      "enabled": true,
+      "email": "moderator@opencare.com",
+      "firstName": "Moderator",
+      "lastName": "Moderator",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/Moderator"
+      ],
+      "attributes": {
+        "phone": "01811123458",
         "gender": "MALE",
         "dob": "1990-01-01",
         "district_id": "10",
