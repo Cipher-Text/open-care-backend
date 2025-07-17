@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-amenity-property
+      author: sadman
+      changes:
+        - createTable:
+            tableName: amenity_property
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: amenity_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: key
+                  type: VARCHAR(50)
+              - column:
+                  name: value
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+        - addForeignKeyConstraint:
+            baseTableName: amenity_property
+            baseColumnNames: amenity_id
+            constraintName: fk_amenity_property_amenity
+            referencedTableName: hospital_amenity
+            referencedColumnNames: id
+            onDelete: CASCADE

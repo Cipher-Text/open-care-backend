@@ -86,3 +86,9 @@ databaseChangeLog:
   - include:
       file: tables/contribution.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/hospital_amenity.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/amenity_property.yaml
+      relativeToChangelogFile: true
