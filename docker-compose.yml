@@ -1,14 +1,48 @@
-networks:
-  app_network:
-    driver: bridge
-
 services:
-  # Keycloak Authentication Server
+  # PostgreSQL for application
+  postgres-app:
+    image: postgres:16
+    container_name: opencare-postgres
+    volumes:
+      - postgres_app_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: open_care
+      POSTGRES_USER: ${POSTGRES_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-12345678}
+    networks:
+      - opencare-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USERNAME:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL for Keycloak
+  postgres-keycloak:
+    image: postgres:16
+    container_name: keycloak-postgres
+    volumes:
+      - postgres_keycloak_data:/var/lib/postgresql/data
+    ports:
+      - "5444:5432"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks:
+      - opencare-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Keycloak service
   keycloak:
     image: quay.io/keycloak/keycloak:latest
-    container_name: keycloak
-    networks:
-      - app_network
+    container_name: opencare-keycloak
     volumes:
       - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
     command:
@@ -16,34 +50,113 @@ services:
       - --import-realm
     environment:
       KC_DB: postgres
-      KC_DB_URL_HOST: localhost
-      KC_DB_URL_PORT: 5432
-      KC_DB_URL_DATABASE: open_care_keycloak
-      KC_DB_SCHEMA: public
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: 12345678
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HTTP_ENABLED: "true"
+      KC_DB_URL_HOST: postgres-keycloak
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USERNAME:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
-      - "8080:8080"
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    networks:
+      - opencare-network
+    depends_on:
+      postgres-keycloak:
+        condition: service_healthy
 
-  # MinIO Object Storage
+  # MinIO service
   minio:
     image: minio/minio:latest
-    container_name: minio
-    networks:
-      - app_network
+    container_name: opencare-minio
     restart: always
     ports:
-      - "9100:9000"   # S3 API
-      - "9101:9001"   # Web UI
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web UI
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-minioadmin123}
+      MINIO_REGION: us-east-1
+      MINIO_BROWSER_REDIRECT_URL: http://localhost:9001
+      MINIO_SERVER_URL: http://localhost:9000
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
+    networks:
+      - opencare-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # MinIO Client to initialize bucket
+  minio-client:
+    image: minio/mc:latest
+    container_name: opencare-minio-client
+    depends_on:
+      - minio
+    environment:
+      MC_HOST_minio: http://${MINIO_ACCESS_KEY:-minioadmin}:${MINIO_SECRET_KEY:-minioadmin123}@minio:9000
+    entrypoint: >
+      /bin/sh -c "
+      until (mc admin info minio) do echo 'Waiting for MinIO to start...' && sleep 1; done;
+      mc mb minio/${MINIO_BUCKET_NAME:-opencare} --ignore-existing;
+      mc policy set public minio/${MINIO_BUCKET_NAME:-opencare};
+      exit 0;
+      "
+    networks:
+      - opencare-network
+
+  # Application backend
+  app:
+    image: open-care-backend:latest
+    container_name: opencare-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: ${SERVER_PORT:-6700}
+      DB_HOSTNAME: postgres-app
+      DB_PORT: 5432
+      POSTGRES_USERNAME: ${POSTGRES_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-12345678}
+      KEYCLOAK_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-opencare}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-open-care-backend}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-u3L5IEUSLoBoPzFghcMUvdSJSUedr6Fm}
+      KEYCLOAK_ADMIN_REALM: ${KEYCLOAK_ADMIN_REALM:-master}
+      KEYCLOAK_ADMIN_CLIENT_ID: ${KEYCLOAK_ADMIN_CLIENT_ID:-admin-cli}
+      KEYCLOAK_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      RATE_LIMITING_ENABLED: ${RATE_LIMITING_ENABLED:-true}
+      RATE_LIMITING_LIMIT: ${RATE_LIMITING_LIMIT:-100}
+      RATE_LIMITING_REFRESH_PERIOD: ${RATE_LIMITING_REFRESH_PERIOD:-60}
+      FRONTEND_REDIRECT_URI: ${FRONTEND_REDIRECT_URI:-http://localhost:5173}
+      LOGGING_LEVEL_ROOT: ${LOGGING_LEVEL_ROOT:-error}
+      LOGGING_LEVEL_SQL: ${LOGGING_LEVEL_SQL:-debug}
+      LOGGING_LEVEL_WEB: ${LOGGING_LEVEL_WEB:-debug}
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin123}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME:-opencare}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-ghp_your_github_token_here}
+    ports:
+      - "${SERVER_PORT:-6700}:${SERVER_PORT:-6700}"
+    networks:
+      - opencare-network
+    depends_on:
+      postgres-app:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+      minio:
+        condition: service_started
+
+networks:
+  opencare-network:
+    driver: bridge
 
 volumes:
+  postgres_app_data:
+  postgres_keycloak_data:
   minio_data:
