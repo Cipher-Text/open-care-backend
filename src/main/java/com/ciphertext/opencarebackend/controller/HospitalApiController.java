@@ -110,6 +110,10 @@ public class HospitalApiController {
         return ResponseEntity.ok(hospitalResponses);
     }
 
+    @Operation(
+        summary = "Get hospital by ID",
+        description = "Retrieves a hospital by its unique ID."
+    )
     @GetMapping("/{id}")
     public ResponseEntity<HospitalResponse> getHospitalById(@PathVariable int id)
             throws ResourceNotFoundException {
@@ -121,6 +125,10 @@ public class HospitalApiController {
         return ResponseEntity.ok(hospitalResponse);
     }
 
+    @Operation(
+        summary = "Create a new hospital",
+        description = "Creates a new hospital record with the provided details."
+    )
     @PostMapping
     public ResponseEntity<HospitalResponse> createHospital(@RequestBody HospitalRequest hospitalRequest) {
         log.info("Creating hospital");
@@ -132,6 +140,10 @@ public class HospitalApiController {
         return ResponseEntity.ok(hospitalResponse);
     }
 
+    @Operation(
+        summary = "Update an existing hospital",
+        description = "Updates the details of an existing hospital identified by its ID."
+    )
     @PutMapping("/{id}")
     public ResponseEntity<HospitalResponse> updateHospital(@RequestBody HospitalRequest hospitalRequest, @PathVariable int id)
             throws ResourceNotFoundException {
@@ -144,6 +156,10 @@ public class HospitalApiController {
         return ResponseEntity.ok(hospitalResponse);
     }
 
+    @Operation(
+        summary = "Delete a hospital",
+        description = "Deletes a hospital record identified by its ID."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHospital(@PathVariable int id)
             throws ResourceNotFoundException {
