@@ -23,4 +23,6 @@ public interface DoctorWorkplaceRepository extends JpaRepository<DoctorWorkplace
               LIMIT ?1
                         """, nativeQuery = true)
     List<Object[]> findMedicalSpecialitiesWithDoctorCount(Integer limit);
+
+    long countAllByHospital_Id(int hospitalId);
 }

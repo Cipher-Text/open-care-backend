@@ -2,8 +2,12 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.dto.filter.HospitalFilter;
 import com.ciphertext.opencarebackend.entity.Hospital;
+import com.ciphertext.opencarebackend.entity.HospitalMedicalTest;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
+import com.ciphertext.opencarebackend.exception.UnprocessableEntityException;
+import com.ciphertext.opencarebackend.respository.DoctorWorkplaceRepository;
+import com.ciphertext.opencarebackend.respository.HospitalMedicalTestRepository;
 import com.ciphertext.opencarebackend.respository.HospitalRepository;
 import com.ciphertext.opencarebackend.respository.specification.Filter;
 import com.ciphertext.opencarebackend.respository.specification.InJoin;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.*;
 import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.EQUALS;
@@ -38,6 +43,8 @@ import com.ciphertext.opencarebackend.enums.OrganizationType;
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
+    private final HospitalMedicalTestRepository hospitalMedicalTestRepository;
+    private final DoctorWorkplaceRepository doctorWorkplaceRepository;
 
     @Override
     public Long getHospitalCount() {
@@ -57,7 +64,7 @@ public class HospitalServiceImpl implements HospitalService {
         log.info("Fetching hospitals with filters: {}", hospitalFilter);
         List<Filter> filterList = generateQueryFilters(hospitalFilter);
         Specification<Hospital> specification = where(null);
-        if(!filterList.isEmpty()) {
+        if (!filterList.isEmpty()) {
             specification = where(createSpecification(filterList.removeFirst()));
             for (Filter input : filterList) {
                 specification = specification.and(createSpecification(input));
@@ -112,10 +119,39 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public ResponseEntity<Object> deleteHospitalById(int hospitalId) {
         log.info("Deleting hospital with id: {}", hospitalId);
+        Hospital hospital = hospitalRepository.findById(hospitalId).orElseThrow(() -> {
+            log.error("Hospital not found with id: {}", hospitalId);
+            return new ResourceNotFoundException("Hospital not found with id: " + hospitalId);
+        });
+        checkHospitalDependencies(hospitalId);
         hospitalRepository.deleteById(hospitalId);
         if (hospitalRepository.findById(hospitalId).isPresent()) {
             return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
         } else return ResponseEntity.ok().body("Hospital is Deleted Successfully");
+    }
+
+    private void checkHospitalDependencies(int hospitalId) {
+        List<String> usedInTables = new ArrayList<>();
+
+        long medicalTestCount = hospitalMedicalTestRepository.countAllByHospital_Id(hospitalId);
+
+        if (medicalTestCount > 0) {
+            usedInTables.add("Medical Test Count: " + medicalTestCount);
+        }
+
+        long doctorWorkplaceCount = doctorWorkplaceRepository.countAllByHospital_Id(hospitalId);
+        if (doctorWorkplaceCount > 0) {
+            usedInTables.add("Doctor Workplace Count: " + doctorWorkplaceCount);
+        }
+
+        if (!usedInTables.isEmpty()) {
+            String message = String.format(
+                    "Hospital with ID %d cannot be deleted because it is used in the following tables: %s",
+                    hospitalId, String.join(", ", usedInTables
+                    )
+            );
+            throw new UnprocessableEntityException(message);
+        }
     }
 
     public List<Filter> generateQueryFilters(HospitalFilter hospitalFilter) {

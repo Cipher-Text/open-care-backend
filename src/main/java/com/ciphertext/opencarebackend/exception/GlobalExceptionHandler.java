@@ -46,6 +46,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<ErrorResponse> handleUnprocessableEntityException(UnprocessableEntityException ex, jakarta.servlet.http.HttpServletRequest request) {
+        ErrorResponse errorResponse = buildErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                "Unprocessable Entity",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     @ExceptionHandler(KeycloakClientException.class)
     public ResponseEntity<ErrorResponse> handleKeycloakClientException(KeycloakClientException ex, jakarta.servlet.http.HttpServletRequest request) {
         ErrorResponse errorResponse = buildErrorResponse(

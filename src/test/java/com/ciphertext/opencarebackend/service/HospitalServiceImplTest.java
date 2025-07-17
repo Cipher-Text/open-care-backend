@@ -45,13 +45,6 @@ class HospitalServiceImplTest {
         verify(hospitalRepository, times(1)).findById(99);
     }
 
-//    @Test
-//    void getHospitalById_NegativeId_ThrowsException() {
-//        assertThrows(IllegalArgumentException.class, () -> hospitalService.getHospitalById(-1));
-//        verify(hospitalRepository, never()).findById(anyInt());
-//    }
-
-    // create/post tests for new hospital
     @Test
     void createHospital_ValidHospital_ReturnsHospital() {
         Hospital hospital = new Hospital();
@@ -64,41 +57,5 @@ class HospitalServiceImplTest {
         assertEquals("Test Hospital", result.getName());
         verify(hospitalRepository, times(1)).save(hospital);
     }
-
-    // update/put tests for existing hospital
-//    @Test
-//    void updateHospital_ValidId_ReturnsUpdatedHospital() {
-//        Hospital existingHospital = new Hospital();
-//        existingHospital.setId(1);
-//        existingHospital.setName("Old Hospital");
-//
-//        Hospital updatedHospital = new Hospital();
-//        updatedHospital.setId(1);
-//        updatedHospital.setName("Updated Hospital");
-//
-//        when(hospitalRepository.findById(1)).thenReturn(Optional.of(existingHospital));
-//        when(hospitalRepository.save(updatedHospital)).thenReturn(updatedHospital);
-//
-//        Hospital result = hospitalService.updateHospital(updatedHospital, 1);
-//
-//        assertNotNull(result);
-//        assertEquals("Updated Hospital", result.getName());
-//        verify(hospitalRepository, times(1)).findById(1);
-//        verify(hospitalRepository, times(1)).save(updatedHospital);
-//    }
-
-//    @Test
-//    void updateHospital_InvalidId_ThrowsException() {
-//        Hospital updatedHospital = new Hospital();
-//        updatedHospital.setId(99);
-//        updatedHospital.setName("Updated Hospital");
-//
-//        when(hospitalRepository.findById(99)).thenReturn(Optional.empty());
-//
-//        assertThrows(ResourceNotFoundException.class, () -> hospitalService.updateHospital(updatedHospital, 99));
-//        verify(hospitalRepository, times(1)).findById(99);
-//        verify(hospitalRepository, never()).save(any());
-//    }
-
 
 }

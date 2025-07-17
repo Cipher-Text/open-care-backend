@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HospitalMedicalTestRepository extends JpaRepository<HospitalMedicalTest, Long>, JpaSpecificationExecutor<HospitalMedicalTest> {
 
+    long countAllByHospital_Id(int hospitalId);
 }
