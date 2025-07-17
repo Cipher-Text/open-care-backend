@@ -7,6 +7,12 @@ import com.ciphertext.opencarebackend.entity.Hospital;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.mapper.HospitalMapper;
 import com.ciphertext.opencarebackend.service.HospitalService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,10 +31,36 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/hospitals")
 @RequiredArgsConstructor
+@Tag(name = "Hospital Management", description = "API for managing hospital information including creation, retrieval, updating and deletion of hospital records")
 public class HospitalApiController {
     private final HospitalService hospitalService;
     private final HospitalMapper hospitalMapper;
 
+    @Operation(
+            summary = "Get paginated hospitals with filters",
+            description = """
+        Retrieves a paginated list of hospitals with advanced filtering capabilities.
+        Supports filtering by:
+        - Name (English or Bengali)
+        - Bed capacity
+        - Geographic location (district, upazila, union)
+        - Hospital type and organization type
+            
+        Returns pagination metadata along with the results.
+        """,
+            parameters = {
+                    @Parameter(name = "name", description = "Filter by hospital name (English)"),
+                    @Parameter(name = "bnName", description = "Filter by hospital name (Bengali)"),
+                    @Parameter(name = "numberOfBed", description = "Filter by number of beds available"),
+                    @Parameter(name = "districtIds", description = "Filter by district ID(s)"),
+                    @Parameter(name = "upazilaId", description = "Filter by upazila ID"),
+                    @Parameter(name = "unionId", description = "Filter by union ID"),
+                    @Parameter(name = "hospitalTypes", description = "Filter by hospital type(s)"),
+                    @Parameter(name = "organizationType", description = "Filter by organization type"),
+                    @Parameter(name = "page", description = "Page number (0-based)", example = "0"),
+                    @Parameter(name = "size", description = "Number of items per page", example = "5")
+            }
+    )
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getAllHospitalsPage(
             @RequestParam(required = false) String name,
