@@ -57,6 +57,18 @@ databaseChangeLog:
                   name: phone
                   type: varchar(100)
               - column:
+                  name: division_id
+                  type: int4
+              - column:
+                  name: district_id
+                  type: int4
+              - column:
+                  name: upazila_id
+                  type: int4
+              - column:
+                  name: union_id
+                  type: int4
+              - column:
                   name: origin_country
                   type: varchar(100)
               - column:
@@ -84,3 +96,27 @@ databaseChangeLog:
                   type: timestamp
                   defaultValueComputed: 'CURRENT_TIMESTAMP'
             tableName: social_organization
+        - addForeignKeyConstraint:
+            baseColumnNames: division_id
+            baseTableName: social_organization
+            constraintName: fk_social_organization_division_id
+            referencedColumnNames: id
+            referencedTableName: division
+        - addForeignKeyConstraint:
+            baseColumnNames: district_id
+            baseTableName: social_organization
+            constraintName: fk_social_organization_district_id
+            referencedColumnNames: id
+            referencedTableName: district
+        - addForeignKeyConstraint:
+            baseColumnNames: upazila_id
+            baseTableName: social_organization
+            constraintName: fk_social_organization_upazila_id
+            referencedColumnNames: id
+            referencedTableName: upazila
+        - addForeignKeyConstraint:
+            baseColumnNames: union_id
+            baseTableName: social_organization
+            constraintName: fk_social_organization_union_id
+            referencedColumnNames: id
+            referencedTableName: union
