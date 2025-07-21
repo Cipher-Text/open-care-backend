@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-campaigns
+      author: sadman
+      changes:
+        - createTable:
+            tableName: campaign
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+              - column:
+                  name: type # ('health', 'education', 'awareness')
+                  type: VARCHAR(50)
+              - column:
+                  name: banner_url
+                  type: VARCHAR(255)
+              - column:
+                  name: start_time
+                  type: TIMESTAMP
+              - column:
+                  name: end_time
+                  type: TIMESTAMP
+              - column:
+                  name: district_id
+                  type: INTEGER
+              - column:
+                  name: upazila_id
+                  type: INTEGER
+              - column:
+                  name: event_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+        - addForeignKeyConstraint:
+            baseTableName: campaign
+            baseColumnNames: district_id
+            referencedTableName: district
+            referencedColumnNames: id
+            constraintName: fk_campaign_district
+        - addForeignKeyConstraint:
+            baseTableName: campaign
+            baseColumnNames: upazila_id
+            referencedTableName: upazila
+            referencedColumnNames: id
+            constraintName: fk_campaign_upazila
