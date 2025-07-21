@@ -9,6 +9,8 @@ public enum UserType {
     MODERATOR("মডারেটর"),
     OPERATOR("অপারেটর"),
     HOSPITAL_ADMIN("হাসপাতাল অ্যাডমিন"),
+    INSTITUTION_ADMIN("প্রতিষ্ঠান অ্যাডমিন"),
+    SOCIAL_ORGANIZATION_ADMIN("সামাজিক সংগঠন অ্যাডমিন"),
     DOCTOR("ডাক্তার"),
     USER("ব্যবহারকারী");
 
