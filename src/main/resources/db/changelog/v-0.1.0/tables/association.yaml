@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-association-table
+      author: sadman
+      changes:
+        - createTable:
+            tableName: association
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bn_name
+                  type: varchar(100)
+              - column:
+                  name: short_name
+                  type: varchar(100)
+              - column:
+                  name: type
+                  type: varchar(50) # e.g., 'General', 'Specialty', 'Sub-specialty', 'Informal'
+              - column:
+                  name: medical_speciality_id
+                  type: int4
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: logo_url
+                  type: varchar(500)
+              - column:
+                  name: founded_date
+                  type: timestamp
+              - column:
+                  name: website_url
+                  type: varchar(500)
+              - column:
+                  name: facebook_url
+                  type: varchar(500)
+              - column:
+                  name: twitter_url
+                  type: varchar(500)
+              - column:
+                  name: linkedin_url
+                  type: varchar(500)
+              - column:
+                  name: youtube_url
+                  type: varchar(500)
+              - column:
+                  name: email
+                  type: varchar(500)
+              - column:
+                  name: phone
+                  type: varchar(100)
+              - column:
+                  name: division_id
+                  type: int4
+              - column:
+                  name: district_id
+                  type: int4
+              - column:
+                  name: upazila_id
+                  type: int4
+              - column:
+                  name: origin_country
+                  type: varchar(100)
+              - column:
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: medical_speciality_id
+            baseTableName: association
+            constraintName: fk_association_medical_speciality_id
+            referencedColumnNames: id
+            referencedTableName: medical_speciality
+
+        - addForeignKeyConstraint:
+            baseColumnNames: division_id
+            baseTableName: association
+            constraintName: fk_association_division_id
+            referencedColumnNames: id
+            referencedTableName: division
+
+        - addForeignKeyConstraint:
+            baseColumnNames: district_id
+            baseTableName: association
+            constraintName: fk_association_district_id
+            referencedColumnNames: id
+            referencedTableName: district
+
+        - addForeignKeyConstraint:
+            baseColumnNames: upazila_id
+            baseTableName: association
+            constraintName: fk_association_upazila_id
+            referencedColumnNames: id
+            referencedTableName: upazila

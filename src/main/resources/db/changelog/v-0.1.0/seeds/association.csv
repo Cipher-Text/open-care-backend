@@ -1,0 +1,20 @@
+id,name,bn_name,short_name,type
+1,Bangladesh Medical Association,বাংলাদেশ মেডিকেল অ্যাসোসিয়েশন,BMA,General
+2,Bangladesh Cardiac Society,,BCS,Specialty
+3,Bangladesh Society of Medicine,,BSM,Specialty
+4,Bangladesh Pediatric Association,,BPA,Specialty
+5,Bangladesh Society of Neurology,,BSN,Specialty
+6,Bangladesh Association of Psychiatrists,,BAP,Specialty
+7,Bangladesh Endocrine Society,,BES,Specialty
+8,Bangladesh Society of Hematology,,BSH,Specialty
+9,Bangladesh Cancer Society,,BCS,Specialty
+10,Bangladesh Society of Radiation Oncologists,,BSRO,Sub-specialty
+11,Ophthalmological Society of Bangladesh,,OSB,Specialty
+12,Bangladesh Orthopaedic Society,,BOS,Specialty
+13,Bangladesh Society of Pathologists,,BSP,Specialty
+14,Bangladesh Society of Microbiologists,,BSM,Specialty
+15,Physicians Bangladesh,,,"Informal"
+16,Postgraduate Doctors' Forum Bangladesh,,PGDFB,Informal
+17,Intern Doctors' Society,,IDS,Informal
+18,Resident Doctors of Bangladesh,,RDB,Informal
+19,Medical Students of Bangladesh,,MSB,Informal

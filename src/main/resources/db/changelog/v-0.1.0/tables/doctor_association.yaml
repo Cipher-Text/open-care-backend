@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-doctor-association-table
+      author: sadman
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: doctor_association_id_pk
+                  name: id
+                  type: bigserial
+              - column:
+                  constraints:
+                    nullable: false
+                  name: doctor_id
+                  type: int8
+              - column:
+                  constraints:
+                    nullable: false
+                  name: association_id
+                  type: int4
+              - column:
+                  name: membership_type
+                  type: varchar(50) # e.g., 'Member', 'Fellow', 'Associate', 'Honorary'
+              - column:
+                  name: start_date
+                  type: timestamp
+              - column:
+                  name: end_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+            tableName: doctor_association
+        - addForeignKeyConstraint:
+            baseColumnNames: doctor_id
+            baseTableName: doctor_association
+            constraintName: doctor_association_fk_doctor
+            deferrable: false
+            initiallyDeferred: false
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: doctor
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: association_id
+            baseTableName: doctor_association
+            constraintName: doctor_association_fk_association
+            deferrable: false
+            initiallyDeferred: false
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: association
+            validate: true
