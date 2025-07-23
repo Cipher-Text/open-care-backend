@@ -159,6 +159,7 @@
       "name": "Super Admin",
       "path": "/Super Admin",
       "realmRoles": [
+        "view-admin-panel",
         "create-master-data",
         "update-master-data",
         "delete-master-data",
@@ -186,6 +187,7 @@
       "name": "Admin",
       "path": "/Admin",
       "realmRoles": [
+        "view-admin-panel",
         "create-master-data",
         "update-master-data",
         "delete-master-data",
@@ -240,6 +242,10 @@
   ],
   "roles": {
     "realm": [
+      {
+        "name": "view-admin-panel",
+        "description": "View Admin Panel Permission"
+      },
       {
         "name": "create-master-data",
         "description": "Create Master Data Permission"
