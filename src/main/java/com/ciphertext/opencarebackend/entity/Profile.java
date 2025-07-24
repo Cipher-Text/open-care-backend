@@ -81,11 +81,4 @@ public class Profile extends Auditable<String> {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "union_id")
     private Union union;
-
-    @Column(name = "domain")
-    @Enumerated(EnumType.STRING)
-    private Domain domain;
-
-    @Column(name = "domain_id")
-    private Integer domainId;
 }

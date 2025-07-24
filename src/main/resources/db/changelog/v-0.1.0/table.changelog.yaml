@@ -95,3 +95,12 @@ databaseChangeLog:
   - include:
       file: tables/campaign.yaml
       relativeToChangelogFile: true
+  - include:
+      file: tables/hospital_profile.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/institution_profile.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/organization_profile.yaml
+      relativeToChangelogFile: true

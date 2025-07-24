@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-organization-event-table
+      id: create-organization-profile-table
       author: sadman
       changes:
         - createTable:
@@ -9,9 +9,14 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: organization_event_id_pk
+                    primaryKeyName: organization_profile_id_pk
                   name: id
-                  type: serial
+                  type: bigserial
+              - column:
+                  constraints:
+                    nullable: false
+                  name: profile_id
+                  type: int8
               - column:
                   constraints:
                     nullable: false
@@ -20,25 +25,24 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: title
+                  name: position
                   type: varchar(300)
               - column:
                   constraints:
                     nullable: false
-                  name: description
-                  type: text
+                  name: start_date
+                  type: date
               - column:
                   constraints:
                     nullable: false
-                  name: event_type
-                  type: varchar(50)
-                  defaultValue: 'general'
+                  name: end_date
+                  type: date
               - column:
                   constraints:
                     nullable: false
-                  name: category
-                  type: varchar(50)
-                  defaultValue: 'general'
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
               - column:
                   constraints:
                     nullable: false
@@ -63,4 +67,24 @@ databaseChangeLog:
                   name: updated_at
                   type: timestamp
                   defaultValueComputed: 'CURRENT_TIMESTAMP'
-            tableName: organization_event
+            tableName: organization_profile
+        - addForeignKeyConstraint:
+            baseColumnNames: profile_id
+            baseTableName: organization_profile
+            constraintName: organization_profile_fk_profile
+            deferrable: false
+            initiallyDeferred: false
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: profile
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: organization_id
+            baseTableName: organization_profile
+            constraintName: organization_profile_fk_organization
+            deferrable: false
+            initiallyDeferred: false
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: organization
+            validate: true
