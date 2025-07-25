@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-organization-profile-table
+      id: create-social-organization-profile-table
       author: sadman
       changes:
         - createTable:
@@ -9,7 +9,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: organization_profile_id_pk
+                    primaryKeyName: social_organization_profile_id_pk
                   name: id
                   type: bigserial
               - column:
@@ -20,7 +20,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: organization_id
+                  name: social_organization_id
                   type: int4
               - column:
                   constraints:
@@ -67,11 +67,11 @@ databaseChangeLog:
                   name: updated_at
                   type: timestamp
                   defaultValueComputed: 'CURRENT_TIMESTAMP'
-            tableName: organization_profile
+            tableName: social_organization_profile
         - addForeignKeyConstraint:
             baseColumnNames: profile_id
-            baseTableName: organization_profile
-            constraintName: organization_profile_fk_profile
+            baseTableName: social_organization_profile
+            constraintName: social_organization_profile_fk_profile
             deferrable: false
             initiallyDeferred: false
             onUpdate: CASCADE
@@ -79,12 +79,12 @@ databaseChangeLog:
             referencedTableName: profile
             validate: true
         - addForeignKeyConstraint:
-            baseColumnNames: organization_id
-            baseTableName: organization_profile
-            constraintName: organization_profile_fk_organization
+            baseColumnNames: social_organization_id
+            baseTableName: social_organization_profile
+            constraintName: social_organization_profile_fk_social_organization
             deferrable: false
             initiallyDeferred: false
             onUpdate: CASCADE
             referencedColumnNames: id
-            referencedTableName: organization
+            referencedTableName: social_organization
             validate: true

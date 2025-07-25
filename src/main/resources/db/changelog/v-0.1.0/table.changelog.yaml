@@ -102,5 +102,5 @@ databaseChangeLog:
       file: tables/institution_profile.yaml
       relativeToChangelogFile: true
   - include:
-      file: tables/organization_profile.yaml
+      file: tables/social_organization_profile.yaml
       relativeToChangelogFile: true
