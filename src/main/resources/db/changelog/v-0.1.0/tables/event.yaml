@@ -1,0 +1,106 @@
+databaseChangeLog:
+  - changeSet:
+      id: create6r-event-table
+      author: sadman
+      changes:
+        - createTable:
+            tableName: event
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: event_id_pk
+                  name: id
+                  type: bigserial
+              - column:
+                  name: campaign_id
+                  type: int8
+              - column:
+                  name: title
+                  type: varchar(300)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: event_type
+                  type: varchar(50)
+                  defaultValue: 'general'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: varchar(50)
+                  defaultValue: 'general'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: end_time
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: location
+                  type: varchar(500)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: lat
+                  type: decimal(10,8)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: lon
+                  type: decimal(11,8)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status
+                  type: varchar(50)
+                  defaultValue: 'active'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: metadata
+                  type: jsonb
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: varchar(100)
+                  defaultValue: 'admin'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - addForeignKeyConstraint:
+                  baseTableName: event
+                  baseColumnNames: campaign_id
+                  referencedTableName: campaign
+                  referencedColumnNames: id
+                  constraintName: fk_event_campaign
