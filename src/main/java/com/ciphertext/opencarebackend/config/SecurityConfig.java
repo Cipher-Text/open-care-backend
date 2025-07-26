@@ -70,6 +70,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/hospital-medical-tests/").hasAuthority("create-hospital-medical-test")
                         .requestMatchers(HttpMethod.PUT, "/api/hospital-medical-tests/").hasAuthority("update-hospital-medical-test")
                         .requestMatchers(HttpMethod.DELETE, "/api/hospital-medical-tests/").hasAuthority("delete-hospital-medical-test")
+
+                        .requestMatchers(HttpMethod.POST, "/api/ambulances/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/ambulances/").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/ambulances/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
