@@ -17,7 +17,7 @@ public interface BloodRequisitionMapper {
     BloodRequisitionResponse toResponse(BloodRequisition bloodRequisition);
 
     @Mapping(source = "status", target = "requisitionStatus", qualifiedByName = "statusToRequisitionStatus")
-    @Mapping(source = "requesterId", target = "requester", qualifiedByName = "profileIdToProfile")
+    @Mapping(source = "requesterId", target = "requester.id")
     @Mapping(source = "bloodGroup", target = "bloodGroup", qualifiedByName = "mapBloodGroup")
     @Mapping(source = "bloodComponent", target = "bloodComponent", qualifiedByName = "mapBloodComponent")
     @Mapping(source = "hospitalId", target = "hospital", qualifiedByName = "hospitalIdToHospital")
@@ -29,13 +29,6 @@ public interface BloodRequisitionMapper {
     @Named("statusToRequisitionStatus")
     default RequisitionStatus statusToRequisitionStatus(String status) {
         return status != null ? RequisitionStatus.valueOf(status) : null;
-    }
-
-    @Named("profileIdToProfile")
-    default Profile profileIdToProfile(Long profileId) {
-        Profile profile = new Profile();
-        profile.setId(profileId);
-        return profile;
     }
 
     @Named("mapBloodGroup")
