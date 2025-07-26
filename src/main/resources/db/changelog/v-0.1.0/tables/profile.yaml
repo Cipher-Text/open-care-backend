@@ -79,8 +79,17 @@ databaseChangeLog:
                   type: boolean
                   defaultValueBoolean: false
               - column:
+                  name: blood_donation_count
+                  type: int4
+              - column:
                   name: last_blood_donation_date
                   type: timestamp
+              - column:
+                  constraints:
+                      nullable: false
+                  name: is_volunteer
+                  type: boolean
+                  defaultValueBoolean: false
               - column:
                   constraints:
                     nullable: false
