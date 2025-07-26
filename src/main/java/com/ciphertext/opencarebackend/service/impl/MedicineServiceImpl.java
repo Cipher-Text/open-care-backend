@@ -2,7 +2,7 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.entity.Medicine;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.MedicineRepository;
+import com.ciphertext.opencarebackend.repository.MedicineRepository;
 import com.ciphertext.opencarebackend.service.MedicineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.service.impl;
 import com.ciphertext.opencarebackend.entity.Profile;
 import com.ciphertext.opencarebackend.enums.UserType;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.ProfileRepository;
+import com.ciphertext.opencarebackend.repository.ProfileRepository;
 import com.ciphertext.opencarebackend.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

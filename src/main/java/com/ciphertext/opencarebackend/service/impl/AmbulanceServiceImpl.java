@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.entity.Ambulance;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.AmbulanceRepository;
+import com.ciphertext.opencarebackend.repository.AmbulanceRepository;
 import com.ciphertext.opencarebackend.service.AmbulanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

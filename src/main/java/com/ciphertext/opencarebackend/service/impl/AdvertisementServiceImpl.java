@@ -4,7 +4,7 @@ package com.ciphertext.opencarebackend.service.impl;
 import com.ciphertext.opencarebackend.entity.Advertisement;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 
-import com.ciphertext.opencarebackend.respository.AdvertisementRepository;
+import com.ciphertext.opencarebackend.repository.AdvertisementRepository;
 import com.ciphertext.opencarebackend.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

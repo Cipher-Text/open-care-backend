@@ -2,15 +2,14 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.dto.filter.HospitalFilter;
 import com.ciphertext.opencarebackend.entity.Hospital;
-import com.ciphertext.opencarebackend.entity.HospitalMedicalTest;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
 import com.ciphertext.opencarebackend.exception.UnprocessableEntityException;
-import com.ciphertext.opencarebackend.respository.DoctorWorkplaceRepository;
-import com.ciphertext.opencarebackend.respository.HospitalMedicalTestRepository;
-import com.ciphertext.opencarebackend.respository.HospitalRepository;
-import com.ciphertext.opencarebackend.respository.specification.Filter;
-import com.ciphertext.opencarebackend.respository.specification.InJoin;
+import com.ciphertext.opencarebackend.repository.DoctorWorkplaceRepository;
+import com.ciphertext.opencarebackend.repository.HospitalMedicalTestRepository;
+import com.ciphertext.opencarebackend.repository.HospitalRepository;
+import com.ciphertext.opencarebackend.repository.specification.Filter;
+import com.ciphertext.opencarebackend.repository.specification.InJoin;
 import com.ciphertext.opencarebackend.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,15 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.*;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.EQUALS;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.LIKE;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.IN_JOIN;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.IN;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.JOIN;
-import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
+import static com.ciphertext.opencarebackend.repository.specification.QueryFilterUtils.*;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.EQUALS;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.LIKE;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.IN_JOIN;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.IN;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.JOIN;
+import static com.ciphertext.opencarebackend.repository.specification.SpecificationBuilder.createSpecification;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 import com.ciphertext.opencarebackend.enums.HospitalType;

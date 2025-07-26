@@ -2,14 +2,11 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.dto.filter.SocialOrganizationFilter;
 import com.ciphertext.opencarebackend.entity.SocialOrganization;
-import com.ciphertext.opencarebackend.enums.HospitalType;
-import com.ciphertext.opencarebackend.enums.OrganizationType;
 import com.ciphertext.opencarebackend.enums.SocialOrganizationType;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.SocialOrganizationRepository;
-import com.ciphertext.opencarebackend.respository.specification.Filter;
-import com.ciphertext.opencarebackend.respository.specification.InJoin;
+import com.ciphertext.opencarebackend.repository.SocialOrganizationRepository;
+import com.ciphertext.opencarebackend.repository.specification.Filter;
 import com.ciphertext.opencarebackend.service.SocialOrganizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.*;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.*;
-import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
+import static com.ciphertext.opencarebackend.repository.specification.QueryFilterUtils.*;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.*;
+import static com.ciphertext.opencarebackend.repository.specification.SpecificationBuilder.createSpecification;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service

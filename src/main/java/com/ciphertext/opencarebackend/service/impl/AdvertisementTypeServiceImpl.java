@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.service.impl;
 import com.ciphertext.opencarebackend.entity.AdvertisementType;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.AdvertisementTypeRepository;
+import com.ciphertext.opencarebackend.repository.AdvertisementTypeRepository;
 import com.ciphertext.opencarebackend.service.AdvertisementTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,17 +1,15 @@
 package com.ciphertext.opencarebackend.service;
 
-import com.ciphertext.opencarebackend.dto.filter.InstitutionFilter;
 import com.ciphertext.opencarebackend.entity.Institution;
 
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.InstitutionRepository;
+import com.ciphertext.opencarebackend.repository.InstitutionRepository;
 import com.ciphertext.opencarebackend.service.impl.InstitutionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.*;
 
 import java.util.*;
 
