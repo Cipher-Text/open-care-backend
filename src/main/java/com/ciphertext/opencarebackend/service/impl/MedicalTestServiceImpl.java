@@ -4,8 +4,8 @@ import com.ciphertext.opencarebackend.dto.filter.MedicalTestFilter;
 import com.ciphertext.opencarebackend.entity.MedicalTest;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.MedicalTestRepository;
-import com.ciphertext.opencarebackend.respository.specification.Filter;
+import com.ciphertext.opencarebackend.repository.MedicalTestRepository;
+import com.ciphertext.opencarebackend.repository.specification.Filter;
 import com.ciphertext.opencarebackend.service.MedicalTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateIndividualFilter;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.EQUALS;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.LIKE;
-import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.createSpecification;
+import static com.ciphertext.opencarebackend.repository.specification.QueryFilterUtils.generateIndividualFilter;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.EQUALS;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.LIKE;
+import static com.ciphertext.opencarebackend.repository.specification.SpecificationBuilder.createSpecification;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 /**

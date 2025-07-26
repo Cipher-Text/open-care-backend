@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,22 +18,22 @@ import lombok.Setter;
 public class Ambulance extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "vehicle_number", nullable = false, unique = true, length = 20)
+    @Column(name = "vehicle_number", nullable = false, length = 20, unique = true)
     private String vehicleNumber;
 
-    @Column(name = "type", nullable = false, length = 50)
+    @Column(length = 50)
     @Enumerated(EnumType.STRING)
-    private AmbulanceType ambulanceType;
+    private AmbulanceType type;
 
-    @Column(name = "driver_name", nullable = false, length = 100)
+    @Column(name = "driver_name", length = 100)
     private String driverName;
 
-    @Column(name = "driver_phone", nullable = false, length = 20)
+    @Column(name = "driver_phone", length = 20)
     private String driverPhone;
 
-    @Column(name = "is_available", nullable = false)
+    @Column(name = "is_available")
     private Boolean isAvailable = true;
 
     @ManyToOne
@@ -39,12 +41,12 @@ public class Ambulance extends Auditable<String> {
     private Hospital hospital;
 
     @ManyToOne
-    @JoinColumn(name = "district_id")
-    private District district;
-
-    @ManyToOne
     @JoinColumn(name = "upazila_id")
     private Upazila upazila;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private District district;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;

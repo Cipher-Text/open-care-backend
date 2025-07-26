@@ -3,7 +3,7 @@ package com.ciphertext.opencarebackend.service.impl;
 import com.ciphertext.opencarebackend.entity.DoctorDegree;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.DoctorDegreeRepository;
+import com.ciphertext.opencarebackend.repository.DoctorDegreeRepository;
 import com.ciphertext.opencarebackend.service.DoctorDegreeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

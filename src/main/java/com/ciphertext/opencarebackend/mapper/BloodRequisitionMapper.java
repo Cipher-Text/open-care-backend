@@ -17,25 +17,18 @@ public interface BloodRequisitionMapper {
     BloodRequisitionResponse toResponse(BloodRequisition bloodRequisition);
 
     @Mapping(source = "status", target = "requisitionStatus", qualifiedByName = "statusToRequisitionStatus")
-    @Mapping(source = "requesterId", target = "requester", qualifiedByName = "profileIdToProfile")
+    @Mapping(source = "requesterId", target = "requester.id")
     @Mapping(source = "bloodGroup", target = "bloodGroup", qualifiedByName = "mapBloodGroup")
     @Mapping(source = "bloodComponent", target = "bloodComponent", qualifiedByName = "mapBloodComponent")
-    @Mapping(source = "hospitalId", target = "hospital", qualifiedByName = "hospitalIdToHospital")
-    @Mapping(source = "districtId", target = "district", qualifiedByName = "mapDistrictIdToDistrict")
-    @Mapping(source = "upazilaId", target = "upazila", qualifiedByName = "mapUpazilaIdToUpazila")
+    @Mapping(source = "hospitalId", target = "hospital.id")
+    @Mapping(source = "districtId", target = "district.id")
+    @Mapping(source = "upazilaId", target = "upazila.id")
     @Mapping(source = "patientGender", target = "patientGender", qualifiedByName = "mapGender")
     BloodRequisition toEntity(BloodRequisitionRequest request);
 
     @Named("statusToRequisitionStatus")
     default RequisitionStatus statusToRequisitionStatus(String status) {
         return status != null ? RequisitionStatus.valueOf(status) : null;
-    }
-
-    @Named("profileIdToProfile")
-    default Profile profileIdToProfile(Long profileId) {
-        Profile profile = new Profile();
-        profile.setId(profileId);
-        return profile;
     }
 
     @Named("mapBloodGroup")
@@ -46,32 +39,6 @@ public interface BloodRequisitionMapper {
     @Named("mapBloodComponent")
     default BloodComponent mapBloodComponent(String component) {
         return component != null ? BloodComponent.valueOf(component) : null;
-    }
-
-    @Named("hospitalIdToHospital")
-    default Hospital hospitalIdToHospital(Long hospitalId) {
-        Hospital hospital = new Hospital();
-        Integer id = hospitalId != null ? hospitalId.intValue() : null;
-        hospital.setId(id);
-        return hospital;
-    }
-
-    @Named("mapDistrictIdToDistrict")
-    default District mapDistrictIdToDistrict(Long districtId) {
-        District district = new District();
-        if(districtId != null) {
-           district.setId(districtId.intValue());
-        }
-        return district;
-    }
-
-    @Named("mapUpazilaIdToUpazila")
-    default Upazila mapUpazilaIdToUpazila(Long upazilaId) {
-        Upazila upazila = new Upazila();
-        if(upazilaId != null) {
-            upazila.setId(upazilaId.intValue());
-        }
-        return upazila;
     }
 
     @Named("mapGender")

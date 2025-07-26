@@ -6,8 +6,8 @@ import com.ciphertext.opencarebackend.entity.DoctorDegree;
 import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.DoctorRepository;
-import com.ciphertext.opencarebackend.respository.specification.Filter;
+import com.ciphertext.opencarebackend.repository.DoctorRepository;
+import com.ciphertext.opencarebackend.repository.specification.Filter;
 import com.ciphertext.opencarebackend.service.DoctorService;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -23,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateIndividualFilter;
-import static com.ciphertext.opencarebackend.respository.specification.QueryFilterUtils.generateJoinTableFilter;
-import static com.ciphertext.opencarebackend.respository.specification.QueryOperator.*;
-import static com.ciphertext.opencarebackend.respository.specification.SpecificationBuilder.*;
+import static com.ciphertext.opencarebackend.repository.specification.QueryFilterUtils.generateIndividualFilter;
+import static com.ciphertext.opencarebackend.repository.specification.QueryFilterUtils.generateJoinTableFilter;
+import static com.ciphertext.opencarebackend.repository.specification.QueryOperator.*;
+import static com.ciphertext.opencarebackend.repository.specification.SpecificationBuilder.*;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service

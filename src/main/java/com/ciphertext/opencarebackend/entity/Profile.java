@@ -81,4 +81,22 @@ public class Profile extends Auditable<String> {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "union_id")
     private Union union;
+
+    @Column(name = "contribution_points")
+    private Integer contributionPoints;
+
+    @Column(name = "is_blood_donor", nullable = false)
+    private Boolean isBloodDonor = false;
+
+    @Column(name = "blood_donation_count")
+    private Integer bloodDonationCount;
+
+    @Column(name = "last_blood_donation_date")
+    private Date lastBloodDonationDate;
+
+    @Column(name = "is_volunteer", nullable = false)
+    private Boolean isVolunteer;
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 }

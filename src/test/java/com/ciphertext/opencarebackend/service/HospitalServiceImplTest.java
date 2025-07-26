@@ -2,7 +2,7 @@ package com.ciphertext.opencarebackend.service;
 
 import com.ciphertext.opencarebackend.entity.Hospital;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.HospitalRepository;
+import com.ciphertext.opencarebackend.repository.HospitalRepository;
 import com.ciphertext.opencarebackend.service.impl.HospitalServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

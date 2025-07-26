@@ -2,7 +2,7 @@ package com.ciphertext.opencarebackend.service.impl;
 
 import com.ciphertext.opencarebackend.entity.BloodDonation;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.BloodDonationRepository;
+import com.ciphertext.opencarebackend.repository.BloodDonationRepository;
 import com.ciphertext.opencarebackend.service.BloodDonationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -7,7 +7,7 @@ import com.ciphertext.opencarebackend.entity.Profile;
 import com.ciphertext.opencarebackend.enums.BloodGroup;
 import com.ciphertext.opencarebackend.enums.Gender;
 import com.ciphertext.opencarebackend.enums.UserType;
-import com.ciphertext.opencarebackend.respository.DistrictRepository;
+import com.ciphertext.opencarebackend.repository.DistrictRepository;
 import com.ciphertext.opencarebackend.service.AuthService;
 import com.ciphertext.opencarebackend.service.KeycloakService;
 import com.ciphertext.opencarebackend.service.ProfileService;

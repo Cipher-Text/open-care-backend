@@ -70,6 +70,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/hospital-medical-tests/").hasAuthority("create-hospital-medical-test")
                         .requestMatchers(HttpMethod.PUT, "/api/hospital-medical-tests/").hasAuthority("update-hospital-medical-test")
                         .requestMatchers(HttpMethod.DELETE, "/api/hospital-medical-tests/").hasAuthority("delete-hospital-medical-test")
+
+                        .requestMatchers(HttpMethod.POST, "/api/ambulances/").hasAuthority("create-master-data")
+                        .requestMatchers(HttpMethod.PUT, "/api/ambulances/").hasAuthority("update-master-data")
+                        .requestMatchers(HttpMethod.DELETE, "/api/ambulances/").hasAuthority("delete-master-data")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -167,6 +171,7 @@ public class SecurityConfig {
                         "/api/hospitals/**",
                         "/api/doctors/**",
                         "/api/hospital-medical-tests/**",
+                        "/api/ambulances/**",
                         "/api/medicines/**",
                         "/api/social-organization/**");
     }

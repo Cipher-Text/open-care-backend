@@ -17,6 +17,12 @@ databaseChangeLog:
                   name: campaign_id
                   type: int8
               - column:
+                  name: domain
+                  type: VARCHAR(50)
+              - column:
+                  name: domain_id
+                  type: int8
+              - column:
                   name: title
                   type: varchar(300)
                   constraints:
@@ -49,7 +55,7 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
-                  name: location
+                  name: address
                   type: varchar(500)
                   constraints:
                     nullable: true

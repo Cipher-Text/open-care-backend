@@ -4,7 +4,7 @@ import com.ciphertext.opencarebackend.dto.response.MedicalSpecialityResponse;
 import com.ciphertext.opencarebackend.entity.DoctorWorkplace;
 import com.ciphertext.opencarebackend.exception.BadRequestException;
 import com.ciphertext.opencarebackend.exception.ResourceNotFoundException;
-import com.ciphertext.opencarebackend.respository.DoctorWorkplaceRepository;
+import com.ciphertext.opencarebackend.repository.DoctorWorkplaceRepository;
 import com.ciphertext.opencarebackend.service.DoctorWorkplaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
