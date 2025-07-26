@@ -61,7 +61,7 @@ public class AmbulanceApiController {
         return ResponseEntity.ok(ambResponse);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<AmbulanceResponse> createAmbulance(@RequestBody AmbulanceRequest ambRequest) {
         Ambulance amb = ambulanceMapper.toEntity(ambRequest);
         amb = ambulanceService.createAmbulance(amb);

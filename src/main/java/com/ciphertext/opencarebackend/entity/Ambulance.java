@@ -1,5 +1,6 @@
 package com.ciphertext.opencarebackend.entity;
 
+import com.ciphertext.opencarebackend.enums.AmbulanceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,8 @@ public class Ambulance extends Auditable<String> {
     private String vehicleNumber;
 
     @Column(length = 50)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private AmbulanceType type;
 
     @Column(name = "driver_name", length = 100)
     private String driverName;
@@ -34,39 +36,18 @@ public class Ambulance extends Auditable<String> {
     @Column(name = "is_available")
     private Boolean isAvailable = true;
 
-    @Column(name = "hospital_id")
-    private Long hospitalId;
-
     @ManyToOne
-    @JoinColumn(name = "hospital_id", insertable = false, updatable = false)
+    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    @Column(name = "upazila_id")
-    private Long upazilaId;
-
     @ManyToOne
-    @JoinColumn(name = "upazila_id", insertable = false, updatable = false)
+    @JoinColumn(name = "upazila_id")
     private Upazila upazila;
 
-    @Column(name = "district_id")
-    private Long districtId;
-
     @ManyToOne
-    @JoinColumn(name = "district_id", insertable = false, updatable = false)
+    @JoinColumn(name = "district_id")
     private District district;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
-
-    @Column(name = "created_by", nullable = false, length = 100)
-    private String createdBy = "admin";
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "updated_by", nullable = false, length = 100)
-    private String updatedBy = "admin";
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
 }

@@ -14,11 +14,8 @@ public class AmbulanceResponse {
     private String driverName;
     private String driverPhone;
     private Boolean isAvailable;
-    private Long hospitalId;
     private HospitalResponse hospital;
-    private Long upazilaId;
     private UpazilaResponse upazila;
-    private Long districtId;
     private DistrictResponse district;
     private Boolean isActive;
     private String createdBy;
