@@ -39,8 +39,14 @@ databaseChangeLog:
                   name: upazila_id
                   type: INTEGER
               - column:
-                  name: event_url
+                  name: website_url
                   type: VARCHAR(255)
+              - column:
+                  name: domain
+                  type: VARCHAR(50)
+              - column:
+                  name: domain_id
+                  type: int8
               - column:
                   constraints:
                     nullable: false
